@@ -1,0 +1,362 @@
+There are 192 words which repeat themselves in the file
+información,346
+número,302
+tipo,285
+estadísticas,248
+fecha,198
+total,195
+producción,158
+nacional,140
+valor,130
+nivel,129
+área,123
+país,121
+sector,104
+servicios,101
+cantidad,101
+código,100
+año,100
+nombre,97
+ingresos,95
+consumo,94
+entidad,92
+variables,91
+estadística,86
+estado,83
+crédito,81
+servicio,76
+precios,76
+tarjetas,76
+sistema,73
+actividades,73
+entidades,72
+productos,71
+identificación,68
+transacciones,68
+costos,68
+población,68
+uso,68
+calidad,68
+gestión,66
+impuesto,66
+encuesta,66
+datos,64
+personas,63
+conocer,63
+través,63
+compras,62
+monto,62
+colombia,61
+otros,61
+gastos,60
+seguimiento,60
+generar,60
+departamento,,58
+tasa,58
+departamento,58
+interés,57
+cuenta,57
+actividad,53
+control,52
+proyectos,51
+salud,51
+bienes,51
+acciones,50
+operaciones,50
+transporte,50
+educación,50
+renta,49
+diferentes,49
+procesos,49
+social,49
+durante,48
+vivienda,48
+programa,47
+tarifa,47
+cuentas,47
+mes,47
+recursos,47
+realizados,46
+tarjeta,46
+áreas,46
+empresas,45
+edad,,44
+riesgos,43
+realizadas,43
+saldo,42
+percepción,42
+comportamiento,42
+desarrollo,42
+registro,41
+tiempo,41
+cobertura,41
+inversión,41
+otras,40
+municipio,40
+medir,40
+energía,39
+índice,39
+base,39
+participación,39
+edad,39
+indicadores,39
+cada,39
+producir,38
+partir,38
+contar,38
+sexo,,37
+ingreso,37
+precio,37
+gas,37
+resultados,37
+usuarios,37
+promedio,37
+proceso,37
+ubicación,36
+general,36
+programas,36
+ley,35
+mensual,35
+volumen,35
+grupos,35
+grupo,35
+consolidar,35
+entre,35
+personal,34
+unidades,34
+seguridad,34
+procedimientos,34
+activos,34
+carga,33
+anterior,33
+mercado,33
+riesgo,33
+colombia,,33
+agua,33
+fin,32
+obtener,32
+acceso,32
+nacionales,32
+clase,32
+público,32
+análisis,32
+exterior,32
+entidad,,32
+política,31
+producción,,31
+variación,31
+rendición,31
+demanda,31
+forestales,31
+toma,31
+zona,31
+cargo,30
+características,30
+interno,30
+débito,29
+caracterización,29
+plan,29
+periodo,29
+emitidas,29
+avances,29
+laboral,28
+destino,28
+orden,28
+área,,28
+determinar,28
+nacional,,28
+capacidad,28
+anual,28
+infraestructura,28
+crédito,,28
+políticas,28
+censo,27
+asistencia,27
+descripción,27
+producto,27
+pública,27
+condiciones,27
+expectativas,27
+sistemas,27
+unidad,26
+públicas,26
+empresa,26
+forma,26
+administrativos,25
+reporte,,25
+financieros,25
+niveles,25
+sexo,25
+desempeño,25
+especies,25
+trabajo,25
+acuerdo,25
+There are 88 words which repeat themselves in the file
+tarjetas de crédito,38
+durante el mes,29
+transacciones por compras,28
+contar con información,27
+número de transacciones,24
+emitidas en colombia,,24
+mes de reporte,,22
+anterior y año,20
+transacciones por avances,20
+tarjeta de crédito,18
+año en curso,18
+bienes y servicios,16
+toma de decisiones,16
+generar información estadística,15
+variables de clasificación:,14
+tarjeta de crédito,,14
+número de identificación,12
+transacciones por retiros,12
+grupos de interés,12
+fecha de inicio,12
+departamento y municipio,11
+número de personas,11
+variables de análisis:,11
+sexo y edad,10
+costos de producción,10
+otros procedimientos administrativos,10
+tarjetas débito emitidas,10
+consolidar información estadística,10
+rendición de cuentas,10
+periodo de balance,9
+variables de estudio:,9
+rendición de cuentas,,9
+saldo a pagar,9
+producción y rendimiento,9
+tasa de cambio,9
+servicio de energía,9
+tipo y número,8
+país con tarjetas,8
+entidades del exterior,,8
+fecha inicio, fecha,8
+crédito de entidades,8
+toma del canal,8
+fecha de nacimiento,,8
+nacional con tarjetas,8
+producto interno bruto,8
+saldo a favor,8
+compras con tarjeta,8
+avances con tarjeta,8
+realizadas con tarjetas,8
+vivienda de interés,7
+conocer el comportamiento,7
+grupo de trabajo,,7
+número de establecimientos,7
+consolidar la información,7
+información a través,7
+plan de mejoramiento,7
+tarifa del 5%;,7
+conocer la percepción,7
+consolidar y difundir,7
+índice de precios,7
+país de origen,,7
+exterior con tarjetas,6
+calidad de vida,6
+tipo de norma,,6
+participación en actividades,6
+tipo de producto,6
+realizados con tarjeta,6
+gastos de consumo,6
+tarifa del 8%,6
+entidades del orden,6
+actividades científicas, tecnológicas,6
+valor del subsidio,6
+servicios de salud,6
+empresas de transporte,6
+usuarios o grupos,6
+conocer el número,6
+país de destino,,6
+tiempo en actividades,6
+fecha de expedición,6
+sistema de información,6
+tipo de programa,6
+cantidad de productores,6
+tarjetas débito expedidas,6
+país de origen,6
+tasa de interés,6
+índice de costos,6
+producir información estadística,6
+total de otros,6
+There are 79 words which repeat themselves in the file
+información estadística,66
+número total,31
+generar información,28
+tarjetas débito,26
+año anterior,25
+compras realizadas,25
+obtener información,24
+energía eléctrica,21
+procedimientos administrativos,20
+nivel nacional,20
+crédito emitidas,18
+generar estadísticas,18
+producir información,14
+seguridad social,13
+otros procedimientos,13
+consolidar información,13
+consumo final,12
+reporte, número,12
+producir estadísticas,12
+colombia, número,12
+colombia, monto,12
+interés social,12
+políticas públicas,12
+avances realizados,12
+encuesta nacional,12
+fecha inicio,,12
+total saldo,11
+gas natural,11
+riesgos laborales,,11
+departamento, municipio,,11
+sexo, edad,,11
+valor agregado,11
+forma farmacéutica,,10
+servicio público,10
+fecha fin,,10
+código dane,10
+impuesto tarifa,10
+participación ciudadana,10
+área, producción,10
+débito emitidas,10
+tarifa general;,9
+año gravable,9
+total ingresos,9
+renta líquida,9
+educación superior,9
+cada uno,9
+personal ocupado,,9
+actividad económica,9
+entidades públicas,8
+resultados operacionales,8
+compras efectuadas,8
+reporte, monto,8
+orden nacional,8
+producto interno,8
+código tipo,8
+crédito realizadas,8
+valor total,8
+bienes gravados;,8
+edad, sexo,,8
+tarifa interbancaria,8
+entidades extranjeras,,8
+monto total,8
+débito expedidas,8
+tarjetas canceladas,8
+tarjeta débito,,8
+crédito realizados,8
+interno bruto,8
+crédito, monto,8
+personal ocupado,8
+actividad económica,,7
+impuesto generado,7
+área sembrada,,7
+desempeño institucional,7
+recursos naturales,7
+cuentas nacionales,7
+inversión extranjera,7
+área total,7
+política pública,7
+ubicación geográfica,7
