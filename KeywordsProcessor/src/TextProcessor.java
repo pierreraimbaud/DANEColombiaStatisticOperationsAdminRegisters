@@ -271,7 +271,7 @@ public class TextProcessor {
             }
             groups=groups.substring(0,groups.length()-1);
             groups+="]";
-            nodesLines.add("{\"id\": \""+nodeID+"\", \"name\": \""+node.getName()+"\", \"groups\": \""+groups+ "\",\"main\": \""+"false\"}");
+            nodesLines.add("{\"id\": \""+nodeID+"\", \"name\": \""+node.getName()+"\", \"groups\": "+groups+ ",\"main\": \""+"false\"}");
         }
         return nodesLines;
     }
