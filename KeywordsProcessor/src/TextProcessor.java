@@ -265,11 +265,12 @@ public class TextProcessor {
             String nodeID =line.get(0).get(0);
             Node node =mapN.get(values.get(Integer.parseInt(nodeID)-1));
 
-            String groups="[";
+            String groups="{";
             for(int i=0; i<groupsList.size();i=i+2){
-                groups+="["+groupsList.get(i).trim()+","+groupsList.get(i+1).trim()+"]";
+                groups+="["+groupsList.get(i).trim()+","+groupsList.get(i+1).trim()+"]"+",";
             }
-            groups+="]";
+            groups=groups.substring(0,groups.length()-1);
+            groups+="}";
             nodesLines.add("{\"id\": \""+nodeID+"\", \"name\": \""+node.getName()+"\", \"groups\": \""+groups+ "\",\"main\": \""+"false\"}");
         }
         return nodesLines;
