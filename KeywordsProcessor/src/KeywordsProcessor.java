@@ -21,7 +21,7 @@ public class KeywordsProcessor {
     /**
      * The string of the id column in the CSV file
      */
-    private static final String ID = "id";
+    private static final String ID = "ID";
 
     private static final int DEFAULT_MIN_COLUMN_FOR_KEYWORDS = 0;
 

@@ -23,7 +23,7 @@ public class TextProcessor {
     /**
      * The string of the id column in the CSV file
      */
-    private static final String ID = "id";
+    private static final String ID = "ID";
 
     /**
      * The separator of the CSV file
@@ -33,7 +33,7 @@ public class TextProcessor {
     /**
      * The number of columns in the CSV file
      */
-    private static final int COLUMN_NUMBER_CSV_FILE =12;
+    private static final int COLUMN_NUMBER_CSV_FILE =16;
 
     /**
      * Variables for writing the whole file for cluster or json
@@ -263,15 +263,18 @@ public class TextProcessor {
             }
 
             String nodeID =line.get(0).get(0);
-            Node node =mapN.get(values.get(Integer.parseInt(nodeID)-1));
+            int id = Integer.parseInt(nodeID)-1;
+            if(id>1){
+                Node node =mapN.get(values.get(id));
 
-            String groups="[";
-            for(int i=0; i<groupsList.size();i=i+2){
-                groups+="[\""+groupsList.get(i).trim()+"\",\""+groupsList.get(i+1).trim()+"\"]"+",";
+                String groups="[";
+                for(int i=0; i<groupsList.size();i=i+2){
+                    groups+="[\""+groupsList.get(i).trim()+"\",\""+groupsList.get(i+1).trim()+"\"]"+",";
+                }
+                groups=groups.substring(0,groups.length()-1);
+                groups+="]";
+                nodesLines.add("{\"id\": \""+nodeID+"\", \"name\": \""+node.getName()+"\", \"groups\": "+groups+ ",\"main\": \""+"false\"}");
             }
-            groups=groups.substring(0,groups.length()-1);
-            groups+="]";
-            nodesLines.add("{\"id\": \""+nodeID+"\", \"name\": \""+node.getName()+"\", \"groups\": "+groups+ ",\"main\": \""+"false\"}");
         }
         return nodesLines;
     }
