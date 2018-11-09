@@ -173,7 +173,7 @@ public class KeywordsProcessor {
      */
     private static Consumer<String> getConsumer2WordsOrMore(Map<String, List<Integer>> map, Map<String, List<Integer>> map1Word, int numberOfWords) {
         return (x) ->{
-            String[] splitStr = x.trim().split("\\s+");
+            String[] splitStr = x.trim().split("\\W+");
             String lineIdAsString = x.trim().split(CSV_SEPARATOR)[0];
             Integer lineId = 0;
             if(!ID.equals(lineIdAsString)) {
@@ -190,8 +190,8 @@ public class KeywordsProcessor {
                         if (i+numberOfWords-1<splitStr.length){
                             if(! generalUselessWords.contains(splitStr[i+1].toLowerCase())){
                                 String multipleWords="";
-                                for (int j=0; j < numberOfWords; j++){
-                                    multipleWords+=splitStr[i].toLowerCase()+ " ";
+                                for (int j=1; j < numberOfWords+1; j++){
+                                    multipleWords+=splitStr[j].toLowerCase()+ " ";
                                 }
                                 multipleWords=multipleWords.substring(0,multipleWords.length()-1);
 
@@ -225,16 +225,16 @@ public class KeywordsProcessor {
 
         //Build keywords maps (1,2,3,4 words)
         Map<String, List<Integer>> map1 = buildKeywordsOccurrencesNumberMap1Word(); //5
-        readMapAndWriteOnStaticStringVar(map1,5);
+        readMapAndWriteOnStaticStringVar(map1,6);
         Map<String, List<Integer>> map2 = new ConcurrentHashMap<>();
         buildKeywordsOccurrencesNumberMap2OrMoreWords(getConsumer2WordsOrMore(map2,map1,2)); //3
-        readMapAndWriteOnStaticStringVar(map1,3);
+        readMapAndWriteOnStaticStringVar(map2,5);
         Map<String, List<Integer>> map3 =new ConcurrentHashMap<>();
         buildKeywordsOccurrencesNumberMap2OrMoreWords(getConsumer2WordsOrMore(map3,map1,3));
-        readMapAndWriteOnStaticStringVar(map1,3);
+        readMapAndWriteOnStaticStringVar(map3,5);
         Map<String, List<Integer>> map4 =new ConcurrentHashMap<>();
         buildKeywordsOccurrencesNumberMap2OrMoreWords(getConsumer2WordsOrMore(map4,map1,4));
-        readMapAndWriteOnStaticStringVar(map1,3);
+        readMapAndWriteOnStaticStringVar(map4,5);
         //The result is stored in a String static var
         BufferedWriter writer;
         try {

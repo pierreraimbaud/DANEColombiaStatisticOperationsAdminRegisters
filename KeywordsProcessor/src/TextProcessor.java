@@ -41,11 +41,6 @@ public class TextProcessor {
     private static String jsonResultText ="{\n\t\"nodes\": [\n";
 
     /**
-     * Cluster names as a list
-     */
-    private static List<String> clusterNames = new ArrayList<>();
-
-    /**
      * Map for the nodes for JSON file
      */
     private static Map<Integer, Node> nodesMap = new ConcurrentHashMap<>();
@@ -56,9 +51,9 @@ public class TextProcessor {
 
         //Get the "hidden" keywords from CSV
         String clustersResults= KeywordsProcessor.getKeywordsListWithOccurrences();
-
+        System.out.println(clustersResults);
         //Build nodes map from CSV
-        buildNodesMapReadingCSVFile();
+        /*buildNodesMapReadingCSVFile();
 
         //Write for JSON
         jsonResultText ="{\n\t\"nodes\": [\n";
@@ -81,7 +76,7 @@ public class TextProcessor {
 
         //Create JSON file
         createJsonFile(jsonResultText);
-
+*/
         /* DEBUG
 		int i =0;
 		List<Integer> values = new ArrayList<>(nodesMap.keySet());
