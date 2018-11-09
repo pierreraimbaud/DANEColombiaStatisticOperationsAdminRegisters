@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="">
+    <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+
+    <style>
+      h1 {
+        font-size : 140%;
+        color:#696969;
+        text-align: center;
+      }
+
+      h2 {
+        font-size : 120%;
+        color:#489450;
+        text-align: center;
+      }
+
+      #svgcontainer1 {
+        display: inline-block;
+        float: left;
+      }
+
+      #svgcontainer2 {
+        display: inline-block;
+        float: right;
+      }
+
+      #explcontainer {
+        display: inline-block;
+      }
+    </style>
+    
+    <h1>Title</h1>
+    <h2>SubTitle</h2>
+    <div id="wrapper">
+      <div id = "svgcontainer1">
+            <p style="color:#789410;font-size:105%"; align="center">XXXX</p>
+            <div><button id = "showDetButton" style="padding: 5px 10px; text-align: center;font-size: 80%;margin: 2px 1px;">XXX</button></div>
+      </div>
+
+      <div id = "svgcontainer2">
+        <p id="txtSvgcontainer2" style="color:#789410;font-size:105%;visibility: hidden"; align="center">XXX</p>
+      </div>
+
+       <div id = "explcontainer">
+            <h2>What, why and how ? Understanding this visualization thanks to abstraction</h2>
+              <p style="color:#111111;">
+                This visualization uses data from datos.gov.co. The principal objective here is to show or discover some interesting insights about this data, knowing that the principal question here is:<br/><b>XXXX</b>
+                <br/><br/>
+                The other objetives are more academic: to use d3, to represent a network in a visualization, to publish the web page on GithubPages etc. The technologies used are d3 (javascript), HTML, CSS, Java (for processing the csv file into a json file) and git (nodejs for developing with a local server). There is no specific prerequisites for enjoying the visualization neither for using the code, available in github.
+                <br/><br/>
+                To be more precise, in the following paragraphs first we will explain what were our data (through data abstraction), why this visualization (through task abstraction) and to conclude the reason of how we choice to present the data (idioms : visual encoding and interaction) ; thanks to that, we have been able to answer to the title question : <i>xxx</i>. Our answers will be the insights of this visualization!
+                <br/>
+              </p>
+              <p style="color:#789410;font-size:110%">What ?</p>
+              <p style="color:#111111;">
+                xxxx<br/><br/>
+            </p>
+            <p style="color:#789410;font-size:110%">Why ?</p>
+            <p style="color:#111111;">
+              xxxx
+              <br/><br/>
+            </p>
+            <p style="color:#789410;font-size:110%">How ?</p>
+            <p style="color:#111111;">
+              xxxx
+            </p>            
+      </div>
+    </div>
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+    <script>
+
+      var dat;
+      d3.json("https://raw.githubusercontent.com/pierreraimbaud/TemasFiestasValleCauca/master/data/data.json").then(function(data) {
+          dat = data;
+          //Create graph
+          createGraph(12.648, true, 500,500);
+      });
+
+      //button to show to the other dataset
+      d3.select("#showDetButton").on("click",function(){
+        d3.json("https://raw.githubusercontent.com/pierreraimbaud/TemasFiestasValleCauca/master/data/data2.json").then(function(data) {
+          dat = data;
+          d3.select("#txtSvgcontainer2").style("visibility", "visible")
+          d3.select("#showDetButton").attr("disabled", true)
+          console.log(dat);
+          //Create graph
+          createGraph(45, false, 730,700);
+        });//end click function
+      });
+
+      function color (nodes){
+        const scale = d3.scaleOrdinal(d3.schemeCategory10);
+        //we want to put a color according to the first group which appears in the list of one node
+        //the gol is to allow a better identification of clusters
+        return nodes => scale(nodes.group.slice(0, nodes.group.indexOf(' ')));
+      }
+
+      function drag (simulation){ 
+        
+        function dragstarted(d) {
+          if (!d3.event.active) simulation.alphaTarget(0.3).restart();
+          d.fx = d.x;
+          d.fy = d.y;
+        }
+        
+        function dragged(d) {
+          d.fx = d3.event.x;
+          d.fy = d3.event.y;
+        }
+        
+        function dragended(d) {
+          if (!d3.event.active) simulation.alphaTarget(0);
+          d.fx = null;
+          d.fy = null;
+        }
+        
+        return d3.drag()
+            .on("start", dragstarted)
+            .on("drag", dragged)
+            .on("end", dragended);
+      }
+
+      function forceSimulation(nodes, links,isSvg1, collisionForceVal) {
+        simu= d3.forceSimulation(nodes)
+            .force("link", d3.forceLink(links).id(d => d.id))
+            .force('collision', d3.forceCollide().radius(function(d) {return collisionForceVal;}))
+            .force("center", d3.forceCenter());
+        !isSvg1 ? simu.force("charge", d3.forceManyBody()) : simu;
+        return simu;
+      };
+
+      function createGraph(collisionForceVal, isSvg1, height, width){
+
+        const links = dat.links.map(d => Object.create(d));
+        const nodes = dat.nodes.map(d => Object.create(d));
+        const simulation = forceSimulation(nodes, links, isSvg1, collisionForceVal).on("tick", ticked);
+
+        const svg = (!isSvg1 ? d3.select("#svgcontainer2") :d3.select("#svgcontainer1")).append("div")
+          .append("svg")
+          .attr('width', width)
+          .attr('height', height)
+          .attr("viewBox", [-width / 2, -height / 2, width, height]);
+
+        const link = svg.append("g")
+            .attr("stroke", "#999")
+            .attr("stroke-opacity", 0.6)
+            .selectAll("line")
+            .data(links)
+            .enter().append("line")
+            .attr("stroke-width", d => Math.sqrt(d.value));
+
+        const node = svg.append("g")
+            .attr("stroke", "#fff")
+            .attr("stroke-width", 1.5)
+            .selectAll("circle")
+            .data(nodes)
+            .enter().append("circle")
+            .attr("r", d => d.main ==="false" ? 8 : 14)
+            .attr("fill", color(nodes))
+            .call(drag(simulation));
+
+        const label = svg.selectAll("label")
+            .data(nodes)
+            .enter()
+            .append("text")
+            .text(function (d) { 
+                return !isSvg1 ? d.group : (d.main ==="true" ? d.group : ""); })
+            .style("fill", "#2B1513")
+            .style("font-weight", d=>d.main ==="true" ? "bold" : "normal")
+            .attr("x", d =>d.x)
+            .attr("y",d => d.y)
+            .style("font-family", "Arial")
+            .style("font-size", d=>d.main ==="true" ? 15: 10);
+
+        node.append("title")
+            .text(d => d.main ==="true" ? d.group :(d.name));
+
+        function ticked() {
+          link
+              .attr("x1", d => d.source.x)
+              .attr("y1", d => d.source.y)
+              .attr("x2", d => d.target.x)
+              .attr("y2", d => d.target.y);
+          
+          node
+              .attr("cx", d => d.x)
+              .attr("cy", d => d.y);
+
+          label
+              .attr("x", d => d.x)
+              .attr("y", d => d.y);
+        }
+      }
+
+</script>
+    <div class="wrapper">
+      <header>
+        <p><a href="">Link of this page - for sharing for example</a></p>
+      </header>
+      <section>
+        <p style="font-size:90%">The original data used come from the Colombian open data website - direct link <a href="https://www.datos.gov.co/api/views/s236-m86m/rows.csv?accessType=DOWNLOAD">here</a></p>
+        <p style="font-size:90%">This project is under <a href="https://opensource.org/licenses/MIT">MIT license.</a></p>
+        <p class="view"><a href="https://github.com/pierreraimbaud/TemasFiestasValleCauca">Project URL on GitHub <small>pierreraimbaud/TemasFiestasValleCauca</small></a>   -   <a style="font-size:90%" href="https://github.com/pierreraimbaud/TemasFiestasValleCauca#markdown">Markdown link</a></p>        
+      </section>
+      <footer>
+        <p>Link to the author GitHub profile: this project is maintained by <a href="https://github.com/pierreraimbaud">pierreraimbaud</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <script src=""></script>
+    
+  </body>
+</html>
