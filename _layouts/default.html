@@ -88,7 +88,7 @@
 
       //button to show to the other dataset
       d3.select("#showDetButton").on("click",function(){
-        d3.json("https://raw.githubusercontent.com/pierreraimbaud/TemasFiestasValleCauca/master/data/data2.json").then(function(data) {
+        d3.json("https://raw.githubusercontent.com/pierreraimbaud/DANEColombiaStatisticOperationsAdminRegisters/master/data/data.json").then(function(data) {
           dat = data;
           d3.select("#txtSvgcontainer2").style("visibility", "visible")
           d3.select("#showDetButton").attr("disabled", true)
@@ -98,11 +98,16 @@
         });//end click function
       });
 
-      function color (nodes){
+      function color (nodes, isSvg1){
         const scale = d3.scaleOrdinal(d3.schemeCategory10);
         //we want to put a color according to the first group which appears in the list of one node
         //the gol is to allow a better identification of clusters
-        return nodes => scale(nodes.group.slice(0, nodes.group.indexOf(' ')));
+        return !isSvg1 ? function(nodes){
+         	return scale(nodes.groups.slice(0, nodes.groups.indexOf(' ')));
+         } : 
+         function(nodes){
+         	return scale(nodes.group.slice(0, nodes.group.indexOf(' ')));
+         } 
       }
 
       function drag (simulation){ 
@@ -165,8 +170,10 @@
             .selectAll("circle")
             .data(nodes)
             .enter().append("circle")
-            .attr("r", d => d.main ==="false" ? 8 : 14)
-            .attr("fill", color(nodes))
+            .attr("r", function (d) { 
+            	return d.main ==="false" ? 8 : 14;
+            })
+            .attr("fill", color(nodes,isSvg1))
             .call(drag(simulation));
 
         const label = svg.selectAll("label")
