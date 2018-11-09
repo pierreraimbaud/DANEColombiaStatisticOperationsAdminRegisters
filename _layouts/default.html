@@ -98,12 +98,26 @@
         });//end click function
       });
 
+      function getStrongestGroupForANode (node, nodeGroups){
+      	var group = nodeGroups[0];
+      	var groupStrength = group[0];
+      	var i;
+      	for(i=1;i<nodeGroups.length;i++){
+      		if (nodeGroups[i][0]>groupStrength){
+      			group=nodeGroups[i];
+      			groupStrength = group[0];
+      		}
+      	}
+      	return group;
+      }
+
       function color (nodes, isSvg1){
         const scale = d3.scaleOrdinal(d3.schemeCategory10);
         //we want to put a color according to the first group which appears in the list of one node
         //the gol is to allow a better identification of clusters
         return !isSvg1 ? function(nodes){
-         	return scale(nodes.groups[0][0]);
+        	var nodeGroup = getStrongestGroupForANode (nodes, nodes.groups);
+         	return scale(nodeGroup[0]);
          } : 
          function(nodes){
          	return scale(nodes.group.slice(0, nodes.group.indexOf(' ')));
@@ -181,7 +195,7 @@
             .enter()
             .append("text")
             .text(function (d) { 
-                return !isSvg1 ? d.group : (d.main ==="true" ? d.group : ""); })
+                return !isSvg1 ? d.groups : (d.main ==="true" ? (!isSvg1 ? d.groups : d.group):"") })
             .style("fill", "#2B1513")
             .style("font-weight", d=>d.main ==="true" ? "bold" : "normal")
             .attr("x", d =>d.x)
@@ -190,7 +204,7 @@
             .style("font-size", d=>d.main ==="true" ? 15: 10);
 
         node.append("title")
-            .text(d => d.main ==="true" ? d.group :(d.name));
+            .text(d => d.main ==="true" ? d.groups :(d.name));
 
         function ticked() {
           link
