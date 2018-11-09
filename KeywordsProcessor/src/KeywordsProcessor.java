@@ -52,9 +52,9 @@ public class KeywordsProcessor {
      * @param map the map to be writed with the keywords, number of occurrence and lines of occurrences
      * @return the map with the keywords, number of occurrence and lines of occurrences
      */
-    private static Consumer<String> getConsumerWord1(Map<String, List<Integer>> map) {
+    private static Consumer<String> getConsumerWord1(Map<String, List<List<Integer>>> map) {
         return (x) ->{
-            String[] splitStr = x.trim().split("\\s+");
+            String[] splitStr = x.trim().split("\\W+");
             //First part of the line - the ID
             String lineIdAsString = x.trim().split(CSV_SEPARATOR)[0];
             Integer lineId = 0;
@@ -69,32 +69,70 @@ public class KeywordsProcessor {
                     splitStr[i]= splitStr[i].toLowerCase();
 
                     if (!map.containsKey(splitStr[i])){
-                        List<Integer> newL = new ArrayList<>();
-                        newL.add(value);
-                        newL.add(lineId);
+
+                        List< List<Integer>> newL = new ArrayList<>();
+
+                        List<Integer> innerList= new ArrayList<>();
+                        innerList.add(1);
+                        innerList.add(-1);
+                        newL.add(innerList);
+                        List<Integer> innerList2= new ArrayList<>();
+                        innerList2.add(lineId);
+                        innerList2.add(1);
+                        newL.add(innerList2);
                         map.put(splitStr[i].toLowerCase(), newL);
                     }
                     else {
-                        value = map.get(splitStr[i]).get(0)+1;
+
+
+                        List<Integer> innerList= map.get(splitStr[i]).get(0);
+                        innerList.set(0,innerList.get(0)+1);
+                        map.get(splitStr[i]).set(0,innerList);
+                        //quit repetitions here for simplification
+                        List<Integer> innerListRepeat= new ArrayList<>();
+                        innerListRepeat.add(lineId);
+                        if (getSecondElementListWithFirstElementOtherList(map.get(splitStr[i]), innerListRepeat) != -1){
+                            List<Integer> innerList2= new ArrayList<>();
+                            innerList2.add(lineId);
+                            innerList2.add(1);
+                            map.get(splitStr[i]).add(innerList2);
+                        }
+                        else{
+                            int index=map.get(splitStr[i]).indexOf(innerListRepeat);
+                            List<Integer> innerList2=  map.get(splitStr[i]).get(index);
+                            innerList2.set(1,innerList2.get(1)+1);
+                            map.get(splitStr[i]).set(index,innerList2);
+
+                        }
+
+
+                        /*value = map.get(splitStr[i]).get(0)+1;
                         map.get(splitStr[i]).set(0,value);
                         if (!map.get(splitStr[i]).contains(lineId)){
                             map.get(splitStr[i]).add(lineId);
                         }
-                        map.put(splitStr[i], map.get(splitStr[i].toLowerCase()));
+                        map.put(splitStr[i], map.get(splitStr[i].toLowerCase()));*/
                     }
                 }
             }
         };
     }
 
+    public static int getSecondElementListWithFirstElementOtherList(List<Integer> list, List<Integer> listWithElement){
+        int element=listWithElement.get(0);
+        if (list.contains(element)){
+            return list.get(1);
+        }
+        return -1;
+    }
     /**
      * Allow to build a the keywords-occurrences number map (for word alone)
      * @return the keywords-occurrences number map (for word alone)
      */
     @SuppressWarnings("deprecation")
-    private static Map<String, List<Integer>> buildKeywordsOccurrencesNumberMap1Word() {
+    private static Map<String, List<List<Integer>>> buildKeywordsOccurrencesNumberMap1Word() {
 
-        Map<String, List<Integer>> mapWord1 = new ConcurrentHashMap<>();
+        Map<String, List<List<Integer>>> mapWord1 = new ConcurrentHashMap<>();
 
         try (Stream<String> stream = Files.lines(Paths.get(CSV_PATH))) {
             stream.forEach(getConsumerWord1(mapWord1));
@@ -112,13 +150,13 @@ public class KeywordsProcessor {
      * @param min the min number
      * @return the filtered map
      */
-    private static Map<String, List<Integer>> filterMapResultByMinimumOfOccurrences(Map<String, List<Integer>> map, int min) {
+    private static Map<String, List<List<Integer>>> filterMapResultByMinimumOfOccurrences(Map<String, List<List<Integer>>> map, int min) {
         int i =0;
-        Map<String, List<Integer>> mapNew = new ConcurrentHashMap<>();
+        Map<String, List<List<Integer>>> mapNew = new ConcurrentHashMap<>();
         List<String> values = new ArrayList<>(map.keySet());
         while(i <map.size()) {
             //Here we check the value of the first number of the list
-            if (map.get(values.get(i)).get(0) >=min){
+            if (map.get(values.get(i)).get(0).get(0) >=min){
                 mapNew.put(values.get(i) , map.get(values.get(i)));
             }
             i++;
@@ -131,17 +169,17 @@ public class KeywordsProcessor {
      * @param mapToRead the map to read
      * @param min the min number for filtering (before reading)
      */
-    private static void readMapAndWriteOnStaticStringVar(Map<String, List<Integer>> mapToRead, int min) {
+    private static void readMapAndWriteOnStaticStringVar(Map<String, List<List<Integer>>> mapToRead, int min) {
 
         //First filter the map
-        Map<String, List<Integer>> map = filterMapResultByMinimumOfOccurrences(mapToRead, min);
+        Map<String, List<List<Integer>>> map = filterMapResultByMinimumOfOccurrences(mapToRead, min);
 
         List<String> values = new ArrayList<>(map.keySet());
 
         Collections.sort(values, new Comparator<String>() {
             public int compare(String a, String b) {
                 // no need to worry about nulls as we know a and b are both in map
-                return map.get(b).get(0) - map.get(a).get(0);
+                return map.get(b).get(0).get(0) - map.get(a).get(0).get(0);
             }
         });
         String val;//"There are "+ map.size()+ " words which repeat themselves in the file";
@@ -171,7 +209,7 @@ public class KeywordsProcessor {
      * @param map the map to be writed with the keywords, number of occurrence and lines of occurrences
      * @return the map with the keywords (by group of 2 or more), number of occurrence and lines of occurrences
      */
-    private static Consumer<String> getConsumer2WordsOrMore(Map<String, List<Integer>> map, Map<String, List<Integer>> map1Word, int numberOfWords) {
+    private static Consumer<String> getConsumer2WordsOrMore(Map<String, List<List<Integer>>> map, Map<String, List<List<Integer>>> map1Word, int numberOfWords) {
         return (x) ->{
             String[] splitStr = x.trim().split("\\W+");
             String lineIdAsString = x.trim().split(CSV_SEPARATOR)[0];
@@ -185,8 +223,8 @@ public class KeywordsProcessor {
 
                     if(map1Word.containsKey(lowerCase))
                     {
-                        Integer value=1;
-                        List<Integer> newL;
+                        //Integer value=1;
+                        List<List<Integer>> newL;
                         if (i+numberOfWords-1<splitStr.length){
                             if(! generalUselessWords.contains(splitStr[i+1].toLowerCase())){
                                 String multipleWords="";
@@ -197,17 +235,30 @@ public class KeywordsProcessor {
 
                                 if (!map.containsKey(multipleWords)){
                                     newL = new ArrayList<>();
-                                    newL.add(value);
-                                    newL.add(lineId);
+                                    List<Integer> innerList= new ArrayList<>();
+                                    innerList.add(1);
+                                    innerList.add(-1);
+                                    newL.add(innerList);
+                                    List<Integer> innerList2= new ArrayList<>();
+                                    innerList2.add(lineId);
+                                    innerList2.add(1);
+                                    newL.add(innerList2);
                                     map.put(multipleWords, newL);
                                 }
                                 else {
-                                    value = map.get(multipleWords).get(0)+1;
-                                    map.get(multipleWords).set(0,value);
+                                    List<Integer> innerList= map.get(multipleWords).get(0);
+                                    innerList.set(0,innerList.get(0)+1);
+                                    map.get(multipleWords).set(0,innerList);
                                     //quit repetitions here for simplification
                                     if (!map.get(multipleWords).contains(lineId)){
-                                        map.get(multipleWords).add(lineId);
+                                        List<Integer> innerList2= new ArrayList<>();
+                                        innerList2.add(lineId);
+                                        innerList2.add(1);
+                                        map.get(multipleWords).add(innerList2);
                                     }
+                                 //   else{
+
+                                  //  }
                                     map.put(multipleWords, map.get(multipleWords));
                                 }
                             }
@@ -224,17 +275,17 @@ public class KeywordsProcessor {
         generalUselessWords.addAll(specificUselessWords);
 
         //Build keywords maps (1,2,3,4 words)
-        Map<String, List<Integer>> map1 = buildKeywordsOccurrencesNumberMap1Word(); //5
-        readMapAndWriteOnStaticStringVar(map1,6);
-        Map<String, List<Integer>> map2 = new ConcurrentHashMap<>();
+        Map<String, List<List<Integer>>> map1 = buildKeywordsOccurrencesNumberMap1Word(); //5
+        readMapAndWriteOnStaticStringVar(map1,2);
+        Map<String, List<List<Integer>>> map2 = new ConcurrentHashMap<>();
         buildKeywordsOccurrencesNumberMap2OrMoreWords(getConsumer2WordsOrMore(map2,map1,2)); //3
         readMapAndWriteOnStaticStringVar(map2,5);
-        Map<String, List<Integer>> map3 =new ConcurrentHashMap<>();
+        /*Map<String, List<Integer>> map3 =new ConcurrentHashMap<>();
         buildKeywordsOccurrencesNumberMap2OrMoreWords(getConsumer2WordsOrMore(map3,map1,3));
         readMapAndWriteOnStaticStringVar(map3,5);
         Map<String, List<Integer>> map4 =new ConcurrentHashMap<>();
-        buildKeywordsOccurrencesNumberMap2OrMoreWords(getConsumer2WordsOrMore(map4,map1,4));
-        readMapAndWriteOnStaticStringVar(map4,5);
+        buildKeywordsOccurrencesNumberMap2OrMoreWords(getConsumer2WordsOrMore(map4,map1,4));*/
+        //readMapAndWriteOnStaticStringVar(map4,5);
         //The result is stored in a String static var
         BufferedWriter writer;
         try {
