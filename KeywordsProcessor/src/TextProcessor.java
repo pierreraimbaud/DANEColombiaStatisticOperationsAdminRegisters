@@ -286,7 +286,7 @@ public class TextProcessor {
         List<String> nodesLines= new ArrayList<>();
         for (String line:lines) {
             String name = line.trim().split(CSV_SEPARATOR)[0];
-            nodesLines.add("{\"id\": \""+name+"\", \"name\": \""+name+"\", \"group\": \""+name+" \",\"main\": \""+"true\"}");
+            nodesLines.add("{\"id\": \""+name+"\", \"name\": \""+name+"\", \"groups\": ["+"\""+name+"\""+","+"\""+name+"\""+ "],\"main\": \""+"true\"}");
         }
         return nodesLines;
     }

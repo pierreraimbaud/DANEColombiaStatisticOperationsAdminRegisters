@@ -103,7 +103,7 @@
         //we want to put a color according to the first group which appears in the list of one node
         //the gol is to allow a better identification of clusters
         return !isSvg1 ? function(nodes){
-         	return scale(nodes.groups.slice(0, nodes.groups.indexOf(' ')));
+         	return scale(nodes.groups[0][0]);
          } : 
          function(nodes){
          	return scale(nodes.group.slice(0, nodes.group.indexOf(' ')));
