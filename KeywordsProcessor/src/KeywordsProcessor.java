@@ -51,7 +51,7 @@ public class KeywordsProcessor {
      * Specific project useless words to not consider when searching keywords for clusters
      */
     private static List<String> specificUselessWords =new ArrayList<>(
-            Arrays.asList("ooee", "rraa","informacion","través","registro","reporte","todo", "diferentes", "región", "cada", "estadisticas", "estadistica",
+            Arrays.asList("ooee", "rraa","informacion","través","registro","registros","reporte","todo", "diferentes", "región", "cada", "operaciones","operacion","estadisticas", "estadistica",
                     "internacional", "espacio", "general","nuestra","nacional","medio","1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12",
                     "13", "14", "15", "16", "17", "18", "19", "20", "25", "30","31","343", "50", "100", "120","180"));
 
