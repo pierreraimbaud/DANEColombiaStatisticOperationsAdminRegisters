@@ -164,8 +164,8 @@
         const links = dat.links.map(d => Object.create(d));
         const nodes = dat.nodes.map(d => Object.create(d));
         const simulation = forceSimulation(nodes, links, isSvg1, collisionForceVal).on("tick", ticked);
-//:d3.select("#svgcontainer1")
-        const svg = (!isSvg1 ? d3.select("#svgcontainer2")).append("div")
+//(!isSvg1 ? d3.select("#svgcontainer2")):d3.select("#svgcontainer1")
+        const svg = d3.select("#svgcontainer2").append("div")
           .append("svg")
           .attr('width', width)
           .attr('height', height)
