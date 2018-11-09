@@ -457,8 +457,6 @@
 		{"id": "sanciones", "name": "sanciones", "groups": ["sanciones","sanciones"],"main": "true"}
 	],
 	"links": [
-		{"source": "1", "target": "rraa", "value": "1"},
-		{"source": "1", "target": "sin", "value": "1"},
 		{"source": "4", "target": "sin", "value": "1"},
 		{"source": "5", "target": "sin", "value": "1"},
 		{"source": "9", "target": "sin", "value": "1"},
@@ -659,7 +657,6 @@
 		{"source": "349", "target": "sin", "value": "1"},
 		{"source": "350", "target": "sin", "value": "1"},
 		{"source": "351", "target": "sin", "value": "1"},
-		{"source": "1", "target": "ooee", "value": "1"},
 		{"source": "4", "target": "ooee", "value": "1"},
 		{"source": "5", "target": "ooee", "value": "1"},
 		{"source": "9", "target": "ooee", "value": "1"},
@@ -994,7 +991,6 @@
 		{"source": "391", "target": "informacion", "value": "2"},
 		{"source": "395", "target": "informacion", "value": "1"},
 		{"source": "0", "target": "registro", "value": "1"},
-		{"source": "1", "target": "registro", "value": "1"},
 		{"source": "11", "target": "registro", "value": "1"},
 		{"source": "40", "target": "registro", "value": "1"},
 		{"source": "41", "target": "registro", "value": "1"},
