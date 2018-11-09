@@ -81,14 +81,14 @@
     <script>
 
       var dat;
-      d3.json("https://raw.githubusercontent.com/pierreraimbaud/TemasFiestasValleCauca/master/data/data.json").then(function(data) {
+      /*d3.json("https://raw.githubusercontent.com/pierreraimbaud/TemasFiestasValleCauca/master/data/data.json").then(function(data) {
           dat = data;
           //Create graph
           createGraph(12.648, true, 1200,1200);
-      });
+      });*/
 
       //button to show to the other dataset
-      /*d3.select("#showDetButton").on("click",function(){
+      d3.select("#showDetButton").on("click",function(){
         d3.json("https://raw.githubusercontent.com/pierreraimbaud/DANEColombiaStatisticOperationsAdminRegisters/master/data/data.json").then(function(data) {
           dat = data;
           d3.select("#txtSvgcontainer2").style("visibility", "visible")
@@ -97,7 +97,7 @@
           //Create graph
           createGraph(45, false, 1200,1200);
         });//end click function
-      });*/
+      });
 
       function getStrongestGroupForANode (node, nodeGroups){
       	var group = nodeGroups[0];
