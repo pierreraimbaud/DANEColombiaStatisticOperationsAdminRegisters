@@ -3,7 +3,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Stream;
@@ -18,13 +17,13 @@ public class TextProcessor {
     /**
      * Constant for file paths
      */
-    private final static String CSV_PATH = "./data/file.csv";
-    private final static String DEST_JSON_FILE_PATH = "./data/data.json";
+    private final static String CSV_PATH = "./../data/file.csv";
+    private final static String DEST_JSON_FILE_PATH = "./../data/data.json";
 
     /**
      * The string of the id column in the CSV file
      */
-    private static final String ID = "id";
+    private static final String ID = "ID";
 
     /**
      * The separator of the CSV file
@@ -34,7 +33,7 @@ public class TextProcessor {
     /**
      * The number of columns in the CSV file
      */
-    private static final int COLUMN_NUMBER_CSV_FILE =12;
+    private static final int COLUMN_NUMBER_CSV_FILE =16;
 
     /**
      * Variables for writing the whole file for cluster or json
@@ -45,7 +44,6 @@ public class TextProcessor {
      * Map for the nodes for JSON file
      */
     private static Map<Integer, Node> nodesMap = new ConcurrentHashMap<>();
-
 
     @SuppressWarnings("deprecation")
     public static void main(String[] args) {
@@ -111,17 +109,17 @@ public class TextProcessor {
     /**
      * Allow to build the nodes map reading the CSV file
      */
-	@SuppressWarnings("deprecation")
-	private static void buildNodesMapReadingCSVFile() {
+    @SuppressWarnings("deprecation")
+    private static void buildNodesMapReadingCSVFile() {
 
-		try (Stream<String> stream = Files.lines(Paths.get(CSV_PATH))) {
-			stream.forEach(getConsumerForBuildingNodesMapReadingCSVFile(nodesMap));
-		}
-		catch (IOException e) {
-			e.printStackTrace();
-			Logger.global.log(Level.SEVERE, e.getMessage(), e.getCause());
-		}
-	}
+        try (Stream<String> stream = Files.lines(Paths.get(CSV_PATH))) {
+            stream.forEach(getConsumerForBuildingNodesMapReadingCSVFile(nodesMap));
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+            Logger.global.log(Level.SEVERE, e.getMessage(), e.getCause());
+        }
+    }
 
     /**
      * Provide a consumer of file which build a map
@@ -129,19 +127,24 @@ public class TextProcessor {
      * @return the consumer of file
      */
     private static Consumer<String> getConsumerForBuildingNodesMapReadingCSVFile(Map<Integer, Node> pNodesMap) {
-		return (x) ->{
-			String[] splitStr = x.trim().split(CSV_SEPARATOR);
-			if(!splitStr[0].equals(ID)) {
-				if (splitStr.length==COLUMN_NUMBER_CSV_FILE) {
+        return (x) ->{
+            String[] splitStr = x.trim().split(CSV_SEPARATOR);
+            if(!splitStr[0].equals(ID)) {
+                if (splitStr.length==COLUMN_NUMBER_CSV_FILE) {
                     pNodesMap.put(Integer.parseInt(splitStr[0]),new Node(splitStr[0], splitStr[1], splitStr[2],
-							splitStr[3], splitStr[4], splitStr[5],
-							splitStr[6], splitStr[7], splitStr[8],
-							splitStr[9], splitStr[10], splitStr[11]));
-				}
-			}
-		};
-	}
+                            splitStr[3], splitStr[4], splitStr[5],
+                            splitStr[6], splitStr[7], splitStr[8],
+                            splitStr[9], splitStr[10], splitStr[11]));
+                }
+            }
+        };
+    }
 
+    /**
+     * Allow to remove from array the empty or " " elements
+     * @param lineValues the input array
+     * @return the new array without the empty or " " elements
+     */
     private static String[] removeEmptyValues(String[] lineValues){
         List <String> linesAsList = new ArrayList<>();
         for(String line : lineValues){
@@ -156,142 +159,163 @@ public class TextProcessor {
         return lineAsArray;
     }
 
+    private static Integer containsInFirstElement(List<List<String>> list,String element){
+        Integer rep=null;
+        for(int i=0; i<list.size();i++){
+            List innerList=list.get(i);
+            if(innerList.get(0).equals(element)){
+                rep= i;
+            }
+        }
+        return rep;
+    }
+
     /**
      * Allow, from a map and an input list of keywords, to write a reversed list TODO EXPLAIN
      * @param mapN the input map
      * @param resultFromMining the input list of keywords
      * @return a reversed list TODO EXPLAIN
      */
-	private static List<List<List<String>>> createReverseResultsList(Map<Integer, Node> mapN, String resultFromMining) {
+    private static List<List<List<String>>> createReverseResultsList(Map<Integer, Node> mapN, String resultFromMining) {
 
-		List<List<List<String>>> reverseResultsList= new ArrayList<>();
+        List<List<List<String>>> reverseResultsList= new ArrayList<>();
 
-		String[] lines = resultFromMining.trim().split("\n");
+        String[] lines = resultFromMining.trim().split("\n");
 
-		for (String line:lines) {
-			String[] lineValues = line.trim().split(CSV_SEPARATOR+"|\\[|\\]");
+        for (String line:lines) {
+            String[] lineValues = line.trim().split(CSV_SEPARATOR+"|\\[|\\]");
             lineValues = removeEmptyValues(lineValues);
-			if (lineValues.length>1){
-			    if (lineValues[1].length()>1){
-                    //lineValues[1]=lineValues[1].substring(1);
-                    lineValues[lineValues.length-1]=lineValues[lineValues.length-1].substring(0,lineValues[lineValues.length-1].length()-1);
-                    String name =lineValues[0];
-                    for (int j = 3; j < lineValues.length; j=j+2) {
+            if (lineValues.length>1){
+                String keyword =lineValues[0];
+                for (int j = 3; j < lineValues.length; j=j+2) {
+                    String lineID =lineValues[j].trim();
+                    String lineKeywordNumberOccurrence =lineValues[j+1].trim();
 
-                        List<List<String>> smallListList= new ArrayList<>();
+                    List<List<String>> smallListList= new ArrayList<>();
 
-                        List<String> smallList1= new ArrayList<>();
-                        smallList1.add(name);
-                        smallList1.add("-1");
+                    List<String> smallList1= new ArrayList<>();
+                    smallList1.add(lineID);
 
-                        List<String> smallList2= new ArrayList<>();
-                        smallList2.add(lineValues[j].trim());
-                        smallList2.add(lineValues[j+1].trim());
+                    List<String> smallList2= new ArrayList<>();
+                    smallList2.add(keyword);
+                    smallList2.add(lineKeywordNumberOccurrence);
 
-                        smallListList.add(smallList1);
-                        smallListList.add(smallList2);
-                        List <String> el = containsElementInListOfList(mapN.get(Integer.parseInt(lineValues[j].trim())).getId(), 0, reverseResultsList);
-                        if(null == el){
-                            reverseResultsList.add(smallListList);
+                    smallListList.add(smallList1);
+                    smallListList.add(smallList2);
+                    Integer pos = containsElementInListOfList(lineID, reverseResultsList);
+                    if(null == pos){
+                        reverseResultsList.add(smallListList);
+                    }
+                    else{
+                        Integer rep=containsInFirstElement(reverseResultsList.get(pos),keyword);
+                        if(rep==null){
+                            reverseResultsList.get(pos).add(smallList2);
                         }
                         else{
-                            int pos =reverseResultsList.indexOf(el);
-                            if(!reverseResultsList.get(pos).contains(name)){
-                                reverseResultsList.get(pos).add(new ArrayList<>(Arrays.asList(name,"1")));
-                            }
+                            List<String> smallList2bis= new ArrayList<>();
+                            smallList2bis.add(reverseResultsList.get(pos).get(rep).get(0));
+                            smallList2bis.add(reverseResultsList.get(pos).get(rep).get(1));
+                            reverseResultsList.get(pos).set(rep,smallList2bis);
                         }
                     }
                 }
             }
-		}
-		return reverseResultsList;
-	}
+        }
+        return reverseResultsList;
+    }
 
     /**
      * Allow to find an element and return the second list which contains this element, otherwise null
      * @param element the element to find
-     * @param indexInSecondList the index where to find inside the second list of the principal list (for  example, the 4th element of each element of the principal list)
      * @param list the input list
      * @return the second list which contains the element, otherwise null
      */
-    private static List containsElementInListOfList(String element, int indexInSecondList, List<List<List<String>>> list){
-        for (List<List<String>> innerList:list) {
+    private static Integer containsElementInListOfList(String element, List<List<List<String>>> list){
+        for (int j =0; j<list.size();j++) {
+            List<List<String>> innerList=list.get(j);
             for (List<String> inInnerList:innerList) {
-                if (element.equals(inInnerList.get(indexInSecondList))) {
-                    return innerList;
+                if (element.equals(inInnerList.get(0))) {
+                    return j;
                 }
             }
         }
         return null;
     }
 
-	/** Allow to get a the list of String which represent all the nodes lines
-	 * @param mapN the input map of nodes
-	 * @param reverseResultsList  a reversed list of list TODO EXPLAIN
-	 * @return the list of String which represent all the nodes lines
-	 */
-	private static List<String> createDeepNodeLinesForJson(Map<Integer, Node> mapN, List<List<List<String>>> reverseResultsList) {
-		//{"id": "50", "group": "Artístico-Cultural"}
-		List<String> nodesLines= new ArrayList<String>();
+    /** Allow to get a the list of String which represent all the nodes lines
+     * @param mapN the input map of nodes
+     * @param reverseResultsList  a reversed list of list TODO EXPLAIN
+     * @return the list of String which represent all the nodes lines
+     */
+    private static List<String> createDeepNodeLinesForJson(Map<Integer, Node> mapN, List<List<List<String>>> reverseResultsList) {
+        //{"id": "50", "group": "Artístico-Cultural"}
+        List<String> nodesLines= new ArrayList<>();
 
-		List<Integer> values = new ArrayList<>(mapN.keySet());
+        List<Integer> values = new ArrayList<>(mapN.keySet());
 
-		for (List<List<String>> line:reverseResultsList) {
-			List<String> group=new ArrayList<>();
-			for(int i=1; i<line.size();i++) {
-			    String s1 =line.get(i).get(0);
-                String s2 =line.get(i).get(1);
-                group.add(s1);
-                group.add(s2);
+        for (List<List<String>> line:reverseResultsList) {
+            List<String> groupsList=new ArrayList<>();
+            for(int i=1; i<line.size();i++) {
+                String s1 =line.get(i).get(0).trim();
+                String s2 =line.get(i).get(1).trim();
+                groupsList.add(s1);
+                groupsList.add(s2);
             }
-            group.size();
-			//group=group.substring(1, group.length()-1);
-			nodesLines.add("{\"id\": \""+line.get(1).get(0)+"\", \"name\": \""+mapN.get(values.get(Integer.parseInt(line.get(1).get(0))-1)).getName()+"\", \"group\": \"["+group.get(0).trim()+","+group.get(1).trim()+"] \",\"main\": \""+"false\"}");
-		}
-		return nodesLines;
-	}
 
-	/** Allow to get a the list of String which represent all the cluster nodes lines
-	 * @param clusterNodesInputLinesFromCSV  the input list for the cluster nodes for CSV file
-	 * @return the list of String which represent all the cluster nodes lines
-	 */
-	private static List<String> createClusterNodesDeepLines(String clusterNodesInputLinesFromCSV) {
+            String nodeID =line.get(0).get(0);
+            int id = Integer.parseInt(nodeID)-1;
+            if(id>1){
+                Node node =mapN.get(values.get(id));
 
-		String[] lines = clusterNodesInputLinesFromCSV.trim().split("\n");
-		List<String> nodesLines= new ArrayList<>();
-		for (String line:lines) {
-			String name = line.trim().split(CSV_SEPARATOR)[0];
+                String groups="[";
+                for(int i=0; i<groupsList.size();i=i+2){
+                    groups+="[\""+groupsList.get(i).trim()+"\",\""+groupsList.get(i+1).trim()+"\"]"+",";
+                }
+                groups=groups.substring(0,groups.length()-1);
+                groups+="]";
+                nodesLines.add("{\"id\": \""+nodeID+"\", \"name\": \""+node.getName()+"\", \"groups\": "+groups+ ",\"main\": \""+"false\"}");
+            }
+        }
+        return nodesLines;
+    }
 
-			nodesLines.add("{\"id\": \""+name+"\", \"name\": \""+name+"\", \"group\": \""+name.trim()+" \",\"main\": \""+"true\"}");
-		}
-		return nodesLines;
-	}
+    /** Allow to get a the list of String which represent all the cluster nodes lines
+     * @param clusterNodesInputLinesFromCSV  the input list for the cluster nodes for CSV file
+     * @return the list of String which represent all the cluster nodes lines
+     */
+    private static List<String> createClusterNodesDeepLines(String clusterNodesInputLinesFromCSV) {
+
+        String[] lines = clusterNodesInputLinesFromCSV.trim().split("\n");
+        List<String> nodesLines= new ArrayList<>();
+        for (String line:lines) {
+            String name = line.trim().split(CSV_SEPARATOR)[0];
+            nodesLines.add("{\"id\": \""+name+"\", \"name\": \""+name+"\", \"groups\": ["+"\""+name+"\""+","+"\""+name+"\""+ "],\"main\": \""+"true\"}");
+        }
+        return nodesLines;
+    }
 
     /** Allow to get a the list of String which represent all the link lines
      * @param clusterAndIDlist  the input list for the links
      * @return the list of String which represent all the links lines TODO EXPLAIN
      */
-	private static List<String> createDeepLinkLinesForJson(String clusterAndIDlist) {
-		//{"source": "Napoleon", "target": "Myriel", "value": 1},
-		List<String> linkLines= new ArrayList<>();
+    private static List<String> createDeepLinkLinesForJson(String clusterAndIDlist) {
+        //{"source": "Napoleon", "target": "Myriel", "value": 1},
+        List<String> linkLines= new ArrayList<>();
 
-		String[] lines = clusterAndIDlist.trim().split("\n");
+        String[] lines = clusterAndIDlist.trim().split("\n");
 
-		for (String line:lines) {
-			String[] lineValues = line.trim().split(CSV_SEPARATOR);
-			if(lineValues.length>1) {
-                if (lineValues[1].length()>1) {
-                    lineValues[1] = lineValues[1].substring(1);
-                    lineValues[lineValues.length - 1] = lineValues[lineValues.length - 1].substring(0, lineValues[lineValues.length - 1].length() - 1);
-                    String name = lineValues[0];
-                    for (int j = 1; j < lineValues.length; j++) {
-                        linkLines.add("{\"source\": \"" + Integer.parseInt(lineValues[j].trim()) + "\", \"target\": \"" + name + "\", \"value\": \"" + 1 + "\"}");
-                    }
+        for (String line:lines) {
+            String[] lineValues = line.trim().split(CSV_SEPARATOR+"|\\[|\\]");
+            lineValues = removeEmptyValues(lineValues);
+            if(lineValues.length>1) {
+                String name = lineValues[0];
+                for (int j = 3; j < lineValues.length; j=j+2) {
+                    linkLines.add("{\"source\": \"" + lineValues[j].trim() + "\", \"target\": \"" + name + "\", \"value\": \"" + lineValues[j+1].trim() + "\"}");
                 }
             }
-		}
-		return linkLines;
-	}
+        }
+        return linkLines;
+    }
 
     /**
      * Allow to write lines of nodes in a String, with or without the last character
@@ -305,7 +329,6 @@ public class TextProcessor {
         if(withoutLastCharacter) {
             jsonResultText = jsonResultText.substring(0, jsonResultText.length()-2);
         }
-        System.out.println(jsonResultText);
     }
 
     /**
@@ -319,7 +342,8 @@ public class TextProcessor {
             writer = new BufferedWriter( new FileWriter(DEST_JSON_FILE_PATH));
             writer.write(inputText);
             writer.close();
-        } catch (IOException e) {
+        }
+        catch (IOException e) {
             e.printStackTrace();
             Logger.global.log(Level.SEVERE, e.getMessage(), e.getCause());
         }

@@ -1,4 +1,3 @@
-import javax.print.DocFlavor;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -16,13 +15,13 @@ public class KeywordsProcessor {
     /**
      * Constant for file paths
      */
-    private final static String CSV_PATH = "./data/file.csv";
-    private final static String DATA_RESULTS_FILE_PATH = "./data/results.txt";
+    private final static String CSV_PATH = "./../data/file.csv";
+    private final static String DATA_RESULTS_FILE_PATH = "./../data/results.txt";
 
     /**
      * The string of the id column in the CSV file
      */
-    private static final String ID = "id";
+    private static final String ID = "ID";
 
     private static final int DEFAULT_MIN_COLUMN_FOR_KEYWORDS = 0;
 
@@ -46,7 +45,7 @@ public class KeywordsProcessor {
             Arrays.asList("de", "la", "el", ",", ";", "", "en", "del", "los", "las", "demás", "bajo", "les", "hecho", "hecho,", "pertenece", "recibió", "realiza", "realizan",
                     "anualmente", "mes", "para", "con", "que", "-", "–", "sobre", "dentro", "y", "o", "al", "se", "no", "ni", "si", "(si,", "(no,", "(para,", "hasta", "cabo", "donde",
                     "por", "a", "su", "e", "un", "una", "sus", "según", "1.", "2.", "3.", "4.", "5;", "6.", "y/o", "esta", "este", "durante", "está", "más", "como", "así", "hace",
-                    "ha", "han", "es", "son", "tiene", "tienen", "id", "lo", "cual", "¿cuántos", "¿la", "¿el", "7.", "/", "lleva"));
+                    "ha", "han", "es", "son", "tiene", "tienen", "id", "lo", "cual", "¿cuántos", "¿la", "¿el", "7.", "/", "lleva", "mas", "anio"));
 
     /**
      * Specific project useless words to not consider when searching keywords for clusters
@@ -108,9 +107,7 @@ public class KeywordsProcessor {
             //Read the complete line and build a map with keywords
             for(int i=0; i< splitStr.length; i++){
                 if (!generalUselessWords.contains(splitStr[i].toLowerCase())){
-                    Integer value=1;
                     splitStr[i]= splitStr[i].toLowerCase();
-
                     if (!map.containsKey(splitStr[i])){
 
                         List< List<Integer>> newL = new ArrayList<>();
@@ -126,12 +123,10 @@ public class KeywordsProcessor {
                         map.put(splitStr[i].toLowerCase(), newL);
                     }
                     else {
-
-
                         List<Integer> innerList= map.get(splitStr[i]).get(0);
                         innerList.set(0,innerList.get(0)+1);
                         map.get(splitStr[i]).set(0,innerList);
-                        //quit repetitions here for simplification
+                        //do not quit repetitions here for get the "strength" of the link/the keyword
                         List<Integer> innerListRepeat= new ArrayList<>();
                         innerListRepeat.add(lineId);
                         int index=containsElementInListOfList(lineId,0, map.get(splitStr[i]));
@@ -142,33 +137,17 @@ public class KeywordsProcessor {
                             map.get(splitStr[i]).add(innerList2);
                         }
                         else{
-                            //int index=map.get(splitStr[i]).indexOf(innerListRepeat);
                             List<Integer> innerList2=  map.get(splitStr[i]).get(index);
                             innerList2.set(1,innerList2.get(1)+1);
                             map.get(splitStr[i]).set(index,innerList2);
 
                         }
-
-
-                        /*value = map.get(splitStr[i]).get(0)+1;
-                        map.get(splitStr[i]).set(0,value);
-                        if (!map.get(splitStr[i]).contains(lineId)){
-                            map.get(splitStr[i]).add(lineId);
-                        }
-                        map.put(splitStr[i], map.get(splitStr[i].toLowerCase()));*/
                     }
                 }
             }
         };
     }
 
-    public static int getSecondElementListWithFirstElementOtherList(List<Integer> list, List<Integer> listWithElement){
-        int element=listWithElement.get(0);
-        if (list.contains(element)){
-            return list.get(1);
-        }
-        return -1;
-    }
     /**
      * Allow to build a the keywords-occurrences number map (for word alone)
      * @return the keywords-occurrences number map (for word alone)
@@ -316,9 +295,9 @@ public class KeywordsProcessor {
                                         innerList2.add(1);
                                         map.get(multipleWords).add(innerList2);
                                     }
-                                 //   else{
+                                    //   else{
 
-                                  //  }
+                                    //  }
                                     map.put(multipleWords, map.get(multipleWords));
                                 }
                             }
@@ -337,9 +316,9 @@ public class KeywordsProcessor {
         //Build keywords maps (1,2,3,4 words)
         Map<String, List<List<Integer>>> map1 = buildKeywordsOccurrencesNumberMap1Word(); //5
         readMapAndWriteOnStaticStringVar(map1,8);
-        Map<String, List<List<Integer>>> map2 = new ConcurrentHashMap<>();
-        buildKeywordsOccurrencesNumberMap2OrMoreWords(getConsumer2WordsOrMore(map2,map1,2)); //3
-        readMapAndWriteOnStaticStringVar(map2,6);
+        //Map<String, List<List<Integer>>> map2 = new ConcurrentHashMap<>();
+        //buildKeywordsOccurrencesNumberMap2OrMoreWords(getConsumer2WordsOrMore(map2,map1,2)); //3
+        //readMapAndWriteOnStaticStringVar(map2,6);
         /*Map<String, List<Integer>> map3 =new ConcurrentHashMap<>();
         buildKeywordsOccurrencesNumberMap2OrMoreWords(getConsumer2WordsOrMore(map3,map1,3));
         readMapAndWriteOnStaticStringVar(map3,5);
