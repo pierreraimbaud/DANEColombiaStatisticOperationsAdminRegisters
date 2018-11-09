@@ -3,6 +3,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Stream;
@@ -53,13 +54,15 @@ public class TextProcessor {
         String clustersResults= KeywordsProcessor.getKeywordsListWithOccurrences();
         System.out.println(clustersResults);
         //Build nodes map from CSV
-        /*buildNodesMapReadingCSVFile();
+        buildNodesMapReadingCSVFile();
 
         //Write for JSON
         jsonResultText ="{\n\t\"nodes\": [\n";
 
+        List<List<List<String>>> list= createReverseResultsList(nodesMap, clustersResults);
+        list.size();
         //Build nodes lines for JSON from node map
-        List<String> nodeLines2 = createDeepNodeLinesForJson(nodesMap, createReverseResultsList(nodesMap, clustersResults));
+        List<String> nodeLines2 = createDeepNodeLinesForJson(nodesMap,list);
 
         //Build "cluster nodes" lines for JSON from node map
         List<String> clusterLines2 =createClusterNodesDeepLines(clustersResults);
@@ -76,7 +79,7 @@ public class TextProcessor {
 
         //Create JSON file
         createJsonFile(jsonResultText);
-*/
+
         /* DEBUG
 		int i =0;
 		List<Integer> values = new ArrayList<>(nodesMap.keySet());
@@ -139,37 +142,62 @@ public class TextProcessor {
 		};
 	}
 
+    private static String[] removeEmptyValues(String[] lineValues){
+        List <String> linesAsList = new ArrayList<>();
+        for(String line : lineValues){
+            if(!line.trim().isEmpty()) {
+                linesAsList.add(line);
+            }
+        }
+        String [] lineAsArray= new String [linesAsList.size()];
+        for(int i=0; i< linesAsList.size();i++){
+            lineAsArray[i]=linesAsList.get(i);
+        }
+        return lineAsArray;
+    }
+
     /**
      * Allow, from a map and an input list of keywords, to write a reversed list TODO EXPLAIN
      * @param mapN the input map
      * @param resultFromMining the input list of keywords
      * @return a reversed list TODO EXPLAIN
      */
-	private static List<List<String>> createReverseResultsList(Map<Integer, Node> mapN, String resultFromMining) {
+	private static List<List<List<String>>> createReverseResultsList(Map<Integer, Node> mapN, String resultFromMining) {
 
-		List<List<String>> reverseResultsList= new ArrayList<>();
+		List<List<List<String>>> reverseResultsList= new ArrayList<>();
 
 		String[] lines = resultFromMining.trim().split("\n");
 
 		for (String line:lines) {
-			String[] lineValues = line.trim().split(CSV_SEPARATOR);
+			String[] lineValues = line.trim().split(CSV_SEPARATOR+"|\\[|\\]");
+            lineValues = removeEmptyValues(lineValues);
 			if (lineValues.length>1){
 			    if (lineValues[1].length()>1){
-                    lineValues[1]=lineValues[1].substring(1);
+                    //lineValues[1]=lineValues[1].substring(1);
                     lineValues[lineValues.length-1]=lineValues[lineValues.length-1].substring(0,lineValues[lineValues.length-1].length()-1);
                     String name =lineValues[0];
-                    for (int j = 1; j < lineValues.length; j++) {
-                        List<String> smallList= new ArrayList<>();
-                        smallList.add(lineValues[j].trim());
-                        smallList.add(name);
+                    for (int j = 3; j < lineValues.length; j=j+2) {
+
+                        List<List<String>> smallListList= new ArrayList<>();
+
+                        List<String> smallList1= new ArrayList<>();
+                        smallList1.add(name);
+                        smallList1.add("-1");
+
+                        List<String> smallList2= new ArrayList<>();
+                        smallList2.add(lineValues[j].trim());
+                        smallList2.add(lineValues[j+1].trim());
+
+                        smallListList.add(smallList1);
+                        smallListList.add(smallList2);
                         List <String> el = containsElementInListOfList(mapN.get(Integer.parseInt(lineValues[j].trim())).getId(), 0, reverseResultsList);
                         if(null == el){
-                            reverseResultsList.add(smallList);
+                            reverseResultsList.add(smallListList);
                         }
                         else{
                             int pos =reverseResultsList.indexOf(el);
                             if(!reverseResultsList.get(pos).contains(name)){
-                                reverseResultsList.get(pos).add(name);
+                                reverseResultsList.get(pos).add(new ArrayList<>(Arrays.asList(name,"1")));
                             }
                         }
                     }
@@ -186,10 +214,12 @@ public class TextProcessor {
      * @param list the input list
      * @return the second list which contains the element, otherwise null
      */
-    private static List containsElementInListOfList(String element, int indexInSecondList, List<List<String>> list){
-        for (List innerList:list) {
-            if(element.equals(innerList.get(indexInSecondList))){
-                return innerList;
+    private static List containsElementInListOfList(String element, int indexInSecondList, List<List<List<String>>> list){
+        for (List<List<String>> innerList:list) {
+            for (List<String> inInnerList:innerList) {
+                if (element.equals(inInnerList.get(indexInSecondList))) {
+                    return innerList;
+                }
             }
         }
         return null;
@@ -200,19 +230,23 @@ public class TextProcessor {
 	 * @param reverseResultsList  a reversed list of list TODO EXPLAIN
 	 * @return the list of String which represent all the nodes lines
 	 */
-	private static List<String> createDeepNodeLinesForJson(Map<Integer, Node> mapN, List<List<String>> reverseResultsList) {
+	private static List<String> createDeepNodeLinesForJson(Map<Integer, Node> mapN, List<List<List<String>>> reverseResultsList) {
 		//{"id": "50", "group": "Artístico-Cultural"}
 		List<String> nodesLines= new ArrayList<String>();
 
 		List<Integer> values = new ArrayList<>(mapN.keySet());
 
-		for (List<String> line:reverseResultsList) {
-			String group="";
+		for (List<List<String>> line:reverseResultsList) {
+			List<String> group=new ArrayList<>();
 			for(int i=1; i<line.size();i++) {
-				group+=line.get(i)+" ";
-			}
-			group=group.substring(0, group.length()-1);
-			nodesLines.add("{\"id\": \""+line.get(0)+"\", \"name\": \""+mapN.get(values.get(Integer.parseInt(line.get(0))-1)).getName()+"\", \"group\": \""+group.trim()+" \",\"main\": \""+"false\"}");
+			    String s1 =line.get(i).get(0);
+                String s2 =line.get(i).get(1);
+                group.add(s1);
+                group.add(s2);
+            }
+            group.size();
+			//group=group.substring(1, group.length()-1);
+			nodesLines.add("{\"id\": \""+line.get(1).get(0)+"\", \"name\": \""+mapN.get(values.get(Integer.parseInt(line.get(1).get(0))-1)).getName()+"\", \"group\": \"["+group.get(0).trim()+","+group.get(1).trim()+"] \",\"main\": \""+"false\"}");
 		}
 		return nodesLines;
 	}

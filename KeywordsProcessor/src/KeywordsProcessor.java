@@ -336,10 +336,10 @@ public class KeywordsProcessor {
 
         //Build keywords maps (1,2,3,4 words)
         Map<String, List<List<Integer>>> map1 = buildKeywordsOccurrencesNumberMap1Word(); //5
-        readMapAndWriteOnStaticStringVar(map1,6);
+        readMapAndWriteOnStaticStringVar(map1,8);
         Map<String, List<List<Integer>>> map2 = new ConcurrentHashMap<>();
         buildKeywordsOccurrencesNumberMap2OrMoreWords(getConsumer2WordsOrMore(map2,map1,2)); //3
-        readMapAndWriteOnStaticStringVar(map2,5);
+        readMapAndWriteOnStaticStringVar(map2,6);
         /*Map<String, List<Integer>> map3 =new ConcurrentHashMap<>();
         buildKeywordsOccurrencesNumberMap2OrMoreWords(getConsumer2WordsOrMore(map3,map1,3));
         readMapAndWriteOnStaticStringVar(map3,5);
