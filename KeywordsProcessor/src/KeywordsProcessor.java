@@ -1,3 +1,4 @@
+import javax.print.DocFlavor;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -22,6 +23,16 @@ public class KeywordsProcessor {
      * The string of the id column in the CSV file
      */
     private static final String ID = "id";
+
+    private static final int DEFAULT_MIN_COLUMN_FOR_KEYWORDS = 0;
+
+    private static final int DEFAULT_MAX_COLUMN_FOR_KEYWORDS = 4;
+
+    private static final int OOEE_MIN_COLUMN_FOR_KEYWORDS = 0;
+
+    private static final int OOEE_MAX_COLUMN_FOR_KEYWORDS = 4;
+
+    private static final String OOEE_TYPE="OE";
 
     /**
      * The separator of the CSV file
@@ -48,13 +59,45 @@ public class KeywordsProcessor {
     private static StringBuilder clustersResultText = new StringBuilder();
 
     /**
+     * Allow to find an element and return the second list which contains this element, otherwise null
+     * @param element the element to find
+     * @param indexInSecondList the index where to find inside the second list of the principal list (for  example, the 4th element of each element of the principal list)
+     * @param list the input list
+     * @return the second list which contains the element, otherwise null
+     */
+    private static int containsElementInListOfList(Integer element, int indexInSecondList, List<List<Integer>> list){
+        for (int i =0; i<list.size();i++) {
+            List<Integer> innerList=list.get(i);
+            if(element.equals(innerList.get(indexInSecondList))){
+                return i;
+            }
+        }
+        return -1;
+    }
+    /**
      * Allow to build a map with the keywords, number of occurrence and lines of occurrences
      * @param map the map to be writed with the keywords, number of occurrence and lines of occurrences
      * @return the map with the keywords, number of occurrence and lines of occurrences
      */
     private static Consumer<String> getConsumerWord1(Map<String, List<List<Integer>>> map) {
         return (x) ->{
-            String[] splitStr = x.trim().split("\\W+");
+            //Second part of the line - the type
+            String itemTypeAsString = x.trim().split(CSV_SEPARATOR)[1];
+            int min=DEFAULT_MIN_COLUMN_FOR_KEYWORDS;
+            int max=DEFAULT_MAX_COLUMN_FOR_KEYWORDS;
+            if (OOEE_TYPE.equals(itemTypeAsString)){
+                min=OOEE_MIN_COLUMN_FOR_KEYWORDS;
+                max=OOEE_MAX_COLUMN_FOR_KEYWORDS;
+            }
+            List<String> splitStrBefore = new ArrayList<>(Arrays.asList(x.trim().split(CSV_SEPARATOR)));
+            splitStrBefore=splitStrBefore.subList(min,max);
+            StringBuilder lin=new StringBuilder();
+            for(String col:splitStrBefore){
+                lin.append(col);
+                lin.append(CSV_SEPARATOR);
+            }
+            String li= lin.toString().substring(0, lin.length()-1);
+            String[] splitStr = li.trim().split("\\W+");
             //First part of the line - the ID
             String lineIdAsString = x.trim().split(CSV_SEPARATOR)[0];
             Integer lineId = 0;
@@ -91,14 +134,15 @@ public class KeywordsProcessor {
                         //quit repetitions here for simplification
                         List<Integer> innerListRepeat= new ArrayList<>();
                         innerListRepeat.add(lineId);
-                        if (getSecondElementListWithFirstElementOtherList(map.get(splitStr[i]), innerListRepeat) != -1){
+                        int index=containsElementInListOfList(lineId,0, map.get(splitStr[i]));
+                        if (-1==index){
                             List<Integer> innerList2= new ArrayList<>();
                             innerList2.add(lineId);
                             innerList2.add(1);
                             map.get(splitStr[i]).add(innerList2);
                         }
                         else{
-                            int index=map.get(splitStr[i]).indexOf(innerListRepeat);
+                            //int index=map.get(splitStr[i]).indexOf(innerListRepeat);
                             List<Integer> innerList2=  map.get(splitStr[i]).get(index);
                             innerList2.set(1,innerList2.get(1)+1);
                             map.get(splitStr[i]).set(index,innerList2);
@@ -211,7 +255,23 @@ public class KeywordsProcessor {
      */
     private static Consumer<String> getConsumer2WordsOrMore(Map<String, List<List<Integer>>> map, Map<String, List<List<Integer>>> map1Word, int numberOfWords) {
         return (x) ->{
-            String[] splitStr = x.trim().split("\\W+");
+            //Second part of the line - the type
+            String itemTypeAsString = x.trim().split(CSV_SEPARATOR)[1];
+            int min=DEFAULT_MIN_COLUMN_FOR_KEYWORDS;
+            int max=DEFAULT_MAX_COLUMN_FOR_KEYWORDS;
+            if (OOEE_TYPE.equals(itemTypeAsString)){
+                min=OOEE_MIN_COLUMN_FOR_KEYWORDS;
+                max=OOEE_MAX_COLUMN_FOR_KEYWORDS;
+            }
+            List<String> splitStrBefore = new ArrayList<>(Arrays.asList(x.trim().split(CSV_SEPARATOR)));
+            splitStrBefore=splitStrBefore.subList(min,max);
+            StringBuilder lin=new StringBuilder();
+            for(String col:splitStrBefore){
+                lin.append(col);
+                lin.append(CSV_SEPARATOR);
+            }
+            String li= lin.toString().substring(0, lin.length()-1);
+            String[] splitStr = li.trim().split("\\W+");
             String lineIdAsString = x.trim().split(CSV_SEPARATOR)[0];
             Integer lineId = 0;
             if(!ID.equals(lineIdAsString)) {
@@ -276,7 +336,7 @@ public class KeywordsProcessor {
 
         //Build keywords maps (1,2,3,4 words)
         Map<String, List<List<Integer>>> map1 = buildKeywordsOccurrencesNumberMap1Word(); //5
-        readMapAndWriteOnStaticStringVar(map1,2);
+        readMapAndWriteOnStaticStringVar(map1,6);
         Map<String, List<List<Integer>>> map2 = new ConcurrentHashMap<>();
         buildKeywordsOccurrencesNumberMap2OrMoreWords(getConsumer2WordsOrMore(map2,map1,2)); //3
         readMapAndWriteOnStaticStringVar(map2,5);

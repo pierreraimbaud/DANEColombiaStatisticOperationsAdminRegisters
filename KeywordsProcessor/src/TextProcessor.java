@@ -186,14 +186,14 @@ public class TextProcessor {
      * @param list the input list
      * @return the second list which contains the element, otherwise null
      */
-	private static List<String> containsElementInListOfList(String element, int indexInSecondList, List<List<String>> list){
-		for (List<String> innerList:list) {
-			if(element.equals(innerList.get(indexInSecondList))){
-				return innerList;
-			}
-		}
-		return null;
-	}
+    private static List containsElementInListOfList(String element, int indexInSecondList, List<List<String>> list){
+        for (List innerList:list) {
+            if(element.equals(innerList.get(indexInSecondList))){
+                return innerList;
+            }
+        }
+        return null;
+    }
 
 	/** Allow to get a the list of String which represent all the nodes lines
 	 * @param mapN the input map of nodes
