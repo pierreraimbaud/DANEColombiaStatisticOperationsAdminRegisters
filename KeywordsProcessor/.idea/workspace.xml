@@ -1,0 +1,324 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="5e7633fd-7182-4a05-835f-6fd9e45316f6" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/../.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/workspace.xml" afterDir="false" />
+    </list>
+    <ignored path="$PROJECT_DIR$/out/" />
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FUSProjectUsageTrigger">
+    <session id="1137072952">
+      <usages-collector id="statistics.lifecycle.project">
+        <counts>
+          <entry key="project.open.time.3" value="1" />
+          <entry key="project.opened" value="1" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.extensions.open">
+        <counts>
+          <entry key="java" value="2" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.types.open">
+        <counts>
+          <entry key="JAVA" value="2" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.extensions.edit">
+        <counts>
+          <entry key="java" value="858" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.types.edit">
+        <counts>
+          <entry key="JAVA" value="858" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.vcs.git.usages" />
+    </session>
+  </component>
+  <component name="FileEditorManager">
+    <leaf>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/TextProcessor.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="126">
+              <caret line="9" column="19" selection-start-line="9" selection-start-column="19" selection-end-line="9" selection-end-column="19" />
+              <folding>
+                <element signature="method#main#0;class#TextProcessor#0" />
+                <element signature="method#buildNodesMapReadingCSVFile#0;class#TextProcessor#0" />
+                <element signature="method#getConsumerForBuildingNodesMapReadingCSVFile#0;class#TextProcessor#0" />
+                <element signature="method#removeEmptyValues#0;class#TextProcessor#0" />
+                <element signature="method#containsInFirstElement#0;class#TextProcessor#0" />
+                <element signature="method#createReverseResultsList#0;class#TextProcessor#0" />
+                <element signature="method#containsElementInListOfList#0;class#TextProcessor#0" />
+                <element signature="method#createDeepNodeLinesForJson#0;class#TextProcessor#0" />
+                <element signature="method#createClusterNodesDeepLines#0;class#TextProcessor#0" />
+                <element signature="method#createDeepLinkLinesForJson#0;class#TextProcessor#0" />
+                <element signature="method#writeLinesFromListInString#0;class#TextProcessor#0" />
+                <element signature="method#createJsonFile#0;class#TextProcessor#0" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/KeywordsProcessor.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="70">
+              <caret line="5" column="19" selection-start-line="5" selection-start-column="19" selection-end-line="10" selection-end-column="31" />
+              <folding>
+                <element signature="method#containsElementInListOfList#0;class#KeywordsProcessor#0" />
+                <element signature="method#getConsumerWord1#0;class#KeywordsProcessor#0" />
+                <element signature="method#buildKeywordsOccurrencesNumberMap1Word#0;class#KeywordsProcessor#0" />
+                <element signature="method#filterMapResultByMinimumOfOccurrences#0;class#KeywordsProcessor#0" />
+                <element signature="method#readMapAndWriteOnStaticStringVar#0;class#KeywordsProcessor#0" />
+                <element signature="method#buildKeywordsOccurrencesNumberMap2OrMoreWords#0;class#KeywordsProcessor#0" />
+                <element signature="method#getConsumer2WordsOrMore#0;class#KeywordsProcessor#0" />
+                <element signature="method#getKeywordsListWithOccurrences#0;class#KeywordsProcessor#0" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>./data/file.csv</find>
+    </findStrings>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/src/TextProcessor.java" />
+        <option value="$PROJECT_DIR$/src/KeywordsProcessor.java" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="49" />
+    <option name="y" value="27" />
+    <option name="width" value="1311" />
+    <option name="height" value="741" />
+  </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectView">
+    <navigator proportions="" version="1">
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="Scope" />
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="KeywordsProcessor" type="b2602c69:ProjectViewProjectNode" />
+              <item name="KeywordsProcessor" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="KeywordsProcessor" type="b2602c69:ProjectViewProjectNode" />
+              <item name="KeywordsProcessor" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+      <pane id="PackagesPane" />
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1541740140213" />
+    <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="RunManager">
+    <configuration name="TextProcessor" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="TextProcessor" />
+      <module name="KeywordsProcessor" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.TextProcessor" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="5e7633fd-7182-4a05-835f-6fd9e45316f6" name="Default Changelist" comment="" />
+      <created>1541734344042</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1541734344042</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="49" y="27" width="1311" height="741" extended-state="6" />
+    <layout>
+      <window_info id="Image Layers" />
+      <window_info id="Designer" />
+      <window_info id="UI Designer" />
+      <window_info id="Capture Tool" />
+      <window_info id="Favorites" side_tool="true" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.11899133" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info anchor="bottom" id="Version Control" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Terminal" />
+      <window_info anchor="bottom" id="Event Log" side_tool="true" />
+      <window_info anchor="bottom" id="Messages" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.3980424" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.2903752" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="right" id="Palette" />
+      <window_info anchor="right" id="Theme Preview" />
+      <window_info anchor="right" id="Capture Analysis" />
+      <window_info anchor="right" id="Palette&#9;" />
+      <window_info anchor="right" id="Maven Projects" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+    </layout>
+  </component>
+  <component name="VcsContentAnnotationSettings">
+    <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/TextProcessor.java</url>
+          <line>71</line>
+          <properties />
+          <option name="timeStamp" value="34" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/TextProcessor.java</url>
+          <line>312</line>
+          <properties />
+          <option name="timeStamp" value="36" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+  <component name="debuggerHistoryManager">
+    <expressions id="evaluateExpression">
+      <expression>
+        <expression-string>lineValues[j].trim()</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>lineValues[lineValues.length - 1]</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>lineValues[1]</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>line.get(0).get(0)</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>line.get(1).get(0)</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>mapN.get(values.get(Integer.parseInt(line.get(0).get(0))-1))</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>mapN.get(values.get(Integer.parseInt(line.get(0).get(0))-1)).getName()</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>line</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>mapN.get(values.get(Integer.parseInt(line.get(1).get(0))-1))</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+    </expressions>
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/src/TextProcessor.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="126">
+          <caret line="9" column="19" selection-start-line="9" selection-start-column="19" selection-end-line="9" selection-end-column="19" />
+          <folding>
+            <element signature="method#main#0;class#TextProcessor#0" />
+            <element signature="method#buildNodesMapReadingCSVFile#0;class#TextProcessor#0" />
+            <element signature="method#getConsumerForBuildingNodesMapReadingCSVFile#0;class#TextProcessor#0" />
+            <element signature="method#removeEmptyValues#0;class#TextProcessor#0" />
+            <element signature="method#containsInFirstElement#0;class#TextProcessor#0" />
+            <element signature="method#createReverseResultsList#0;class#TextProcessor#0" />
+            <element signature="method#containsElementInListOfList#0;class#TextProcessor#0" />
+            <element signature="method#createDeepNodeLinesForJson#0;class#TextProcessor#0" />
+            <element signature="method#createClusterNodesDeepLines#0;class#TextProcessor#0" />
+            <element signature="method#createDeepLinkLinesForJson#0;class#TextProcessor#0" />
+            <element signature="method#writeLinesFromListInString#0;class#TextProcessor#0" />
+            <element signature="method#createJsonFile#0;class#TextProcessor#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/KeywordsProcessor.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="70">
+          <caret line="5" column="19" selection-start-line="5" selection-start-column="19" selection-end-line="10" selection-end-column="31" />
+          <folding>
+            <element signature="method#containsElementInListOfList#0;class#KeywordsProcessor#0" />
+            <element signature="method#getConsumerWord1#0;class#KeywordsProcessor#0" />
+            <element signature="method#buildKeywordsOccurrencesNumberMap1Word#0;class#KeywordsProcessor#0" />
+            <element signature="method#filterMapResultByMinimumOfOccurrences#0;class#KeywordsProcessor#0" />
+            <element signature="method#readMapAndWriteOnStaticStringVar#0;class#KeywordsProcessor#0" />
+            <element signature="method#buildKeywordsOccurrencesNumberMap2OrMoreWords#0;class#KeywordsProcessor#0" />
+            <element signature="method#getConsumer2WordsOrMore#0;class#KeywordsProcessor#0" />
+            <element signature="method#getKeywordsListWithOccurrences#0;class#KeywordsProcessor#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+  </component>
+</project>
