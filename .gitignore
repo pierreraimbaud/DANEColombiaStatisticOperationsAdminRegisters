@@ -8,6 +8,4 @@
  #
  *.iml
  #
- .idea/
- **/..idea/
- KeywordsProcessor/KeywordsProcessor.iml
+ *.xml
