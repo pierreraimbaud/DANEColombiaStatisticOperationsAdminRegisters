@@ -84,7 +84,7 @@
       d3.json("https://raw.githubusercontent.com/pierreraimbaud/TemasFiestasValleCauca/master/data/data.json").then(function(data) {
           dat = data;
           //Create graph
-          createGraph(12.648, true, 500,500);
+          createGraph(12.648, true, 1200,1200);
       });
 
       //button to show to the other dataset
@@ -95,7 +95,7 @@
           d3.select("#showDetButton").attr("disabled", true)
           console.log(dat);
           //Create graph
-          createGraph(45, false, 1000,1000);
+          createGraph(45, false, 1200,1200);
         });//end click function
       });
 
