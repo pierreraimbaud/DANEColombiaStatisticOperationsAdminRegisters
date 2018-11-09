@@ -24,10 +24,10 @@
         text-align: center;
       }
 
-      #svgcontainer1 {
+      <!--#svgcontainer1 {
         display: inline-block;
         float: left;
-      }
+      }-->
 
       #svgcontainer2 {
         display: inline-block;
@@ -42,10 +42,11 @@
     <h1>Title</h1>
     <h2>SubTitle</h2>
     <div id="wrapper">
-      <div id = "svgcontainer1">
+	  <div><button id = "showDetButton" style="padding: 5px 10px; text-align: center;font-size: 80%;margin: 2px 1px;">XXX</button></div>
+
+      <!--<div id = "svgcontainer1">
             <p style="color:#789410;font-size:105%"; align="center">XXXX</p>
-            <div><button id = "showDetButton" style="padding: 5px 10px; text-align: center;font-size: 80%;margin: 2px 1px;">XXX</button></div>
-      </div>
+      </div>-->
 
       <div id = "svgcontainer2">
         <p id="txtSvgcontainer2" style="color:#789410;font-size:105%;visibility: hidden"; align="center">XXX</p>
@@ -164,7 +165,8 @@
         const nodes = dat.nodes.map(d => Object.create(d));
         const simulation = forceSimulation(nodes, links, isSvg1, collisionForceVal).on("tick", ticked);
 
-        const svg = (!isSvg1 ? d3.select("#svgcontainer2") :d3.select("#svgcontainer1")).append("div")
+        const svg = (!isSvg1 ? d3.select("#svgcontainer2") //:d3.select("#svgcontainer1")
+		).append("div")
           .append("svg")
           .attr('width', width)
           .attr('height', height)
