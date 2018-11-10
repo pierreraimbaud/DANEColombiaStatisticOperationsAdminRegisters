@@ -116,8 +116,8 @@
         //we want to put a color according to the first group which appears in the list of one node
         //the gol is to allow a better identification of clusters
         return !isSvg1 ? function(nodes){
-        	var nodeGroup = getStrongestGroupForANode (nodes, nodes.groups);
-         	return scale(nodeGroup[0]);
+        	var nodeGroup = getStrongestGroupForANode (nodes, nodes.groups)[0];
+         	return scale(nodeGroup);
          } : 
          function(nodes){
          	return scale(nodes.group.slice(0, nodes.group.indexOf(' ')));
@@ -196,7 +196,7 @@
             .append("text")
             .text(function (d) { 
 			//!isSvg1 ? d.groups : (d.main ==="true" ? (!isSvg1 ? d.groups : d.group):"") })
-                return d.main ==="true" ? d.name :"" })
+                return d.main ==="true" ? d.name : (getStrongestGroupForANode (d, d.groups))[0]})
             .style("fill", "#2B1513")
             .style("font-weight", d=>d.main ==="true" ? "bold" : "normal")
             .attr("x", d =>d.x)

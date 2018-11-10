@@ -276,8 +276,8 @@ public class TextProcessor {
                 groups=groups.substring(0,groups.length()-1);
                 groups+="]";
                 nodesLines.add("{\"id\": \""+nodeID+"\", \"name\": \""+node.getName()+"\", \"groups\": "+groups
-                        +",\"type\": \""+node.getType()
-                        +",\"statisticOperations\": \""+node.getStatisticalOperations()
+                        +",\"type\": \""+node.getType()+"\","
+                        +"\"statisticOperations\": \""+node.getStatisticalOperations()
                         +"\","+"\"objective\": \""+node.getObjective()+"\","
                         +"\"unityObservation\": \""+node.getUnityObservation()+"\","+"\"entityUsing\": \""+node.getEntitiesUsing()+"\","
                         +"\"variables\": \""+node.getVariables()+"\","+"\"daneDependency\": \""+node.getDaneDependency()+"\","
