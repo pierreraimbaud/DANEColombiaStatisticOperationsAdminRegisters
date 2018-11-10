@@ -275,7 +275,15 @@ public class TextProcessor {
                 }
                 groups=groups.substring(0,groups.length()-1);
                 groups+="]";
-                nodesLines.add("{\"id\": \""+nodeID+"\", \"name\": \""+node.getName()+"\", \"groups\": "+groups+ ",\"main\": \""+"false\"}");
+                nodesLines.add("{\"id\": \""+nodeID+"\", \"name\": \""+node.getName()+"\", \"groups\": "+groups
+                        +",\"statisticOperations\": \""+node.getDate()+"\","+"\"objective\": \""+node.getDescription()+"\","
+                        +"\"unityObservation\": \""+node.getEntity()+"\","+"\"entity\": \""+node.getEntityType()+"\","
+                        +"\"variables\": \""+node.getFundings()+"\","+"\"daneDependency\": \""+node.getGroup()+"\","
+                        +"\"thematic\": \""+node.getModality()+"\","+"\"thematic2\": \""+node.getPeriodicity()+"\","
+                        +"\"thematicShared\": \""+node.getF()+"\","+"\"entityProducing\": \""+node.getE()+"\","
+                        +"\"periodicity\": \""+node.getD()+"\","+"\"geographicZone\": \""+node.getA()+"\","
+                        +"\"geographicDivision\": \""+node.getB()+"\","+"\"indicators\": \""+node.getC()+"\","
+                        +"\"methodologyOOEE\": \""+node.getSize()+"\","+ "\"main\": \""+"false\"}");
             }
         }
         return nodesLines;
@@ -291,7 +299,7 @@ public class TextProcessor {
         List<String> nodesLines= new ArrayList<>();
         for (String line:lines) {
             String name = line.trim().split(CSV_SEPARATOR)[0];
-            nodesLines.add("{\"id\": \""+name+"\", \"name\": \""+name+"\", \"groups\": ["+"\""+name+"\""+","+"\""+name+"\""+ "],\"main\": \""+"true\"}");
+            nodesLines.add("{\"id\": \""+name+"\", \"name\": \""+name+"\", \"groups\": ["+"\""+name+"\""+","+"\""+name+"\""+ "],"+"\"main\": \""+"true\"}");
         }
         return nodesLines;
     }
@@ -312,7 +320,7 @@ public class TextProcessor {
             if(lineValues.length>1) {
                 String name = lineValues[0];
                 for (int j = 3; j < lineValues.length; j=j+2) {
-                    if(!"1".equals(lineValues[j].trim())&&!"0".equals(lineValues[j].trim())) {
+                    if(!"1".equals(lineValues[j].trim())&&!"0".equals(lineValues[j].trim())&&!"2".equals(lineValues[j].trim())) {
                         linkLines.add("{\"source\": \"" + lineValues[j].trim() + "\", \"target\": \"" + name + "\", \"value\": \"" + lineValues[j + 1].trim() + "\"}");
                     }
                 }

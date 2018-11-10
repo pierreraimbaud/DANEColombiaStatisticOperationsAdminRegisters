@@ -29,7 +29,7 @@ public class KeywordsProcessor {
 
     private static final int OOEE_MIN_COLUMN_FOR_KEYWORDS = 2;
 
-    private static final int OOEE_MAX_COLUMN_FOR_KEYWORDS = 17;
+    private static final int OOEE_MAX_COLUMN_FOR_KEYWORDS = 15;
 
     private static final String OOEE_TYPE="OOEE";
 
