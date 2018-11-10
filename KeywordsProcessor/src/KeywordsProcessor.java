@@ -25,11 +25,11 @@ public class KeywordsProcessor {
 
     private static final int DEFAULT_MIN_COLUMN_FOR_KEYWORDS = 0;
 
-    private static final int DEFAULT_MAX_COLUMN_FOR_KEYWORDS = 4;
+    private static final int DEFAULT_MAX_COLUMN_FOR_KEYWORDS = 9;
 
     private static final int OOEE_MIN_COLUMN_FOR_KEYWORDS = 0;
 
-    private static final int OOEE_MAX_COLUMN_FOR_KEYWORDS = 4;
+    private static final int OOEE_MAX_COLUMN_FOR_KEYWORDS = 9;
 
     private static final String OOEE_TYPE="OE";
 
@@ -45,15 +45,15 @@ public class KeywordsProcessor {
             Arrays.asList("de", "la", "el", ",", ";", "", "en", "del", "los", "las", "demás", "bajo", "les", "hecho", "hecho,", "pertenece", "recibió", "realiza", "realizan",
                     "anualmente", "mes", "para", "con", "que", "-", "–", "sobre", "dentro", "y", "o", "al", "se", "no", "ni", "si", "(si,", "(no,", "(para,", "hasta", "cabo", "donde",
                     "por", "a", "su", "e", "un", "una", "sus", "según", "1.", "2.", "3.", "4.", "5;", "6.", "y/o", "esta", "este", "durante", "está", "más", "como", "así", "hace",
-                    "ha", "han", "es", "son", "tiene", "tienen", "id", "lo", "cual", "¿cuántos", "¿la", "¿el", "7.", "/", "lleva", "mas", "anio"));
+                    "ha", "han", "es", "son", "tiene", "tienen", "id", "lo", "cual", "¿cuántos", "¿la", "¿el", "7.", "/", "lleva", "mas", "sin", "anio"));
 
     /**
      * Specific project useless words to not consider when searching keywords for clusters
      */
     private static List<String> specificUselessWords =new ArrayList<>(
-            Arrays.asList("valle", "regional","través","corregimiento","marco","todo", "diferentes", "región", "cada", "años", "nacionales","septiembre",
-                    "internacional", "espacio", "general","manifestaciones","municipio","fiesta","fiestas","principal","eventos","comunidad", "muestra","nuestra",
-                    "evento","festividad","festival","encuentro","año","celebración","nacional","medio","actividades"));
+            Arrays.asList("ooee", "rraa","informacion","través","registro","registros","reporte","todo", "diferentes", "región", "cada", "operaciones","operacion","estadisticas", "estadistica",
+                    "internacional", "espacio", "general","nuestra","nacional","medio","1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12",
+                    "13", "14", "15", "16", "17", "18", "19", "20", "25", "30","31","343", "50", "100", "120","180"));
 
     private static StringBuilder clustersResultText = new StringBuilder();
 

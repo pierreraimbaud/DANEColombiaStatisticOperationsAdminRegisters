@@ -24,10 +24,10 @@
         text-align: center;
       }
 
-      #svgcontainer1 {
+      <!--#svgcontainer1 {
         display: inline-block;
         float: left;
-      }
+      }-->
 
       #svgcontainer2 {
         display: inline-block;
@@ -42,10 +42,11 @@
     <h1>Title</h1>
     <h2>SubTitle</h2>
     <div id="wrapper">
-      <div id = "svgcontainer1">
+	     <div><button id = "showDetButton" style="padding: 5px 10px; text-align: center;font-size: 80%;margin: 2px 1px;">XXX</button></div>
+    </div>
+      <!--<div id = "svgcontainer1">
             <p style="color:#789410;font-size:105%"; align="center">XXXX</p>
-            <div><button id = "showDetButton" style="padding: 5px 10px; text-align: center;font-size: 80%;margin: 2px 1px;">XXX</button></div>
-      </div>
+      </div>-->
 
       <div id = "svgcontainer2">
         <p id="txtSvgcontainer2" style="color:#789410;font-size:105%;visibility: hidden"; align="center">XXX</p>
@@ -75,16 +76,15 @@
               xxxx
             </p>            
       </div>
-    </div>
     <script src="https://d3js.org/d3.v5.min.js"></script>
     <script>
 
       var dat;
-      d3.json("https://raw.githubusercontent.com/pierreraimbaud/TemasFiestasValleCauca/master/data/data.json").then(function(data) {
+      /*d3.json("https://raw.githubusercontent.com/pierreraimbaud/TemasFiestasValleCauca/master/data/data.json").then(function(data) {
           dat = data;
           //Create graph
-          createGraph(12.648, true, 500,500);
-      });
+          createGraph(12.648, true, 1200,1200);
+      });*/
 
       //button to show to the other dataset
       d3.select("#showDetButton").on("click",function(){
@@ -94,7 +94,7 @@
           d3.select("#showDetButton").attr("disabled", true)
           console.log(dat);
           //Create graph
-          createGraph(45, false, 730,700);
+          createGraph(45, false, 1600,1600);
         });//end click function
       });
 
@@ -163,8 +163,8 @@
         const links = dat.links.map(d => Object.create(d));
         const nodes = dat.nodes.map(d => Object.create(d));
         const simulation = forceSimulation(nodes, links, isSvg1, collisionForceVal).on("tick", ticked);
-
-        const svg = (!isSvg1 ? d3.select("#svgcontainer2") :d3.select("#svgcontainer1")).append("div")
+//(!isSvg1 ? d3.select("#svgcontainer2")):d3.select("#svgcontainer1")
+        const svg = d3.select("#svgcontainer2").append("div")
           .append("svg")
           .attr('width', width)
           .attr('height', height)
@@ -172,7 +172,7 @@
 
         const link = svg.append("g")
             .attr("stroke", "#999")
-            .attr("stroke-opacity", 0.6)
+            .attr("stroke-opacity", 0.1)
             .selectAll("line")
             .data(links)
             .enter().append("line")
@@ -195,7 +195,8 @@
             .enter()
             .append("text")
             .text(function (d) { 
-                return !isSvg1 ? d.groups : (d.main ==="true" ? (!isSvg1 ? d.groups : d.group):"") })
+			//!isSvg1 ? d.groups : (d.main ==="true" ? (!isSvg1 ? d.groups : d.group):"") })
+                return d.main ==="true" ? d.groups :"" })
             .style("fill", "#2B1513")
             .style("font-weight", d=>d.main ==="true" ? "bold" : "normal")
             .attr("x", d =>d.x)

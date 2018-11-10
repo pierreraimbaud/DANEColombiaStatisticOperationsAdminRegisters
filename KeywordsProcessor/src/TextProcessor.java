@@ -310,7 +310,9 @@ public class TextProcessor {
             if(lineValues.length>1) {
                 String name = lineValues[0];
                 for (int j = 3; j < lineValues.length; j=j+2) {
-                    linkLines.add("{\"source\": \"" + lineValues[j].trim() + "\", \"target\": \"" + name + "\", \"value\": \"" + lineValues[j+1].trim() + "\"}");
+                    if(!"1".equals(lineValues[j].trim())&&!"0".equals(lineValues[j].trim())) {
+                        linkLines.add("{\"source\": \"" + lineValues[j].trim() + "\", \"target\": \"" + name + "\", \"value\": \"" + lineValues[j + 1].trim() + "\"}");
+                    }
                 }
             }
         }
