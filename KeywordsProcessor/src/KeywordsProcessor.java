@@ -23,15 +23,15 @@ public class KeywordsProcessor {
      */
     private static final String ID = "ID";
 
-    private static final int DEFAULT_MIN_COLUMN_FOR_KEYWORDS = 0;
+    private static final int DEFAULT_MIN_COLUMN_FOR_KEYWORDS = 2;
 
-    private static final int DEFAULT_MAX_COLUMN_FOR_KEYWORDS = 9;
+    private static final int DEFAULT_MAX_COLUMN_FOR_KEYWORDS = 17;
 
-    private static final int OOEE_MIN_COLUMN_FOR_KEYWORDS = 0;
+    private static final int OOEE_MIN_COLUMN_FOR_KEYWORDS = 2;
 
-    private static final int OOEE_MAX_COLUMN_FOR_KEYWORDS = 9;
+    private static final int OOEE_MAX_COLUMN_FOR_KEYWORDS = 17;
 
-    private static final String OOEE_TYPE="OE";
+    private static final String OOEE_TYPE="OOEE";
 
     /**
      * The separator of the CSV file
@@ -44,16 +44,65 @@ public class KeywordsProcessor {
     private static List<String> generalUselessWords = new ArrayList<>(
             Arrays.asList("de", "la", "el", ",", ";", "", "en", "del", "los", "las", "demás", "bajo", "les", "hecho", "hecho,", "pertenece", "recibió", "realiza", "realizan",
                     "anualmente", "mes", "para", "con", "que", "-", "–", "sobre", "dentro", "y", "o", "al", "se", "no", "ni", "si", "(si,", "(no,", "(para,", "hasta", "cabo", "donde",
-                    "por", "a", "su", "e", "un", "una", "sus", "según", "1.", "2.", "3.", "4.", "5;", "6.", "y/o", "esta", "este", "durante", "está", "más", "como", "así", "hace",
-                    "ha", "han", "es", "son", "tiene", "tienen", "id", "lo", "cual", "¿cuántos", "¿la", "¿el", "7.", "/", "lleva", "mas", "sin", "anio"));
+                    "por", "a", "su", "e", "un", "una", "sus", "según", "0","1.", "2.", "3.", "4.", "5;", "6.", "y/o", "esta", "este", "durante", "está", "más", "como", "así", "hace",
+                    "ha", "han", "es", "son", "tiene", "tienen", "otras" , "otros", "segun","id", "lo", "cual", "¿cuántos", "¿la", "¿el", "7.", "/", "lleva", "mas", "sin", "anio"));
 
     /**
      * Specific project useless words to not consider when searching keywords for clusters
      */
     private static List<String> specificUselessWords =new ArrayList<>(
-            Arrays.asList("ooee", "rraa","informacion","través","registro","registros","reporte","todo", "diferentes", "región", "cada", "operaciones","operacion","estadisticas", "estadistica",
+            Arrays.asList("ooee", "rraa", "dane","informacion","través","registro","registros","reporte","todo", "diferentes", "región", "cada", "operaciones","operacion","estadisticas", "estadistica",
                     "internacional", "espacio", "general","nuestra","nacional","medio","1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12",
-                    "13", "14", "15", "16", "17", "18", "19", "20", "25", "30","31","343", "50", "100", "120","180"));
+                    "13", "14", "15", "16", "17", "18", "19", "20", "25", "30","31","343", "50", "100", "120","180",
+                    "numero", "tipo", "total", "departamento", "fecha", "ministerio", "entidad","entidades",
+                    "confirmar", "promedio","actividad", "exterior","emitidos","titulo",
+                    "valor","area","anho","anhos",
+                    "area","areas",
+                    "titulo", "titulos",
+                    "direccion",
+                    "mensual",
+                    "colombia",
+                    "anho",
+                    "anual",
+                    "codigo",
+                    "proceso",
+                    "sector",
+                    "sistema",
+                    "nivel",
+                    "departamental",
+                    "administrativo",
+                    "publica",
+                    "estado",
+                    "nombre",
+                    "unidad",
+                    "municipio",
+                    "categoria",
+                    "precio",
+                    "nacion",
+                    "cantidad",
+                    "identificacion",
+                    "grupo",
+                    "municipal",
+                    "posicion",
+                    "accion",
+                    "porcentaje",
+                    "control",
+                    "variacion",
+                    "indicador",
+                    "regional",
+                    "reserva",
+                    "monto",
+                    "uso",
+                    "usuario",
+                    "costo",
+                    "dia",
+                    "recurso",
+                    "programa",
+                    "calidad",
+                    "gestion",
+                    "nacional","nacionales",
+                    "zona"
+            ));
 
     private static StringBuilder clustersResultText = new StringBuilder();
 
@@ -104,11 +153,24 @@ public class KeywordsProcessor {
                 //Assign line id
                 lineId = Integer.parseInt(lineIdAsString);
             }
+            String word;
             //Read the complete line and build a map with keywords
             for(int i=0; i< splitStr.length; i++){
                 if (!generalUselessWords.contains(splitStr[i].toLowerCase())){
-                    splitStr[i]= splitStr[i].toLowerCase();
-                    if (!map.containsKey(splitStr[i])){
+                    word= splitStr[i].toLowerCase();
+                    //quit plural on words (spanish => s or es
+                    if (word.length()>=2){
+                        String end1 = word.substring(word.length()-1);
+                        String end2 = word.substring(word.length()-2);
+                        if ("es".equals(end2)&& (!("interes".equals(word)||"bienes".equals(word)))){
+                            word=word.substring(0,word.length()-2);
+                        }
+                        else if ("s".equals(end1) && !("interes".equals(word)||"bienes".equals(word) ||"pais".equals(word))){
+                            word=word.substring(0,word.length()-1);
+                        }
+                    }
+
+                    if (!map.containsKey(word)){
 
                         List< List<Integer>> newL = new ArrayList<>();
 
@@ -120,26 +182,26 @@ public class KeywordsProcessor {
                         innerList2.add(lineId);
                         innerList2.add(1);
                         newL.add(innerList2);
-                        map.put(splitStr[i].toLowerCase(), newL);
+                        map.put(word.toLowerCase(), newL);
                     }
                     else {
-                        List<Integer> innerList= map.get(splitStr[i]).get(0);
+                        List<Integer> innerList= map.get(word).get(0);
                         innerList.set(0,innerList.get(0)+1);
-                        map.get(splitStr[i]).set(0,innerList);
+                        map.get(word).set(0,innerList);
                         //do not quit repetitions here for get the "strength" of the link/the keyword
                         List<Integer> innerListRepeat= new ArrayList<>();
                         innerListRepeat.add(lineId);
-                        int index=containsElementInListOfList(lineId,0, map.get(splitStr[i]));
+                        int index=containsElementInListOfList(lineId,0, map.get(word));
                         if (-1==index){
                             List<Integer> innerList2= new ArrayList<>();
                             innerList2.add(lineId);
                             innerList2.add(1);
-                            map.get(splitStr[i]).add(innerList2);
+                            map.get(word).add(innerList2);
                         }
                         else{
-                            List<Integer> innerList2=  map.get(splitStr[i]).get(index);
+                            List<Integer> innerList2=  map.get(word).get(index);
                             innerList2.set(1,innerList2.get(1)+1);
-                            map.get(splitStr[i]).set(index,innerList2);
+                            map.get(word).set(index,innerList2);
 
                         }
                     }
@@ -315,7 +377,7 @@ public class KeywordsProcessor {
 
         //Build keywords maps (1,2,3,4 words)
         Map<String, List<List<Integer>>> map1 = buildKeywordsOccurrencesNumberMap1Word(); //5
-        readMapAndWriteOnStaticStringVar(map1,8);
+        readMapAndWriteOnStaticStringVar(map1,200);
         //Map<String, List<List<Integer>>> map2 = new ConcurrentHashMap<>();
         //buildKeywordsOccurrencesNumberMap2OrMoreWords(getConsumer2WordsOrMore(map2,map1,2)); //3
         //readMapAndWriteOnStaticStringVar(map2,6);

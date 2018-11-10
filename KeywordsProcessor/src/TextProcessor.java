@@ -33,7 +33,7 @@ public class TextProcessor {
     /**
      * The number of columns in the CSV file
      */
-    private static final int COLUMN_NUMBER_CSV_FILE =16;
+    private static final int COLUMN_NUMBER_CSV_FILE =18;
 
     /**
      * Variables for writing the whole file for cluster or json
@@ -134,7 +134,9 @@ public class TextProcessor {
                     pNodesMap.put(Integer.parseInt(splitStr[0]),new Node(splitStr[0], splitStr[1], splitStr[2],
                             splitStr[3], splitStr[4], splitStr[5],
                             splitStr[6], splitStr[7], splitStr[8],
-                            splitStr[9], splitStr[10], splitStr[11]));
+                            splitStr[9], splitStr[10], splitStr[11]
+                            , splitStr[12], splitStr[13], splitStr[14]
+                            , splitStr[15], splitStr[16], splitStr[17]));
                 }
             }
         };

@@ -13,9 +13,16 @@ public class Node {
 	private String entity;
 	private String entityType;
 	private String description;
-		
-	public Node(String id, String municipio, String name, String date, String periodicity, String group,
-			String modality, String size, String fundings, String entity, String entityType, String description) {
+    private String a;
+    private String b;
+    private String c;
+    private String d;
+    private String e;
+    private String f;
+
+    public Node(String id, String municipio, String name, String date, String periodicity, String group,
+			String modality, String size, String fundings, String entity, String entityType, String description
+			, String a, String b, String c, String d, String e, String f) {
 
 		this.id = id;
 		this.municipio = municipio;
@@ -29,6 +36,12 @@ public class Node {
 		this.entity = entity;
 		this.entityType = entityType;
 		this.description = description;
+		this.a=a;
+		this.b=b;
+		this.c=c;
+		this.d=d;
+		this.e=e;
+		this.f=f;
 	}
 	
 	public String getId() {
