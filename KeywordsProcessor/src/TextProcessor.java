@@ -276,14 +276,16 @@ public class TextProcessor {
                 groups=groups.substring(0,groups.length()-1);
                 groups+="]";
                 nodesLines.add("{\"id\": \""+nodeID+"\", \"name\": \""+node.getName()+"\", \"groups\": "+groups
-                        +",\"statisticOperations\": \""+node.getDate()+"\","+"\"objective\": \""+node.getDescription()+"\","
-                        +"\"unityObservation\": \""+node.getEntity()+"\","+"\"entity\": \""+node.getEntityType()+"\","
-                        +"\"variables\": \""+node.getFundings()+"\","+"\"daneDependency\": \""+node.getGroup()+"\","
-                        +"\"thematic\": \""+node.getModality()+"\","+"\"thematic2\": \""+node.getPeriodicity()+"\","
-                        +"\"thematicShared\": \""+node.getF()+"\","+"\"entityProducing\": \""+node.getE()+"\","
-                        +"\"periodicity\": \""+node.getD()+"\","+"\"geographicZone\": \""+node.getA()+"\","
-                        +"\"geographicDivision\": \""+node.getB()+"\","+"\"indicators\": \""+node.getC()+"\","
-                        +"\"methodologyOOEE\": \""+node.getSize()+"\","+ "\"main\": \""+"false\"}");
+                        +",\"type\": \""+node.getType()
+                        +",\"statisticOperations\": \""+node.getStatisticalOperations()
+                        +"\","+"\"objective\": \""+node.getObjective()+"\","
+                        +"\"unityObservation\": \""+node.getUnityObservation()+"\","+"\"entityUsing\": \""+node.getEntitiesUsing()+"\","
+                        +"\"variables\": \""+node.getVariables()+"\","+"\"daneDependency\": \""+node.getDaneDependency()+"\","
+                        +"\"thematic\": \""+node.getThematic()+"\","+"\"thematic2\": \""+node.getThematics2()+"\","
+                        +"\"thematicShared\": \""+node.getThematicShared()+"\","+"\"entityProducing\": \""+node.getEntityProducing()+"\","
+                        +"\"periodicity\": \""+node.getPeriodicity()+"\","+"\"geographicZone\": \""+node.getGeographicZone()+"\","
+                        +"\"geographicDivision\": \""+node.getGeographicDivision()+"\","+"\"indicators\": \""+node.getIndicators()+"\","
+                        +"\"methodologyOOEE\": \""+node.getMethodologyOOEE()+"\","+ "\"main\": \""+"false\"}");
             }
         }
         return nodesLines;

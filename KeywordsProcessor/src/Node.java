@@ -2,46 +2,46 @@
 public class Node {
 
 	private String id;
-	private String municipio;
+	private String type;
 	private String name;
-	private String date;
-	private String periodicity;
-	private String group;
-	private String modality;
-	private String size;
-	private String fundings;
-	private String entity;
-	private String entityType;
-	private String description;
-    private String a;
-    private String b;
-    private String c;
-    private String d;
-    private String e;
-    private String f;
+	private String statisticalOperations;
+	private String objective;
+	private String unityObservation;
+	private String entitiesUsing;
+	private String variables;
+	private String daneDependency;
+	private String thematic;
+	private String thematics2;
+	private String thematicShared;
+    private String entityProducing;
+    private String periodicity;
+    private String geographicZone;
+    private String geographicDivision;
+    private String indicators;
+    private String methodologyOOEE;
 
-    public Node(String id, String municipio, String name, String date, String periodicity, String group,
-			String modality, String size, String fundings, String entity, String entityType, String description
-			, String a, String b, String c, String d, String e, String f) {
+    public Node(String id, String type, String name, String statisticalOperations, String objective, String unityObservation,
+                String entitiesUsing, String variables, String daneDependency, String thematic, String thematics2, String thematicShared,
+                String entityProducing, String periodicity, String geographicZone, String geographicDivision, String indicators, String methodologyOOEE) {
 
 		this.id = id;
-		this.municipio = municipio;
+		this.type = type;
 		this.name = name;
-		this.date = date;
+		this.statisticalOperations = statisticalOperations;
+		this.objective = objective;
+		this.unityObservation = unityObservation;
+		this.entitiesUsing = entitiesUsing;
+		this.variables = variables;
+		this.daneDependency = daneDependency;
+		this.thematic = thematic;
+		this.thematics2 = thematics2;
+		this.thematicShared = thematicShared;
+		this.entityProducing = entityProducing;
 		this.periodicity = periodicity;
-		this.group = group;
-		this.modality = modality;
-		this.size = size;
-		this.fundings = fundings;
-		this.entity = entity;
-		this.entityType = entityType;
-		this.description = description;
-		this.a=a;
-		this.b=b;
-		this.c=c;
-		this.d=d;
-		this.e=e;
-		this.f=f;
+		this.geographicZone = geographicZone;
+		this.geographicDivision = geographicDivision;
+		this.indicators = indicators;
+		this.methodologyOOEE = methodologyOOEE;
 	}
 	
 	public String getId() {
@@ -50,11 +50,11 @@ public class Node {
 	public void setId(String id) {
 		this.id = id;
 	}
-	public String getMunicipio() {
-		return municipio;
+	public String getType() {
+		return type;
 	}
-	public void setMunicipio(String municipio) {
-		this.municipio = municipio;
+	public void setType(String type) {
+		this.type = type;
 	}
 	public String getName() {
 		return name;
@@ -62,106 +62,106 @@ public class Node {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public String getDate() {
-		return date;
+	public String getStatisticalOperations() {
+		return statisticalOperations;
 	}
-	public void setDate(String date) {
-		this.date = date;
+	public void setStatisticalOperations(String statisticalOperations) {
+		this.statisticalOperations = statisticalOperations;
 	}
-	public String getPeriodicity() {
-		return periodicity;
+	public String getObjective() {
+		return objective;
 	}
-	public void setPeriodicity(String periodicity) {
-		this.periodicity = periodicity;
+	public void setObjective(String objective) {
+		this.objective = objective;
 	}
-	public String getGroup() {
-		return group;
+	public String getUnityObservation() {
+		return unityObservation;
 	}
-	public void setGroup(String group) {
-		this.group = group;
+	public void setUnityObservation(String group) {
+		this.unityObservation = group;
 	}
-	public String getModality() {
-		return modality;
+	public String getEntitiesUsing() {
+		return entitiesUsing;
 	}
-	public void setModality(String modality) {
-		this.modality = modality;
+	public void setEntitiesUsing(String entitiesUsing) {
+		this.entitiesUsing = entitiesUsing;
 	}
-	public String getSize() {
-		return size;
+	public String getVariables() {
+		return variables;
 	}
-	public void setSize(String size) {
-		this.size = size;
+	public void setVariables(String variables) {
+		this.variables = variables;
 	}
-	public String getFundings() {
-		return fundings;
+	public String getDaneDependency() {
+		return daneDependency;
 	}
-	public void setFundings(String fundings) {
-		this.fundings = fundings;
+	public void setDaneDependency(String daneDependency) {
+		this.daneDependency = daneDependency;
 	}
-	public String getEntity() {
-		return entity;
+	public String getThematic() {
+		return thematic;
 	}
-	public void setEntity(String entity) {
-		this.entity = entity;
+	public void setThematic(String thematic) {
+		this.thematic = thematic;
 	}
-	public String getEntityType() {
-		return entityType;
+	public String getThematics2() {
+		return thematics2;
 	}
-	public void setEntityType(String entityType) {
-		this.entityType = entityType;
+	public void setThematics2(String thematics2) {
+		this.thematics2 = thematics2;
 	}
-	public String getDescription() {
-		return description;
+	public String getThematicShared() {
+		return thematicShared;
 	}
-	public void setDescription(String description) {
-		this.description = description;
+	public void setThematicShared(String thematicShared) {
+		this.thematicShared = thematicShared;
 	}
-    public String getA() {
-        return a;
+    public String getEntityProducing() {
+        return entityProducing;
     }
 
-    public void setA(String a) {
-        this.a = a;
+    public void setEntityProducing(String entityProducing) {
+        this.entityProducing = entityProducing;
     }
 
-    public String getB() {
-        return b;
+    public String getPeriodicity() {
+        return periodicity;
     }
 
-    public void setB(String b) {
-        this.b = b;
+    public void setPeriodicity(String periodicity) {
+        this.periodicity = periodicity;
     }
 
-    public String getC() {
-        return c;
+    public String getGeographicZone() {
+        return geographicZone;
     }
 
-    public void setC(String c) {
-        this.c = c;
+    public void setGeographicZone(String geographicZone) {
+        this.geographicZone = geographicZone;
     }
 
-    public String getD() {
-        return d;
+    public String getGeographicDivision() {
+        return geographicDivision;
     }
 
-    public void setD(String d) {
-        this.d = d;
+    public void setGeographicDivision(String geographicDivision) {
+        this.geographicDivision = geographicDivision;
     }
 
-    public String getE() {
-        return e;
+    public String getIndicators() {
+        return indicators;
     }
 
-    public void setE(String e) {
-        this.e = e;
+    public void setIndicators(String indicators) {
+        this.indicators = indicators;
     }
 
-    public String getF() {
-        return f;
+    public String getMethodologyOOEE() {
+        return methodologyOOEE;
     }
 
-    public void setF(String f) {
-        this.f = f;
+    public void setMethodologyOOEE(String methodologyOOEE) {
+        this.methodologyOOEE = methodologyOOEE;
     }
 
 
