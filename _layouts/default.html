@@ -117,7 +117,8 @@
         //the gol is to allow a better identification of clusters
         return !isSvg1 ? function(nodes){
         	var nodeGroup = getStrongestGroupForANode (nodes, nodes.groups)[0];
-         	return scale(nodeGroup);
+          var gr =nodes.main ==="true" ? nodes.name : nodeGroup;
+         	return scale(gr);
          } : 
          function(nodes){
          	return scale(nodes.group.slice(0, nodes.group.indexOf(' ')));
