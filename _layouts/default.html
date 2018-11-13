@@ -42,14 +42,14 @@
     <h1>Title</h1>
     <h2>SubTitle</h2>
     <div id="wrapper">
-	     <div><button id = "showDetButton" style="padding: 5px 10px; text-align: center;font-size: 80%;margin: 2px 1px;">XXX</button></div>
+       <div><button id = "showDetButton" style="padding: 5px 10px; text-align: center;font-size: 80%;margin: 2px 1px;">XXX</button></div>
     </div>
       <!--<div id = "svgcontainer1">
-            <p style="color:#789410;font-size:105%"; align="center">XXXX</p>
+            <p style="color:#789410;font-size:-105%"; align="center">XXXX</p>
       </div>-->
 
       <div id = "svgcontainer2">
-        <p id="txtSvgcontainer2" style="color:#789410;font-size:105%;visibility: hidden"; align="center">XXX</p>
+        <p id="txtSvgcontainer2" style="color:#789410;font-size:-105%;visibility: hidden"; align="center">XXX</p>
       </div>
 
        <div id = "explcontainer">
@@ -77,9 +77,18 @@
             </p>            
       </div>
     <script src="https://d3js.org/d3.v5.min.js"></script>
+<script type="text/javascript" src="forceInABox.js">   </script>
+<script type="text/javascript" src="https://cdn.rawgit.com/john-guerra/forceInABox/master/forceInABox.js"></script>
     <script>
 
+
       var dat;
+      var fociA = [{x:-250,y:30},{x:-200,y:30},{x:-175,y:30},{x:65,y:30},{x:75,y:30},{x:-145,y:30},{x:-105,y:30},{x:-95,y:30},{x:-85,y:30},{x:-75,y:30},
+{x:-250,y:70},{x:-200,y:70},{x:-175,y:70},{x:65,y:70},{x:75,y:70},{x:-145,y:70},{x:-105,y:70},{x:-95,y:70},{x:-85,y:70},{x:-75,y:70},
+{x:-250,y:90},{x:-200,y:90},{x:-175,y:90},{x:65,y:90},{x:75,y:90},{x:-145,y:90},{x:-105,y:90},{x:-95,y:90},{x:-85,y:90},{x:-75,y:90},
+{x:-250,y:110},{x:-200,y:350},{x:-175,y:350},{x:65,y:350},{x:75,y:350},{x:-145,y:350},{x:-105,y:350},{x:-95,y:350},{x:-85,y:350},{x:-75,y:350},
+{x:-250,y:130},{x:-200,y:130},{x:-175,y:130},{x:65,y:130},{x:75,y:130},{x:-145,y:130},{x:-105,y:130},{x:-95,y:130},{x:-85,y:130},{x:-75,y:130},
+{x:-250,y:150},{x:-200,y:150},{x:-175,y:150},{x:65,y:150},{x:75,y:150},{x:-145,y:150},{x:-105,y:150}];
       /*d3.json("https://raw.githubusercontent.com/pierreraimbaud/TemasFiestasValleCauca/master/data/data.json").then(function(data) {
           dat = data;
           //Create graph
@@ -87,28 +96,28 @@
       });*/
 
       //button to show to the other dataset
-      d3.select("#showDetButton").on("click",function(){
-        d3.json("https://raw.githubusercontent.com/pierreraimbaud/DANEColombiaStatisticOperationsAdminRegisters/master/data/data.json").then(function(data) {
+      //d3.select("#showDetButton").on("click",function(){
+        d3.json("./../data/data.json").then(function(data) {
           dat = data;
           d3.select("#txtSvgcontainer2").style("visibility", "visible")
           d3.select("#showDetButton").attr("disabled", true)
           console.log(dat);
           //Create graph
-          createGraph(45, false, 1600,1600);
+          createGraph(10, false, 1600,1400);
         });//end click function
-      });
+      //});
 
       function getStrongestGroupForANode (node, nodeGroups){
-      	var group = nodeGroups[0];
-      	var groupStrength = group[0];
-      	var i;
-      	for(i=1;i<nodeGroups.length;i++){
-      		if (nodeGroups[i][0]>groupStrength){
-      			group=nodeGroups[i];
-      			groupStrength = group[0];
-      		}
-      	}
-      	return group;
+        var group = nodeGroups[0];
+        var groupStrength = group[0];
+        var i;
+        for(i=1;i<nodeGroups.length;i++){
+          if (nodeGroups[i][0]>groupStrength){
+            group=nodeGroups[i];
+            groupStrength = group[0];
+          }
+        }
+        return group;
       }
 
       function color (nodes, isSvg1){
@@ -116,12 +125,12 @@
         //we want to put a color according to the first group which appears in the list of one node
         //the gol is to allow a better identification of clusters
         return !isSvg1 ? function(nodes){
-        	var nodeGroup = getStrongestGroupForANode (nodes, nodes.groups)[0];
+          var nodeGroup = getStrongestGroupForANode (nodes, nodes.groups)[0];//nodes.group//
           var gr =nodes.main ==="true" ? nodes.name : nodeGroup;
-         	return scale(gr);
+          return scale(gr);
          } : 
          function(nodes){
-         	return scale(nodes.group.slice(0, nodes.group.indexOf(' ')));
+          return scale(nodes.group.slice(0, nodes.group.indexOf(' ')));
          } 
       }
 
@@ -153,17 +162,43 @@
       function forceSimulation(nodes, links,isSvg1, collisionForceVal) {
         simu= d3.forceSimulation(nodes)
             .force("link", d3.forceLink(links).id(d => d.id))
-            .force('collision', d3.forceCollide().radius(function(d) {return collisionForceVal;}))
+            .force('collision',d3.forceCollide().radius(function(d) { 
+              return 20; }))
+           // .force('collision', d3.forceCollide().radius(function(d) {return 11;}))
+          //  .force("charge", d3.forceManyBody())
             .force("center", d3.forceCenter());
-        !isSvg1 ? simu.force("charge", d3.forceManyBody()) : simu;
+        //!isSvg1 ? simu.force("charge", d3.forceManyBody()) : simu;
         return simu;
       };
 
-      function createGraph(collisionForceVal, isSvg1, height, width){
+      var groupos= [];
+      function createGraph(collisionForceVal, isSvg1, width,height){
 
         const links = dat.links.map(d => Object.create(d));
         const nodes = dat.nodes.map(d => Object.create(d));
-        const simulation = forceSimulation(nodes, links, isSvg1, collisionForceVal).on("tick", ticked);
+        var i;
+        for (i=1095; i<nodes.length;i++){
+                  groupos.push(getStrongestGroupForANode (nodes[i], nodes[i].groups));
+
+        }
+           var template = "force";
+var groupingForce = forceInABox().strength(0.1) // Strength to foci
+    .template(template) // Either treemap or force
+    .groupBy("group") // Node attribute to group
+    .links(links) // The graph links. Must be called after setting the grouping attribute
+    .size([width, height]) // Size of the chart
+
+        const simulation = forceSimulation(nodes, links, isSvg1, collisionForceVal);
+
+simulation
+    .nodes(nodes)
+    .force("group", groupingForce)
+    .force("link", d3.forceLink(links)
+      .distance(2)
+      .strength(groupingForce.getLinkStrength) // default link force will try to join nodes in the same group stronger than if they are in different groups
+    );
+
+        simulation.on("tick", ticked);
 //(!isSvg1 ? d3.select("#svgcontainer2")):d3.select("#svgcontainer1")
         const svg = d3.select("#svgcontainer2").append("div")
           .append("svg")
@@ -186,7 +221,7 @@
             .data(nodes)
             .enter().append("circle")
             .attr("r", function (d) { 
-            	return d.main ==="false" ? 8 : 14;
+              return d.main ==="false" ? 8 : 14;
             })
             .attr("fill", color(nodes,isSvg1))
             .call(drag(simulation));
@@ -196,8 +231,8 @@
             .enter()
             .append("text")
             .text(function (d) { 
-			//!isSvg1 ? d.groups : (d.main ==="true" ? (!isSvg1 ? d.groups : d.group):"") })
-                return d.main ==="true" ? d.name : (getStrongestGroupForANode (d, d.groups))[0]})
+      //!isSvg1 ? d.groups : (d.main ==="true" ? (!isSvg1 ? d.groups : d.group):"") })
+                return d.main ==="true" ? d.name :d.group})//(getStrongestGroupForANode (d, d.groups))[0]}) //d.group})//
             .style("fill", "#2B1513")
             .style("font-weight", d=>d.main ==="true" ? "bold" : "normal")
             .attr("x", d =>d.x)
@@ -216,14 +251,67 @@
               .attr("y1", d => d.source.y)
               .attr("x2", d => d.target.x)
               .attr("y2", d => d.target.y);
-          
+
           node
               .attr("cx", d => d.x)
               .attr("cy", d => d.y);
-
           label
               .attr("x", d => d.x)
               .attr("y", d => d.y);
+          /*node//.forEach(function(d, i) {
+            .attr("cx", function(d) { 
+              var gr =getStrongestGroupForANode (d, d.groups);
+              if (gr[0].length>1){
+                gr=gr[0];
+              }
+              var s=groupos.indexOf(gr)-1;
+              var t = fociA[s];
+              if (t===undefined){
+                return 0;
+              }
+              var tx = t.x;
+
+              return -tx+d.x; })
+            .attr("cy", function(d) {
+            var gr =getStrongestGroupForANode (d, d.groups);
+              if (gr[0].length>1){
+                gr=gr[0];
+              }
+              var s=groupos.indexOf(gr)-1;
+              var t = fociA[s];
+              if (t===undefined){
+                return 0;
+              }
+              var ty = t.y; 
+              return -ty+d.y;});
+          //});
+
+          label
+              .attr("x", function(d) { 
+              var gr =getStrongestGroupForANode (d, d.groups);
+              if (gr[0].length>1){
+                gr=gr[0];
+              }
+              var s=groupos.indexOf(gr)-1;
+              var t = fociA[s];
+              if (t===undefined){
+                return 0;
+              }
+              var tx = t.x;
+
+              return -tx+d.x; })
+            .attr("y", function(d) {
+            var gr =getStrongestGroupForANode (d, d.groups);
+              if (gr[0].length>1){
+                gr=gr[0];
+              }
+              var s=groupos.indexOf(gr)-1;
+              var t = fociA[s];
+              if (t===undefined){
+                return 0;
+              }
+              var ty = t.y; 
+              return -ty+d.y;});*/
         }
       }
 
