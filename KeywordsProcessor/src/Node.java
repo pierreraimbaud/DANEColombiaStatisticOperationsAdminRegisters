@@ -21,8 +21,9 @@ public class Node {
     private String methodologyOOEE;
 
     public Node(String id, String type, String name, String statisticalOperations, String objective, String unityObservation,
-                String entitiesUsing, String variables, String daneDependency, String thematic, String thematics2, String thematicShared,
-                String entityProducing, String periodicity, String geographicZone, String geographicDivision, String indicators, String methodologyOOEE) {
+                String entitiesUsing, String variables, String daneDependency, String thematicShared,
+                String entityProducing, String periodicity, String geographicZone, String geographicDivision,
+				String indicators, String methodologyOOEE, String thematic, String thematics2) {
 
 		this.id = id;
 		this.type = type;
@@ -33,8 +34,6 @@ public class Node {
 		this.entitiesUsing = entitiesUsing;
 		this.variables = variables;
 		this.daneDependency = daneDependency;
-		this.thematic = thematic;
-		this.thematics2 = thematics2;
 		this.thematicShared = thematicShared;
 		this.entityProducing = entityProducing;
 		this.periodicity = periodicity;
@@ -42,6 +41,8 @@ public class Node {
 		this.geographicDivision = geographicDivision;
 		this.indicators = indicators;
 		this.methodologyOOEE = methodologyOOEE;
+        this.thematic = thematic;
+        this.thematics2 = thematics2;
 	}
 	
 	public String getId() {
