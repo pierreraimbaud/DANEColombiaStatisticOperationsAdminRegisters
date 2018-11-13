@@ -1,12 +1,27 @@
-http://blockbuilder.org/tacastillo/b6d0ad90bc8b9b9e329b7cca92c60f75
+
 <!DOCTYPE html>
+<html lang="en">
 <head>
 <style type="text/css">
 		.general{			
 			font-family: 'Alegreya', serif;
 			font-size: 18px;			
 		}
-
+		.rrColor{			
+			background-color: #ff1493;			
+		}
+		.ooColor{			
+			background-color: cyan;			
+		}
+		.headerT{			
+			background-color: black;
+			color: white;
+		}
+		.tabla{			
+			font-family: 'Alegreya', serif;
+			font-size: 14px;			
+		}
+		
 		.label{
 			font-size: 18px;
 			font-family: 'Alegreya', serif;
@@ -140,18 +155,51 @@ http://blockbuilder.org/tacastillo/b6d0ad90bc8b9b9e329b7cca92c60f75
 
 		
 	</style>
+	
+	<link href="https://fonts.googleapis.com/css?family=Alegreya" rel="stylesheet"> 
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
 	</head>
 <meta charset="utf-8">
+</head>
+<body>
+<div class="container general">
+  <div class="row">
+    <div class="col-md-offset-1 col-md-10" id="viz">
+<br/>
+
+  <div class="text-justify">
+  <h2>Visualización Tarea 2. (Gráfico Radial)</h2>
+	La siguiente visualización permite escoger un tema (palabra clave) de interés y mostrar los Registros Administrativos y Operaciones estadísticas más relevantes alrededor de ese tema.
+	<BR/>
+	<h3>Instrucciones:</h3>
+	-Escriba una palabra clave y elija una opción del autocompletar.
+	<BR/>-Presione el botón "Actualizar Visualización" para realizar el filtro.
+	<BR/>-A continuación podrá ver los registros y operaciones estadísticas más relevantes del tema seleccionado en el centro del círculo.
+	<BR/>-Colocando el Mouse sobre un punto podrá ver el nombre del Registro u Operación y su tipo.
+	
+	<BR/>
+  <p class="text-justify">
+  <h3>Lista de Palabras claves del demo</h3>
+  economica, credito, servicio, riesgo, cuenta, inversion, publico, social, financiera, fondo, empresa, superintendencia, transporte, venta, produccion, republica, banco, persona, ambiental, moneda, tasa, planeacion, ingreso, proceso, interes, desarrollo, pension, financiero, finanza, consumo, pais, institucion, investigacion, vivienda, saldo, instituto, banca, accion, transferencia, salud, tarjeta, establecimiento, comercial, compra, educacion, derecho, sociedad, leasing, dnp, mercado, seguro, cartera.</p>
+  </p>
+  </div>
+<div class="autocomplete" >
+    <input id="myInput" type="text" name="myCountry" placeholder="Escriba una palabra clave de la lista anterior" style="width:400px;" value="">
+	  <input id="buttonF" class="btn btn-info" type="submit" value="Actualizar Visualización">
+  </div>
+<h3> <span class="rrColor">RRAA: Registros Administrativos</span> </h3> 
+<h3> <span class="ooColor">OOEE: Operaciones Estadísticas</span> </h3> 
 
 
-
-<h2> RRAA y OOEE relacionados con: </h2> 
-
-<svg width="700" height="500" viewBox="-700 -250 1400 500">
+<div class="center">
+<svg width="100%" height="500" viewBox="-700 -500 1400 1000">
   <circle r="100" stroke="brown" stroke-opacity="0.5" fill="none"></circle>
   <circle r="200" stroke="steelblue" stroke-opacity="0.5" fill="none"></circle>
+  <circle r="300" stroke="steelblue" stroke-opacity="0.5" fill="none"></circle>
 </svg>
-
+</div>
     
 <script src="auto-complete.js"></script>
 <script src="https://d3js.org/d3.v4.min.js"></script>
@@ -205,7 +253,7 @@ var node = d3.select("svg")
   .selectAll("circle")
   .data(nodes)
   .enter().append("circle")
-    .attr("r", 6.5)
+    .attr("r", 7)
     .attr("fill", function(d) { return d.type === "RRAA" ? "deeppink" : "cyan"; })
 	.on("mouseover", function(d) {
 				div.transition()
@@ -236,7 +284,7 @@ var calculus =0;
 
 var simulation = d3.forceSimulation(nodes)
     .force("r", forceRadial(function(d){return coincidence(d);}))
-    .force("charge", d3.forceCollide().radius(7))//d3.forceCollide().radius((function(d){ return radioBub(d)})+2))
+    .force("charge", d3.forceCollide().radius(8))//d3.forceCollide().radius((function(d){ return radioBub(d)})+2))
     //.force("r", forceRadial(function(d) { return d.type === "OOEE2" ? 0 : Math.floor(Math.random() * 300); ; }))
 	.on("tick", ticked);
 
@@ -414,8 +462,10 @@ function constant(x) {
 	 //tr.exit().remove();
 	
     var td = tr.selectAll("td")
+	
      .data(function(d, i) { return Object.values(d); })
      .enter().append("td")
+	   .attr('class',function(d) { return d=="RRAA"?'rrColor': d=="OOEE"?'ooColor':'' ; })
        .text(function(d) { return d; });
 
 	//titulo de la leyenda
@@ -423,8 +473,8 @@ function constant(x) {
 	.remove();   
 	
 	var texty =	d3.select("svg").append('text')
-			.attr('x', -250)
-			.attr('y', -250)
+			.attr('x', -350)
+			.attr('y', -350)
 			.attr('text-anchor', 'end')
 			.attr('class', 'label2')
 			//.atrr('id','titleG')
@@ -434,7 +484,7 @@ function constant(x) {
 }
 d3.select('#buttonF')
 		.on("click", function () {
-	    var selectedValue = d3.select('#myInput').property('name');
+	    var selectedValue = d3.select('#myInput').property('value');
 			//console.log(selectedValue);
 			pex(selectedValue);
 		});
@@ -451,22 +501,7 @@ d3.select('#buttonF')
 
 
 </script>
-  <div class="autocomplete" style="width:300px;">
-    <input id="myInput" type="text" name="myCountry" placeholder="Escriba una palabra clave" value="">
-	  <input id="buttonF" type="submit">
-  </div>
-  <div>
-  economica,credito,servicio,riesgo,cuenta,inversion,publico,social,financiera,fondo,empresa,superintendencia,transporte,venta,produccion,republica,banco,persona,ambiental,moneda,tasa,planeacion,ingreso,proceso,interes,desarrollo,pension,financiero,finanza,consumo,pais,institucion,investigacion,vivienda,saldo,instituto,banca,accion,transferencia,salud,tarjeta,establecimiento,comercial,compra,educacion,derecho,sociedad,leasing,dnp,mercado,seguro,cartera
-  Leyenda, instrucciones,
-  </div>
-      <table class="objecttable">
-     <thead>
-     <tr><th>Tipo</th><th>Nombre del Nodo</th><th>Puntaje</th><th>Keyword</th></tr>
-     </thead>
-     <tbody></tbody>
-    </table>
-<!--Make sure the form has the autocomplete function switched off:-->
-  
+
 <script>
 function autocomplete(inp, arr) {
   /*the autocomplete function takes two arguments,
@@ -572,3 +607,28 @@ var countries = ['economica','credito','servicio','riesgo','cuenta','inversion',
 /*initiate the autocomplete function on the "myInput" element, and pass along the countries array as possible autocomplete values:*/
 autocomplete(document.getElementById("myInput"), countries);
 </script>
+</div>
+</div>
+</div>
+<div class="container general">
+  <div class="row">
+  
+    <div class="col-md-offset-1 col-md-10 text-justify">
+	<h2>Visualización Tarea 3. (Tabla)</h2>
+	La siguiente tabla permite ver los nodos de la visualización anterior ordenados por relevancia.
+	<BR/>
+	En la <strong>primera posición</strong> podrá encontrar cuál es la Operación Estadística o Registro administrativo más relevante en un tema determinado (palabra clave).
+	<BR/>
+	<BR/>
+     <table class="table  table-striped tabla objecttable">
+     <thead class="headerT">
+     <tr><th>Tipo</th><th>Nombre del Nodo</th><th>Puntaje</th><th>Keyword</th></tr>
+     </thead>
+     <tbody></tbody>
+    </table>
+<!--Make sure the form has the autocomplete function switched off:-->
+  
+</div>
+</div>
+</div>
+</body>
