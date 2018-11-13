@@ -45,6 +45,9 @@ public class TextProcessor {
      */
     private static Map<Integer, Node> nodesMap = new ConcurrentHashMap<>();
 
+    private static List<String> clusterLinesNames = new ArrayList<>();
+
+
     @SuppressWarnings("deprecation")
     public static void main(String[] args) {
 
@@ -63,10 +66,10 @@ public class TextProcessor {
         List<String> nodeLines2 = createDeepNodeLinesForJson(nodesMap,list);
 
         //Build "cluster nodes" lines for JSON from node map
-        List<String> clusterLines2 =createClusterNodesDeepLines(clustersResults);
+        List<String> clusterLines2 =createClusterNodesDeepLines(clustersResults,nodeLines2);
 
         //Build link lines for JSON from node map
-        List<String> deepLinkLines = createDeepLinkLinesForJson(clustersResults);
+        List<String> deepLinkLines = createDeepLinkLinesForJson(clustersResults,nodeLines2);
 
         //Write for JSON
         writeLinesFromListInString(nodeLines2,false);
@@ -244,6 +247,34 @@ public class TextProcessor {
         return null;
     }
 
+
+    private static String getBiggestValueKeyword(List<String> groupsList){
+        String valMax=groupsList.get(0);
+        int valueMax=0;
+        try {
+            String val = groupsList.get(1);
+            valueMax = Integer.parseInt(val);
+        }
+        catch (NumberFormatException e){
+            e.printStackTrace();
+            //TODO exception OK
+        }
+        for(int i=1; i< groupsList.size();i=i+2){
+            try{
+                String val = groupsList.get(i);
+                int newValue = Integer.parseInt(val);
+                if(newValue>valueMax){
+                    valMax = groupsList.get(i-1);
+                }
+            }
+            catch (NumberFormatException e){
+                e.printStackTrace();
+                //TODO exception OK
+            }
+        }
+        return valMax;
+    }
+
     /** Allow to get a the list of String which represent all the nodes lines
      * @param mapN the input map of nodes
      * @param reverseResultsList  a reversed list of list TODO EXPLAIN
@@ -268,7 +299,7 @@ public class TextProcessor {
             int id = Integer.parseInt(nodeID)-1;
             if(id>1){
                 Node node =mapN.get(values.get(id));
-
+                String group=getBiggestValueKeyword(groupsList);
                 String groups="[";
                 for(int i=0; i<groupsList.size();i=i+2){
                     groups+="[\""+groupsList.get(i).trim()+"\",\""+groupsList.get(i+1).trim()+"\"]"+",";
@@ -276,7 +307,8 @@ public class TextProcessor {
                 groups=groups.substring(0,groups.length()-1);
                 groups+="]";
                 nodesLines.add("{\"id\": \""+nodeID+"\", \"name\": \""+node.getName()+"\", \"groups\": "+groups
-                        +",\"type\": \""+node.getType()+"\","
+                        +",\"group\": \""+group+"\","
+                        +"\"type\": \""+node.getType()+"\","
                         +"\"statisticOperations\": \""+node.getStatisticalOperations()
                         +"\","+"\"objective\": \""+node.getObjective()+"\","
                         +"\"unityObservation\": \""+node.getUnityObservation()+"\","+"\"entityUsing\": \""+node.getEntitiesUsing()+"\","
@@ -295,13 +327,15 @@ public class TextProcessor {
      * @param clusterNodesInputLinesFromCSV  the input list for the cluster nodes for CSV file
      * @return the list of String which represent all the cluster nodes lines
      */
-    private static List<String> createClusterNodesDeepLines(String clusterNodesInputLinesFromCSV) {
+    private static List<String> createClusterNodesDeepLines(String clusterNodesInputLinesFromCSV,List<String> nodeLines2) {
 
         String[] lines = clusterNodesInputLinesFromCSV.trim().split("\n");
         List<String> nodesLines= new ArrayList<>();
-        for (String line:lines) {
+        for (int i =0; i<lines.length;i++) {
+            String line= lines[i];
             String name = line.trim().split(CSV_SEPARATOR)[0];
-            nodesLines.add("{\"id\": \""+name+"\", \"name\": \""+name+"\", \"groups\": ["+"\""+name+"\""+","+"\""+name+"\""+ "],"+"\"main\": \""+"true\"}");
+            clusterLinesNames.add(name);
+            nodesLines.add("{\"id\": \""+(nodeLines2.size()+i)+"\", \"name\": \""+name+"\", \"groups\": ["+"\""+name+"\""+","+"\""+name+"\""+ "],"+"\"group\": \""+name+"\",\"main\": \""+"true\"}");
         }
         return nodesLines;
     }
@@ -310,7 +344,7 @@ public class TextProcessor {
      * @param clusterAndIDlist  the input list for the links
      * @return the list of String which represent all the links lines TODO EXPLAIN
      */
-    private static List<String> createDeepLinkLinesForJson(String clusterAndIDlist) {
+    private static List<String> createDeepLinkLinesForJson(String clusterAndIDlist, List<String> nodeLines2) {
         //{"source": "Napoleon", "target": "Myriel", "value": 1},
         List<String> linkLines= new ArrayList<>();
 
@@ -320,10 +354,10 @@ public class TextProcessor {
             String[] lineValues = line.trim().split(CSV_SEPARATOR+"|\\[|\\]");
             lineValues = removeEmptyValues(lineValues);
             if(lineValues.length>1) {
-                String name = lineValues[0];
+                int id = clusterLinesNames.indexOf(lineValues[0]);
                 for (int j = 3; j < lineValues.length; j=j+2) {
                     if(!"1".equals(lineValues[j].trim())&&!"0".equals(lineValues[j].trim())&&!"2".equals(lineValues[j].trim())) {
-                        linkLines.add("{\"source\": \"" + lineValues[j].trim() + "\", \"target\": \"" + name + "\", \"value\": \"" + lineValues[j + 1].trim() + "\"}");
+                        linkLines.add("{\"source\": \"" + lineValues[j].trim() + "\", \"target\": \"" + (id+nodeLines2.size()) + "\", \"value\": \"" + lineValues[j + 1].trim() + "\"}");
                     }
                 }
             }
