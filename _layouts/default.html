@@ -30,6 +30,20 @@
      width:auto;
      white-space:normal
 }
+table{
+border-collapse:collapse;
+    border-spacing:0;
+    max-height: 10px;
+border:1px solid #111111;
+}
+
+table td{
+border:1px solid #111111;
+white-space:nowrap;
+width:auto;
+max-height: 10px;
+height: 50%
+}
 </style>
 <body>
 <input id="checkGroupInABox" type="checkbox">Group in a Box</input>
@@ -48,42 +62,117 @@
        -moz-hyphens="auto";
         -ms-hyphens="auto";
             hyphens="auto";
-     white-space="normal";word-break="break-all"; align="center">xxxxxxxxxx</p>
+     white-space="normal";word-break="break-all"; float="center">Informaciones</p>
+              <table style="width:100%">
+  <tr>
+    <td height="10"><p style="font-size:65%;font-weight:bold;min-height: 10px;">Info</p></td>
+    <td> <p id='name' style="font-size:65%;font-weight:bold";>Result</p></td> 
+  </tr>
+   <tr>
+    <td><p style="font-size:65%""font-weight:bold">name</p></td>
+    <td> <p id='name' style="font-size:65% ;text-align=left; float=left";>Details</p></td> 
+  </tr>
+  <tr>
+    <td><p style="font-size:65%" "font-weight:bold">type</p></td>
+    <td><p id='type' style="font-size:65%;text-align=left; float=left">Details</p></td>
+  </tr>
               
-              <p style="font-size:65%""font-weight:bold">name</p>
-              <p id='name' style="font-size:65%"; align="left";>Details</p>
-              <p style="font-size:65%" "align:left" "font-weight:bold">type</p>
-              <p id='type' style="font-size:65%"; align="left">Details</p>
-              <p style="font-size:65%" "align:left" "font-weight:bold">statisticalOperations</p>
-              <p id='statisticalOperations' style="font-size:65%"; align="left">Details</p>
-              <p style="font-size:65%" "align:left" "font-weight:bold">objective</p>
-              <p id='objective' style="font-size:65%"; align="left">Details</p>
-              <p style="font-size:65%" "align:left" "font-weight:bold">unityObservation</p>
-              <p id='unityObservation' style="font-size:65%"; align="left">Details</p>
-              <p style="font-size:65%" "align:left" "font-weight:bold">entitiesUsing</p>
-              <p id='entitiesUsing' style="font-size:65%"; align="left">Details</p>
-              <p style="font-size:65%" "align:left" "font-weight:bold">variables</p>
-              <p id='variables' style="font-size:65%"; align="left">Details</p>
-              <p style="font-size:65%"; align="left">daneDependency</p>
-              <p id='daneDependency' style="font-size:65%"; align="left">Details</p>
-              <p style="font-size:65%"; align="left">thematic</p>
-              <p id='thematic' style="font-size:65%"; align="left">Details</p>
-              <p style="font-size:65%"; align="left">thematic2</p>
-              <p id='thematic2' style="font-size:65%"; align="left">Details</p>
-              <p style="font-size:65%"; align="left">thematicShared</p>
-              <p id='thematicShared' style="font-size:65%"; align="left">Details</p>
-              <p style="font-size:65%"; align="left">entityProducing</p>
-              <p id='entityProducing' style="font-size:65%"; align="left">Details</p>
-              <p style="font-size:65%"; align="left">periodicity</p>
-              <p id='periodicity' style="font-size:65%"; align="left">Details</p>
-              <p style="font-size:65%"; align="left">geographicZone</p>
-              <p id='geographicZone' style="font-size:65%"; align="left">Details</p>
-              <p style="font-size:65%"; align="left">geographicDivision</p>
-              <p id='geographicDivision' style="font-size:65%"; align="left">Details</p>
-              <p style="font-size:65%"; align="left">indicators</p>
-              <p id='indicators' style="font-size:65%"; align="left">Details</p>
-              <p style="font-size:65%"; align="left">methodologyOOEE</p>
-              <p id='methodologyOOEE' style="font-size:65%"; align="left">Details</p>
+             
+              
+              
+              <tr>
+    <td><p style="font-size:65%" "font-weight:bold">statisticalOperations</p></td>
+    <td>
+              <p id='statisticalOperations' style="font-size:65%;text-align=left; float=left">Details</p></td>
+  </tr>
+              
+              <tr>
+    <td><p style="font-size:65%" "align:left" "font-weight:bold">objective</p></td>
+    <td>
+              <p id='objective' style="font-size:65%;text-align=left; float=left">Details</p></td>
+  </tr>
+              
+              <tr>
+    <td><p style="font-size:65%" "align:left" "font-weight:bold">unityObservation</p></td>
+    <td>
+              <p id='unityObservation' style="font-size:65%">Details</p></td>
+  </tr>
+              
+              <tr>
+    <td><p style="font-size:65%" "align:left" "font-weight:bold">entitiesUsing</p></td>
+    <td>
+              <p id='entitiesUsing' style="font-size:65%">Details</p></td>
+  </tr>
+              
+              <tr>
+    <td><p style="font-size:65%" "align:left" "font-weight:bold">variables</p></td>
+    <td>
+              <p id='variables' style="font-size:65%">Details</p></td>
+  </tr>
+              
+              <tr>
+    <td><p style="font-size:65%">daneDependency</p></td>
+    <td>
+              <p id='daneDependency' style="font-size:65%">Details</p></td>
+  </tr>
+              
+              <tr>
+    <td><p style="font-size:65%">thematic</p></td>
+    <td>
+              <p id='thematic' style="font-size:65%">Details</p></td>
+  </tr>
+              
+              <tr>
+    <td><p style="font-size:65%">thematic2</p></td>
+    <td>
+              <p id='thematic2' style="font-size:65%">Details</p></td>
+  </tr>
+              
+              <tr>
+    <td><p style="font-size:65%">thematicShared</p></td>
+    <td>
+              <p id='thematicShared' style="font-size:65%">Details</p></td>
+  </tr>
+              
+              <tr>
+    <td><p style="font-size:65%">entityProducing</p></td>
+    <td>
+              <p id='entityProducing' style="font-size:65%">Details</p></td>
+  </tr>
+              
+              <tr>
+    <td><p style="font-size:65%">periodicity</p></td>
+    <td>
+              <p id='periodicity' style="font-size:65%">Details</p></td>
+  </tr>
+              
+              <tr>
+    <td><p style="font-size:65%">geographicZone</p></td>
+    <td>
+              <p id='geographicZone' style="font-size:65%">Details</p></td>
+  </tr>
+              
+              <tr>
+    <td><p style="font-size:65%">geographicDivision</p></td>
+    <td>
+              <p id='geographicDivision' style="font-size:65%">Details</p></td>
+  </tr>
+              
+              <tr>
+    <td><p style="font-size:65%">indicators</p></td>
+    <td>
+              <p id='indicators' style="font-size:65%">Details</p></td>
+  </tr>
+              
+              <tr>
+    <td><p style="font-size:65%">methodologyOOEE</p></td>
+    <td>
+              <p id='methodologyOOEE' style="font-size:65%">Details</p></td>
+  </tr>
+
+
+              </table>
+
         </div>
 </div>
 <script src="//d3js.org/d3.v4.js"></script>
