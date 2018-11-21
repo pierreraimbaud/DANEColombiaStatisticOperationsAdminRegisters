@@ -8,10 +8,10 @@
 			font-size: 18px;			
 		}
 		.rrColor{			
-			background-color: #ff1493;			
+			background-color: #1f77b4;			
 		}
 		.ooColor{			
-			background-color: cyan;			
+			background-color: #ff7f0e;			
 		}
 		.headerT{			
 			background-color: black;
@@ -168,15 +168,15 @@
   <div class="row">
     <div class="col-md-offset-1 col-md-10" id="viz">
 <br/>
-
+<h2>Visualización Tareas 3 y 4</h2>
   <div class="text-justify">
-  <h2>Visualización Tarea 2. (Gráfico Radial)</h2>
+  <h2>Visualización Tarea 3. (Gráfico Radial)</h2>
 	La siguiente visualización permite escoger un tema (palabra clave) de interés y mostrar los Registros Administrativos y Operaciones estadísticas más relevantes alrededor de ese tema.
 	<BR/>
 	<h3>Instrucciones:</h3>
 	-Escriba una palabra clave y elija una opción del autocompletar.
 	<BR/>-Presione el botón "Actualizar Visualización" para realizar el filtro.
-	<BR/>-A continuación podrá ver los registros y operaciones estadísticas más relevantes del tema seleccionado en el centro del círculo.
+	<BR/>-A continuación podrá ver los registros y operaciones estadísticas más relevantes del tema seleccionado en el <strong>centro</strong> del círculo.
 	<BR/>-Colocando el Mouse sobre un punto podrá ver el nombre del Registro u Operación y su tipo.
 	
 	<BR/>
@@ -254,7 +254,7 @@ var node = d3.select("svg")
   .data(nodes)
   .enter().append("circle")
     .attr("r", 7)
-    .attr("fill", function(d) { return d.type === "RRAA" ? "deeppink" : "cyan"; })
+    .attr("fill", function(d) { return d.type === "RRAA" ? "#1f77b4" : "#ff7f0e"; })
 	.on("mouseover", function(d) {
 				div.transition()
 				.duration(200)
@@ -288,9 +288,12 @@ var simulation = d3.forceSimulation(nodes)
     //.force("r", forceRadial(function(d) { return d.type === "OOEE2" ? 0 : Math.floor(Math.random() * 300); ; }))
 	.on("tick", ticked);
 
-
+	let iter =0;
 function ticked() {
-  node
+
+	//frame skip
+	if (iter++ % 2 !==0){return;}
+	node
       .attr("cx", function(d) { return d.x; })
       .attr("cy", function(d) { return d.y; });
 	  
@@ -614,9 +617,9 @@ autocomplete(document.getElementById("myInput"), countries);
   <div class="row">
   
     <div class="col-md-offset-1 col-md-10 text-justify">
-	<h2>Visualización Tarea 3. (Tabla)</h2>
-	La siguiente tabla permite ver los nodos de la visualización anterior ordenados por relevancia.
-	<BR/>
+	<h2>Visualización Tarea 4. (Tabla)</h2>
+	La siguiente tabla apoya la visualización de la tarea 3 y permite ver los items ordenados por relevancia. La relevancia ha sido calculada teniendo el cuenta el número de coincidencias de una palabra clave en los diferentes atributos de un RRAA o una OOEE.
+	<BR/><BR/>
 	En la <strong>primera posición</strong> podrá encontrar cuál es la Operación Estadística o Registro administrativo más relevante en un tema determinado (palabra clave).
 	<BR/>
 	<BR/>
