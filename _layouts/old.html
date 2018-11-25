@@ -149,7 +149,7 @@
     var gg = svgNew.append("g")
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")"); 
 
-    d3.csv("../data/data1.csv")
+    d3.csv("https://raw.githubusercontent.com/pierreraimbaud/DANEColombiaStatisticOperationsAdminRegisters/master/data/data1.csv")
       .then((data) => {
           return data.map((d) => {
             d.occurrences = +d.occurrences;
@@ -190,7 +190,7 @@
             throw error;
         });
 
-    d3.csv("../data/data2.csv")
+    d3.csv("https://raw.githubusercontent.com/pierreraimbaud/DANEColombiaStatisticOperationsAdminRegisters/master/data/data2.csv")
         .then((data) => {
             return data.map((d) => {
               d.occurrences = +d.occurrences;
