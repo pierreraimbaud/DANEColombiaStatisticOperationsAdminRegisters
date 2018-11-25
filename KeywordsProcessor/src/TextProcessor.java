@@ -51,7 +51,9 @@ public class TextProcessor {
     @SuppressWarnings("deprecation")
     public static void main(String[] args) {
 
+        KeywordsProcessor.buildListNotAcceptedKeywords();
         //Get the "hidden" keywords from CSV
+        KeywordsProcessor.writeOldCategoryFile();
         String clustersResults= KeywordsProcessor.getKeywordsListWithOccurrences();
         System.out.println(clustersResults);
         //Build nodes map from CSV
@@ -265,6 +267,7 @@ public class TextProcessor {
                 int newValue = Integer.parseInt(val);
                 if(newValue>valueMax){
                     valMax = groupsList.get(i-1);
+                    valueMax=newValue;
                 }
             }
             catch (NumberFormatException e){

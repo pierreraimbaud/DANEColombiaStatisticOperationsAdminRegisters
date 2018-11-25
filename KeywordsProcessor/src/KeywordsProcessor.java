@@ -1,6 +1,4 @@
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.*;
@@ -17,6 +15,11 @@ public class KeywordsProcessor {
      */
     private final static String CSV_PATH = "./../data/file.csv";
     private final static String DATA_RESULTS_FILE_PATH = "./../data/results.txt";
+    private final static String CSV_BAR_CHART_PATH = "./../data/data1.csv";
+    private final static String CSV_BAR_CHART2_PATH = "./../data/data2.csv";
+
+    private final static String USELESS_WORDS_FILE_PATH = "./../data/uselessWords.txt";
+    private final static String EXCLUDED_WORDS_FILE_PATH = "./../data/excludedWords.txt";
 
     /**
      * The string of the id column in the CSV file
@@ -25,11 +28,11 @@ public class KeywordsProcessor {
 
     private static final int DEFAULT_MIN_COLUMN_FOR_KEYWORDS = 2;
 
-    private static final int DEFAULT_MAX_COLUMN_FOR_KEYWORDS = 17;
+    private static final int DEFAULT_MAX_COLUMN_FOR_KEYWORDS = 10;
 
     private static final int OOEE_MIN_COLUMN_FOR_KEYWORDS = 2;
 
-    private static final int OOEE_MAX_COLUMN_FOR_KEYWORDS = 15;
+    private static final int OOEE_MAX_COLUMN_FOR_KEYWORDS = 10;
 
     private static final String OOEE_TYPE="OOEE";
 
@@ -37,33 +40,40 @@ public class KeywordsProcessor {
      * The separator of the CSV file
      */
     private static final String CSV_SEPARATOR = ",";
-
+    public static final int INDEX_FOR_OLD_CATEGORY = 17;
+    private static final String CSV_COLUMN_NAME_FOR_OLD_CATEGORY = "G. TEMA 2. Tema al que pertenece el registro administrativo   (Este campo sera diligenciado por el funcionario del DANE)";
     /**
      * Generic useless words to not consider when searching keywords for clusters
      */
-    private static List<String> generalUselessWords = new ArrayList<>(
-            Arrays.asList("de", "la", "el", ",", ";", "", "en", "del", "los", "las", "demás", "bajo", "les", "hecho", "hecho,", "pertenece", "recibió", "realiza", "realizan",
-                    "anualmente", "mes", "para", "con", "que", "-", "–", "sobre", "dentro", "y", "o", "al", "se", "no", "ni", "si", "(si,", "(no,", "(para,", "hasta", "cabo", "donde",
-                    "por", "a", "su", "e", "un", "una", "sus", "según", "0","1.", "2.", "3.", "4.", "5;", "6.", "y/o", "esta", "este", "durante", "está", "más", "como", "así", "hace",
-                    "ha", "han", "es", "son", "tiene", "tienen", "otras" , "otros", "segun","id", "lo", "cual", "¿cuántos", "¿la", "¿el", "7.", "/", "lleva", "mas", "sin", "anio"));
-
+    private static List<String> wordAlwaysExcluded;
     /**
      * Specific project useless words to not consider when searching keywords for clusters
      */
-    private static List<String> specificUselessWords =new ArrayList<>(
-            Arrays.asList("ooee", "rraa", "dane","informacion","través","registro","registros","reporte","todo", "diferentes", "región", "cada", "operaciones","operacion","estadisticas", "estadistica",
-                    "internacional", "espacio", "general","nuestra","nacional","medio","1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12",
-                    "13", "14", "15", "16", "17", "18", "19", "20", "25", "30","31","343", "50", "100", "120","180",
-                    "numero", "tipo", "total", "departamento", "fecha", "ministerio", "entidad","entidades", "confirmar",
-                    "promedio","actividad", "exterior","emitidos","titulo", "valor","area","anho","anhos","area","areas","titulo",
-                    "titulos","direccion", "mensual","colombia","anho","anual","codigo","proceso", "sector","sistema","nivel", "departamental",
-                    "administrativo", "publica", "estado", "nombre", "unidad", "municipio", "categoria", "precio", "nacion", "cantidad", "identificacion",
-                    "grupo", "municipal", "posicion", "accion", "porcentaje", "control", "variacion", "indicador", "regional", "reserva", "monto", "uso",
-                    "usuario", "costo", "dia", "recurso", "programa", "calidad", "gestion", "nacional","nacionales", "zona"
-            ));
+    private static List<String> wordsExcludedOnlyAtFirstPosition;
 
     private static StringBuilder clustersResultText = new StringBuilder();
 
+    public static void buildListNotAcceptedKeywords() {
+        wordAlwaysExcluded = buildListNotIncludedKeywords(USELESS_WORDS_FILE_PATH);
+        wordsExcludedOnlyAtFirstPosition = buildListNotIncludedKeywords(EXCLUDED_WORDS_FILE_PATH);
+    }
+
+    private static List buildListNotIncludedKeywords(String filePath){
+        Scanner s = null;
+        List list = new ArrayList();
+        try {
+            s = new Scanner(new File(filePath));
+            list = new ArrayList<String>();
+            while (s.hasNext()){
+                list.add(s.next());
+            }
+            s.close();
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
     /**
      * Allow to find an element and return the second list which contains this element, otherwise null
      * @param element the element to find
@@ -113,8 +123,10 @@ public class KeywordsProcessor {
             }
             String word;
             //Read the complete line and build a map with keywords
+            List allUselessWords = wordAlwaysExcluded.subList(0, wordAlwaysExcluded.size());//clone the list
+            allUselessWords.addAll(wordsExcludedOnlyAtFirstPosition);
             for(int i=0; i< splitStr.length; i++){
-                if (!generalUselessWords.contains(splitStr[i].toLowerCase())){
+                if (!allUselessWords.contains(splitStr[i].toLowerCase())){
                     word= splitStr[i].toLowerCase();
                     //quit plural on words (spanish => s or es
                     if (word.length()>=2){
@@ -252,7 +264,7 @@ public class KeywordsProcessor {
      * @param map the map to be writed with the keywords, number of occurrence and lines of occurrences
      * @return the map with the keywords (by group of 2 or more), number of occurrence and lines of occurrences
      */
-    private static Consumer<String> getConsumer2WordsOrMore(Map<String, List<List<Integer>>> map, Map<String, List<List<Integer>>> map1Word, int numberOfWords) {
+    private static Consumer<String> getConsumer2WordsOrMore(Map<String, List<List<Integer>>> map, int numberOfWords) {
         return (x) ->{
             //Second part of the line - the type
             String itemTypeAsString = x.trim().split(CSV_SEPARATOR)[1];
@@ -278,16 +290,16 @@ public class KeywordsProcessor {
             }
             for(int i=0; i< splitStr.length; i++){
                 String lowerCase = splitStr[i].toLowerCase();
-                if (!generalUselessWords.contains(lowerCase)){
+                if (!wordAlwaysExcluded.contains(lowerCase)){
 
-                    if(map1Word.containsKey(lowerCase))
-                    {
+                   // if(map1Word.containsKey(lowerCase))
+                    //{
                         //Integer value=1;
                         List<List<Integer>> newL;
                         if (i+numberOfWords-1<splitStr.length){
-                            if(! generalUselessWords.contains(splitStr[i+1].toLowerCase())){
+                            if(! wordAlwaysExcluded.contains(splitStr[i+numberOfWords-1].toLowerCase())){
                                 String multipleWords="";
-                                for (int j=1; j < numberOfWords+1; j++){
+                                for (int j=i; j < numberOfWords+i; j++){
                                     multipleWords+=splitStr[j].toLowerCase()+ " ";
                                 }
                                 multipleWords=multipleWords.substring(0,multipleWords.length()-1);
@@ -324,27 +336,99 @@ public class KeywordsProcessor {
                         }
                     }
                 }
-            }
+           // }
         };
     }
 
+    public static void writeOldCategoryFile(){
+        Map<String, Integer> map = new ConcurrentHashMap<>();
+
+        try (Stream<String> stream = Files.lines(Paths.get(CSV_PATH))) {
+            stream.forEach(getConsumerOldCategories(map));
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+            Logger.global.log(Level.SEVERE, e.getMessage(), e.getCause());
+        }
+
+        List<String> values = new ArrayList<>(map.keySet());
+
+        Collections.sort(values, new Comparator<String>() {
+            public int compare(String a, String b) {
+                // no need to worry about nulls as we know a and b are both in map
+                return map.get(b)- map.get(a);
+            }
+        });
+        values.size();
+
+        StringBuilder categorical2Results=new StringBuilder();
+        categorical2Results.append("oldCategory");
+        categorical2Results.append(CSV_SEPARATOR);
+        categorical2Results.append("occurrences");
+        categorical2Results.append("\n");
+        Scanner s;
+        try {
+            s = new Scanner(new File(DATA_RESULTS_FILE_PATH));
+            for (String line : values){
+                categorical2Results.append(line);
+                categorical2Results.append(CSV_SEPARATOR);
+                categorical2Results.append(map.get(line));
+                categorical2Results.append("\n");
+            }
+            s.close();
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        BufferedWriter writerCSV2;
+        try {
+            writerCSV2 = new BufferedWriter( new FileWriter(CSV_BAR_CHART_PATH));
+
+            writerCSV2.write(categorical2Results.toString());
+            writerCSV2.close();
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+            Logger.global.log(Level.SEVERE, e.getMessage(), e.getCause());
+        }
+    }
+
+    private static Consumer<String> getConsumerOldCategories(Map<String, Integer> map) {
+        return (x) ->{
+            List<String> splitStrBefore = new ArrayList<>(Arrays.asList(x.trim().split(CSV_SEPARATOR)));
+            String val=splitStrBefore.get(INDEX_FOR_OLD_CATEGORY);
+            if(!CSV_COLUMN_NAME_FOR_OLD_CATEGORY.equals(val)){
+                if (!map.containsKey(val)) {
+                    map.put(val, 1);
+                }
+                else{
+                    map.put(val, map.get(val)+1);
+                }
+            }
+        };
+    }
     @SuppressWarnings("deprecation")
     public static String getKeywordsListWithOccurrences(){
         //Adding specific excluded words
-        generalUselessWords.addAll(specificUselessWords);
+        //wordAlwaysExcluded.addAll(wordsExcludedOnlyAtFirstPosition);
 
         //Build keywords maps (1,2,3,4 words)
         Map<String, List<List<Integer>>> map1 = buildKeywordsOccurrencesNumberMap1Word(); //5
-        readMapAndWriteOnStaticStringVar(map1,200);
-        //Map<String, List<List<Integer>>> map2 = new ConcurrentHashMap<>();
-        //buildKeywordsOccurrencesNumberMap2OrMoreWords(getConsumer2WordsOrMore(map2,map1,2)); //3
-        //readMapAndWriteOnStaticStringVar(map2,6);
-        /*Map<String, List<Integer>> map3 =new ConcurrentHashMap<>();
-        buildKeywordsOccurrencesNumberMap2OrMoreWords(getConsumer2WordsOrMore(map3,map1,3));
-        readMapAndWriteOnStaticStringVar(map3,5);
-        Map<String, List<Integer>> map4 =new ConcurrentHashMap<>();
-        buildKeywordsOccurrencesNumberMap2OrMoreWords(getConsumer2WordsOrMore(map4,map1,4));*/
-        //readMapAndWriteOnStaticStringVar(map4,5);
+        readMapAndWriteOnStaticStringVar(map1,150);
+
+        /*Map<String, List<List<Integer>>> map2 = new ConcurrentHashMap<>();
+        buildKeywordsOccurrencesNumberMap2OrMoreWords(getConsumer2WordsOrMore(map2,2)); //3
+        readMapAndWriteOnStaticStringVar(map2,70);
+        Map<String, List<List<Integer>>> map3 =new ConcurrentHashMap<>();
+        buildKeywordsOccurrencesNumberMap2OrMoreWords(getConsumer2WordsOrMore(map3,3));
+        readMapAndWriteOnStaticStringVar(map3,70);
+        Map<String, List<List<Integer>>> map4 =new ConcurrentHashMap<>();
+        buildKeywordsOccurrencesNumberMap2OrMoreWords(getConsumer2WordsOrMore(map4,4));
+        readMapAndWriteOnStaticStringVar(map4,50);
+        Map<String, List<List<Integer>>> map5 =new ConcurrentHashMap<>();
+        buildKeywordsOccurrencesNumberMap2OrMoreWords(getConsumer2WordsOrMore(map5,5));
+        readMapAndWriteOnStaticStringVar(map5,50);*/
         //The result is stored in a String static var
         BufferedWriter writer;
         try {
@@ -356,6 +440,42 @@ public class KeywordsProcessor {
             e.printStackTrace();
             Logger.global.log(Level.SEVERE, e.getMessage(), e.getCause());
         }
+
+
+        StringBuilder categorical2Results=new StringBuilder();
+        categorical2Results.append("newCategory");
+        categorical2Results.append(CSV_SEPARATOR);
+        categorical2Results.append("occurrences");
+        categorical2Results.append("\n");
+        Scanner s;
+        try {
+            s = new Scanner(new File(DATA_RESULTS_FILE_PATH));
+            while (s.hasNextLine()){
+                String line = s.nextLine();
+                List<String> splitLine = new ArrayList<>(Arrays.asList(line.trim().split(CSV_SEPARATOR)));
+                categorical2Results.append(splitLine.get(0).toUpperCase());
+                categorical2Results.append(CSV_SEPARATOR);
+                categorical2Results.append(splitLine.get(1).substring(2));
+                categorical2Results.append("\n");
+            }
+            s.close();
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        BufferedWriter writerCSV2;
+        try {
+            writerCSV2 = new BufferedWriter( new FileWriter(CSV_BAR_CHART2_PATH));
+
+            writerCSV2.write(categorical2Results.toString());
+            writerCSV2.close();
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+            Logger.global.log(Level.SEVERE, e.getMessage(), e.getCause());
+        }
+
         return clustersResultText.toString();
     }
 }

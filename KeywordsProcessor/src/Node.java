@@ -21,9 +21,9 @@ public class Node {
     private String methodologyOOEE;
 
     public Node(String id, String type, String name, String statisticalOperations, String objective, String unityObservation,
-                String entitiesUsing, String variables, String daneDependency, String thematicShared,
-                String entityProducing, String periodicity, String geographicZone, String geographicDivision,
-				String indicators, String methodologyOOEE, String thematic, String thematics2) {
+                String entitiesUsing, String variables, String daneDependency,String entityProducing,
+				String indicators,String thematicShared, String periodicity, String geographicZone, String geographicDivision,
+				String methodologyOOEE, String thematic, String thematics2) {
 
 		this.id = id;
 		this.type = type;

@@ -1,0 +1,825 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style>
+  h1 {
+    font-size : 130%;
+    color:#696969;
+    text-align: center;
+  }
+  h2 {
+    font-size : 110%;
+    color:#489450;
+    text-align: center;
+  }
+  .node {
+    stroke: #fff;
+    stroke-width: 1.5px;
+  }
+  .link {
+    stroke: #999;
+    stroke-opacity: .6;
+  }
+  .cell {
+    fill: none;
+    stroke: grey;
+  }
+  #chart {
+          display: inline-block;
+          float: left;
+  }
+  #chartDetail {
+    display: inline-block;
+    float: right;
+  }
+  .p.newCategorys {
+      word-wrap: break-word;
+       width:auto;
+       white-space:normal
+  }
+  .table {display:block; }
+  .row { display:block;border:1px solid #111111;word-break: break-all}
+  .cell {display:inline-block;font-size:85%;}
+
+  /*Color for global dataset*/
+    .bar--positive {
+      fill: #C48189;
+    }
+    .bar--negative {
+      fill: #CFECEC;
+    }
+    .bar:hover {
+      fill: #347C17;
+    }
+
+    /*Color for North dataset*/
+    .bar1--positive {
+      fill: #7F4E52;
+    }
+    .bar1--negative {
+        fill: #3B9C9C;
+    }
+    .bar1:hover {
+      fill: #347C17;
+    }
+
+    /*Color for Equator dataset*/
+    .bar2--positive {
+      fill: #C5908E;
+    }
+    .bar2--negative {
+      fill: #46C7C7;
+    }
+    .bar2:hover {
+      fill: #347C17;
+    }
+
+    /*Color for South dataset*/
+    .bar3--positive {
+      fill: #E8ADAA;
+    }
+    .bar3--negative {
+      fill: #79BAEC;
+    }
+    .bar3:hover {
+      fill: #347C17;
+    }
+    
+    .toolTip {
+      position: absolute;
+      display: none;
+      min-width: 80px;
+      height: auto;
+      background: none repeat scroll 0 0 #ffffff;
+      border: 1px solid #6F257F;
+      padding: 14px;
+      text-align: center;
+    }
+    
+
+    .xaxis text {
+      color:blue;
+    }
+    .yaxis text {
+      color:blue;
+    }
+
+    .bar {
+  fill: steelblue;
+}
+
+.bar:hover {
+  fill: brown;
+}
+
+.axis--x path {
+  display: none;
+}
+   
+
+</style>
+<body>
+  <h1>Tématicas y relaciones entre los diferentes registros administrativos y operaciones estadisticas del DANE en Colombia</h1>
+  <h2>Visión global de las tématicas y relaciones entre RRAA y OOEE</h2>
+  <p style="font-size:85%">A la izquierda pueden observar las operaciones estadisticas y los registros administrativos organizados por grupos, cada grupo siendo una palabra clave encontrada en varios registros u operaciones, después de haber procesado la información disponible sobre cada registro u operación.</br>
+  A la derecha, después de haber dado <b>clic en un circulo, cada uno siendo un registro u operación</b>, pueden observar las caracteristicas de la operación estadistica o del registro administrativo.</br></br>
+  NB: los circulos grandes son las tematicas y los más pequeños son los registros (sin borde gris) o las operaciones (con borde gris).
+  </p>
+  <div id='container'>
+
+    <p style="color:#709410;font-size:105%"; word-wrap="break-word";
+                width="auto";-ms-word-break="break-all"white-space="normal";word-break="break-all"; float="center">Visualización Tarea 1 (Diagrama de redes)</p>
+                <select id="selectTemplate" type="select">
+    <option value="treemap">Treemap</option>
+    <option value="force">Force</option>
+  </select>
+
+
+    <div id = "chart">
+    </div>
+    <div id = "chartDetail">
+      <p style="color:#709410;font-size:105%"; word-wrap="break-word";
+          width="auto";-ms-word-break="break-all"white-space="normal";word-break="break-all"; float="center">Visualización Tarea 4 (Tabla de detalle)</p>
+      <div id="tableChartDetail">
+         <div class="row">
+          <div class="cell" style="font-weight:bold">Nombre</div>
+          <div class="cell"id='name'>-</div>
+        </div>
+        <div class="row">
+          <div class="cell" style="font-weight:bold">Tipo</div>
+          <div class="cell" id='type'>-</div>
+        </div>
+        <div class="row">
+          <div class="cell" style="font-weight:bold" >Nombre de sus grupos</div>
+          <div class="cell"id='groups' >-</div>
+        </div>
+        <div class="row">
+          <div class="cell" style="font-weight:bold" >Grupo principal</div>
+          <div class="cell"id='group' >-</div>
+        </div>
+        <div class="row">
+          <div class="cell"  style="font-weight:bold">Operaciones estatisticas</div>
+          <div class="cell"id='statisticalOperations' >-</div>
+        </div>
+        <div class="row">
+          <div class="cell"  style="font-weight:bold" >Objetivo</div>
+          <div class="cell"id='objective' >-</div>
+        </div>
+        <div class="row">
+          <div class="cell"  style="font-weight:bold" >Unidad de observación</div>
+          <div class="cell"id='unityObservation' >-</div>
+        </div>
+        <div class="row">
+          <div class="cell"  style="font-weight:bold" >Entidad que lo usa</div>
+          <div class="cell"id='entitiesUsing' >-</div>
+        </div>
+        <div class="row">
+          <div class="cell"  style="font-weight:bold" >Variables</div>
+          <div class="cell"id='variables' >-</div>
+        </div>
+        <div class="row">
+          <div class="cell" style="font-weight:bold" >Dependencia al DANE</div>
+          <div class="cell"id='daneDependency' >-</div>
+        </div>
+        <div class="row">
+          <div class="cell"  style="font-weight:bold">Tématica</div>
+          <div class="cell"id='thematic' >-</div>
+        </div>
+        <div class="row">
+          <div class="cell"  style="font-weight:bold">Tématica 2</div>
+          <div class="cell"id='thematic2' >-</div>
+        </div>
+        <div class="row">
+          <div class="cell"  style="font-weight:bold">Tématica compartida</div>
+          <div class="cell"id='thematicShared' >-</div>
+        </div>
+        <div class="row">
+          <div class="cell"  style="font-weight:bold">Entidad que lo produce</div>
+          <div class="cell"id='entityProducing' >-</div>
+        </div>
+        <div class="row">
+          <div class="cell"  style="font-weight:bold">Periodicidad</div>
+          <div class="cell"id='periodicity' >-</div>
+        </div>
+        <div class="row">
+          <div class="cell" style="font-weight:bold" >Zona geografica</div>
+          <div class="cell"id='geographicZone' >-</div>
+        </div>
+        <div class="row">
+          <div class="cell" style="font-weight:bold" >Desagregación geografica</div>
+          <div class="cell"id='geographicDivision' >-</div>
+        </div>
+        <div class="row">
+          <div class="cell" style="font-weight:bold" >Indicadores</div>
+          <div class="cell"id='indicators' >-</div>
+        </div>
+        <div class="row">
+          <div class="cell"  style="font-weight:bold">Metodología OOEE</div>
+          <div class="cell"id='methodologyOOEE' >-</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="https://d3js.org/d3.v5.min.js"></script>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/spin.js/2.0.1/spin.min.js'></script> 
+
+  <script type="text/javascript">
+        /* Script for group in a box technique */
+        /* global d3 */
+        function forceInABox(alpha){
+          function index(d) {
+            return d.index;
+          }
+          var id = index,
+              nodes,
+              links, //needed for the force version
+              tree,
+              size = [100,100],
+              nodeSize = 1, // The expected node size used for computing the cluster node
+              forceCharge = -2,
+              foci = {},
+              // oldStart = force.start,
+              linkStrengthIntraCluster = 0.1,
+              linkStrengthInterCluster = 0.01,
+              // oldGravity = force.gravity(),
+              templateNodes = [],
+              offset = [0,0],
+              templateForce,
+              templateNodesSel,
+              groupBy = function (d) { return d.cluster; },
+              template = "treemap",
+              enableGrouping = true,
+              strength = 0.1;
+              // showingTemplate = false;
+          function force(alpha) {
+            if (!enableGrouping) {
+              return force;
+            }
+            if (template==="force") {
+              //Do the tick of the template force and get the new focis
+              templateForce.tick();
+              getFocisFromTemplate();
+            }
+
+            for (var i = 0, n = nodes.length, node, k = alpha * strength; i < n; ++i) {
+              node = nodes[i];
+              node.vx += (foci[groupBy(node)].x - node.x) * k;
+              node.vy += (foci[groupBy(node)].y - node.y) * k;
+            }
+          }
+          function initialize() {
+            if (!nodes) return;
+
+            // var i,
+            //     n = nodes.length,
+            //     m = links.length,
+            //     nodeById = map(nodes, id),
+            //     link;
+
+            if (template==="treemap") {
+              initializeWithTreemap();
+            } else {
+              initializeWithForce();
+            }
+          }
+          force.initialize = function(_) {
+            nodes = _;
+            initialize();
+          };
+          function getLinkKey(l) {
+            var sourceID = groupBy(l.source),
+              targetID = groupBy(l.target);
+
+            return sourceID <= targetID ?
+              sourceID + "~" + targetID :
+              targetID + "~" + sourceID;
+          }
+          function computeClustersNodeCounts(nodes) {
+            var clustersCounts = d3.map();
+
+            nodes.forEach(function (d) {
+              if (!clustersCounts.has(groupBy(d))) {
+                clustersCounts.set(groupBy(d), 0);
+              }
+            });
+
+            nodes.forEach(function (d) {
+              // if (!d.show) { return; }
+              clustersCounts.set(groupBy(d), clustersCounts.get(groupBy(d)) + 1);
+            });
+
+            return clustersCounts;
+          }
+          //Returns
+          function computeClustersLinkCounts(links) {
+            var dClusterLinks =  d3.map(),
+              clusterLinks = [];
+            links.forEach(function (l) {
+              var key = getLinkKey(l), count;
+              if (dClusterLinks.has(key)) {
+                count = dClusterLinks.get(key);
+              } else {
+                count = 0;
+              }
+              count += 1;
+              dClusterLinks.set(key, count);
+            });
+
+            dClusterLinks.entries().forEach(function (d) {
+              var source, target;
+              source = d.key.split("~")[0];
+              target = d.key.split("~")[1];
+              if (source !== undefined && target !== undefined) {
+                clusterLinks.push({
+                  "source":source,
+                  "target":target,
+                  "count":d.value,
+                });
+              }
+            });
+            return clusterLinks;
+          }
+          //Returns the metagraph of the clusters
+          function getGroupsGraph() {
+            var gnodes = [],
+              glinks = [],
+              // edges = [],
+              dNodes = d3.map(),
+              // totalSize = 0,
+              clustersList,
+              c, i, size,
+              clustersCounts,
+              clustersLinks;
+
+            clustersCounts = computeClustersNodeCounts(nodes);
+            clustersLinks = computeClustersLinkCounts(links);
+
+            //map.keys() is really slow, it's crucial to have it outside the loop
+            clustersList = clustersCounts.keys();
+            for (i = 0; i< clustersList.length ; i+=1) {
+              c = clustersList[i];
+              size = clustersCounts.get(c);
+              gnodes.push({id : c, size :size });
+              dNodes.set(c, i);
+              // totalSize += size;
+            }
+
+            clustersLinks.forEach(function (l) {
+              source = dNodes.get(l.source);
+              target = dNodes.get(l.target);
+              if (source!==undefined && target !== undefined) {
+                glinks.push({
+                  "source": source,
+                  "target": target,
+                  "count":l.count
+                });
+              } else {
+                console.log("Force in a box error, couldn't find the link source or target on the list of nodes");
+              }
+            });
+
+
+            return {nodes: gnodes, links: glinks};
+          }
+          function getGroupsTree() {
+            var children = [],
+              totalSize = 0,
+              clustersList,
+              c, i, size, clustersCounts;
+
+            clustersCounts = computeClustersNodeCounts(force.nodes());
+
+            //map.keys() is really slow, it's crucial to have it outside the loop
+            clustersList = clustersCounts.keys();
+            for (i = 0; i< clustersList.length ; i+=1) {
+              c = clustersList[i];
+              size = clustersCounts.get(c);
+              children.push({id : c, size :size });
+              totalSize += size;
+            }
+            // return {id: "clustersTree", size: totalSize, children : children};
+            return {id: "clustersTree",  children : children};
+          }
+          function getFocisFromTemplate() {
+            //compute foci
+            foci.none = {x : 0, y : 0};
+            templateNodes.forEach(function (d) {
+              if (template==="treemap") {
+                foci[d.data.id] = {
+                  x : (d.x0 + (d.x1-d.x0) / 2) - offset[0],
+                  y : (d.y0 + (d.y1-d.y0) / 2) - offset[1]
+                };
+              } else {
+                foci[d.id] = {x : d.x - offset[0] , y : d.y - offset[1]};
+              }
+            });
+          }
+          function initializeWithTreemap() {
+            var treemap = d3.treemap()
+              .size(force.size());
+
+            tree = d3.hierarchy(getGroupsTree())
+              // .sort(function (p, q) { return d3.ascending(p.size, q.size); })
+              // .count()
+              .sum(function (d) { return d.size; })
+              .sort(function(a, b) {
+                return b.height - a.height || b.value - a.value; })
+              ;
+
+
+            templateNodes = treemap(tree).leaves();
+
+            getFocisFromTemplate();
+          }
+          function checkLinksAsObjects() {
+            // Check if links come in the format of indexes instead of objects
+            var linkCount = 0;
+            if (nodes.length===0) return;
+
+            links.forEach(function (link) {
+              var source, target;
+              if (!nodes) return;
+              source = link.source;
+              target = link.target;
+              if (typeof link.source !== "object") source = nodes[link.source];
+              if (typeof link.target !== "object") target = nodes[link.target];
+              if (source === undefined || target === undefined) {
+                console.log(link);
+                throw Error("Error setting links, couldn't find nodes for a link (see it on the console)" );
+              }
+              link.source = source; link.target = target;
+              link.index = linkCount++;
+            });
+          }
+          function initializeWithForce() {
+            var net;
+
+            if (nodes && nodes.length>0) {
+              if (groupBy(nodes[0])===undefined) {
+                throw Error("Couldn't find the grouping attribute for the nodes. Make sure to set it up with forceInABox.groupBy('attr') before calling .links()");
+              }
+            }
+
+            checkLinksAsObjects();
+
+            net = getGroupsGraph();
+            templateForce = d3.forceSimulation(net.nodes)
+              .force("x", d3.forceX(size[0]/2).strength(0.5))
+              .force("y", d3.forceY(size[1]/2).strength(0.5))
+              .force("collide", d3.forceCollide(function (d) { return d.size*nodeSize; }))
+              .force("charge", d3.forceManyBody().strength(function (d) { return forceCharge * d.size; }))
+              .force("links", d3.forceLink(!net.nodes ? net.links :[]));
+
+            templateNodes = templateForce.nodes();
+
+            getFocisFromTemplate();
+          }
+          function drawTreemap(container) {
+            container.selectAll(".cell").remove();
+            container.selectAll("cell")
+              .data(templateNodes)
+              .enter().append("svg:rect")
+              .attr("class", "cell")
+              .attr("x", function (d) { return d.x0; })
+              .attr("y", function (d) { return d.y0; })
+              .attr("width", function (d) { return d.x1-d.x0; })
+              .attr("height", function (d) { return d.y1-d.y0; });
+          }
+          function drawGraph(container) {
+            container.selectAll(".cell").remove();
+            templateNodesSel = container.selectAll("cell")
+              .data(templateNodes);
+            templateNodesSel
+              .enter().append("svg:circle")
+              .attr("class", "cell")
+              .attr("cx", function (d) { return d.x; })
+              .attr("cy", function (d) { return d.y; })
+              .attr("r", function (d) { return d.size*nodeSize; });
+          }
+          force.drawTemplate = function (container) {
+            // showingTemplate = true;
+            if (template === "treemap") {
+              drawTreemap(container);
+            } else {
+              drawGraph(container);
+            }
+            return force;
+          };
+          //Backwards compatibility
+          force.drawTreemap = force.drawTemplate;
+          force.deleteTemplate = function (container) {
+            // showingTemplate = false;
+            container.selectAll(".cell").remove();
+
+            return force;
+          };
+          force.template = function (x) {
+            if (!arguments.length) return template;
+            template = x;
+            initialize();
+            return force;
+          };
+          force.groupBy = function (x) {
+            if (!arguments.length) return groupBy;
+            if (typeof x === "string") {
+              groupBy = function (d) {return d[x]; };
+              return force;
+            }
+            groupBy = x;
+            return force;
+          };
+          force.enableGrouping = function (x) {
+            if (!arguments.length) return enableGrouping;
+            enableGrouping = x;
+            // update();
+            return force;
+          };
+          force.strength = function (x) {
+            if (!arguments.length) return strength;
+            strength = x;
+            return force;
+          };
+          force.getLinkStrength = function (e) {
+            if(enableGrouping)  {
+              if (groupBy(e.source) === groupBy(e.target)) {
+                if (typeof(linkStrengthIntraCluster)==="function") {
+                  return linkStrengthIntraCluster(e);
+                } else {
+                  return linkStrengthIntraCluster;
+                }
+              } else {
+                if (typeof(linkStrengthInterCluster)==="function") {
+                  return linkStrengthInterCluster(e);
+                } else {
+                  return linkStrengthInterCluster;
+                }
+              }
+            } else {
+              // Not grouping return the intracluster
+              if (typeof(linkStrengthIntraCluster)==="function") {
+                  return linkStrengthIntraCluster(e);
+                } else {
+                  return linkStrengthIntraCluster;
+                }
+
+            }
+          };
+          force.id = function(_) {
+            return arguments.length ? (id = _, force) : id;
+          };
+          force.size = function(_) {
+            return arguments.length ? (size = _, force) : size;
+          };
+          force.linkStrengthInterCluster = function(_) {
+            return arguments.length ? (linkStrengthInterCluster = _, force) : linkStrengthInterCluster;
+          };
+          force.linkStrengthIntraCluster = function(_) {
+            return arguments.length ? (linkStrengthIntraCluster = _, force) : linkStrengthIntraCluster;
+          };
+          force.nodes = function(_) {
+            return arguments.length ? (nodes = _, force) : nodes;
+          };
+          force.links = function(_) {
+            if (!arguments.length)
+              return links;
+            if (_ === null) links = [];
+            else links = _;
+            return force;
+          };
+          force.nodeSize = function(_) {
+            return arguments.length ? (nodeSize = _, force) : nodeSize;
+          };
+          force.forceCharge = function(_) {
+            return arguments.length ? (forceCharge = _, force) : forceCharge;
+          };
+          force.offset = function(_) {
+            return arguments.length ? (offset = _, force) : offset;
+          };
+          return force;
+        }
+
+        // config references
+        var chartConfig = {
+            target : 'chart',
+            data_url : 'external_data.json',
+            width: 1,
+            height: 1,
+            val: 90
+        };
+        // loader settings
+        var opts = {
+          lines: 19, // The number of lines to draw
+          length: 19, // The length of each line
+          width: 5, // The line thickness
+          radius: 14, // The radius of the inner circle
+          color: '#EE3124', // #rgb or #rrggbb or array of colors
+          speed: 1.9, // Rounds per second
+          trail: 40, // Afterglow percentage
+          className: 'spinner', // The CSS class to assign to the spinner
+        };
+
+        // instantiate chart within callback
+        const trueH= screen.height;
+        const trueW=screen.width;
+
+        /* Script for chart 1 : network + chart 2 : table */
+        var widthNetworkChart = 0.7*trueW;
+        var heightNetworkChart = 0.7*trueH;
+
+        var widthTableChart = 0.2*trueW;
+        var heightTableChart = 0.7*trueH;
+
+        var svg = d3.select("#chart")
+                  .append("svg")
+            .attr("width", widthNetworkChart)
+            .attr("height", heightNetworkChart);
+
+        var svg2 = d3.select("#chartDetail").
+                append("svg")
+            .attr("width", widthTableChart)
+            .attr("height", heightTableChart);
+
+        d3.select("#tableChartDetail")
+            .attr("width", widthTableChart)
+            .attr("height", heightTableChart);
+
+        d3.select("#tableChartDetail").selectAll('.row').style("max-width",widthTableChart+"px");
+
+
+            
+
+        var useGroupInABox = true,
+          drawTemplate = true,
+          template = "treemap";
+        d3.select("#selectTemplate").property("value", template);
+        d3.select("#selectTemplate").on("change", function () {
+          template = d3.select("#selectTemplate").property("value");
+          force.stop();
+          force.force("group").template(template);
+          force.alphaTarget(0.5).restart();
+        });
+
+        d3.select("#checkGroupInABox").property("checked", useGroupInABox);
+        d3.select("#checkShowTreemap").property("checked", drawTemplate);
+        d3.select("#selectTemplate").property("value", template);
+
+        var color = d3.scaleOrdinal(d3.schemeSet3);
+
+        var target = document.getElementById(chartConfig.target);
+        // callback function wrapped for loader in 'init' function
+        function init() {
+            // trigger loader
+            var spinner = new Spinner(opts).spin(target);
+            // slow the json load intentionally, so we can see it every load
+            setTimeout(function() {
+                // load json data and trigger callback
+                d3.json("../data/data.json").then(function(graph) {
+                //d3.json("../data/data.json", function(error, graph) {
+                    // stop spin.js loader
+                    spinner.stop();
+                  // d3.json("../data/data.json", function(error, graph) {
+                    var groupingForce = forceInABox()
+                            .strength(0.1) // Strength to foci
+                            .template(template) // Either treemap or force
+                            .groupBy("group") // Node attribute to group
+                            .links(graph.links) // The graph links. Must be called after setting the grouping attribute
+                            .enableGrouping(useGroupInABox)
+                            .nodeSize(3) // How big are the nodes to compute the force template
+                            .forceCharge(-5) // Separation between nodes on the force template
+                            .size([widthNetworkChart, heightNetworkChart]) // Size of the chart
+
+                    var force = d3.forceSimulation()
+                        .nodes(graph.nodes)
+                        .force("group", groupingForce)
+                        .force('collision',d3.forceCollide().radius(7));
+                        // .force("link", d3.forceLink(graph.links)
+                         //  .distance(10)
+                        //   .strength(0.001)
+                       //  );
+
+                    force.force("group").drawTemplate(svg);
+
+                    // Set up dictionary of neighbors
+                    var node2neighbors = {};
+                    for (var i =0; i < graph.nodes.length; i++){
+                      var id = graph.nodes[i].name;
+                      node2neighbors[id] = graph.links.filter(function(d){
+                          return d.source.name == name || d.target.name == name;
+                        }).map(function(d){
+                          return d.source.name == name ? d.target.name : d.source.name;
+                        });
+                    }
+
+                    //var link = svg.selectAll(".link")
+                    //  .data(graph.links)
+                    //   .enter().append("line")
+                    //   .attr("class", function(d){ return ["link", d.source.id, d.target.id].join(" "); })
+                    //   .style("opacity", 0)
+                    //   .style("stroke-width", 5);//function(d) { return Math.sqrt(d.value); });
+
+                    var node = svg.selectAll(".node")
+                      .data(graph.nodes)
+                      .enter().append("circle")
+                        .attr("class", "node")
+                        .attr("id", function(n){ return n.name; })
+                        .style("stroke-width", function(d) { return d.type ==="OOEE" ? 2 : 0; })
+                        .style("stroke", function(d) { return d.type ==="OOEE" ? "#666666":""; })
+                        .attr("r", function (d) {
+                          return d.main ==="false" ? 5 : 0;
+                        })
+                        .style("fill", function(d) { return color(d.group); })
+                        .on("click", function(n){
+                          d3.select("#name").text(n.name);
+                          d3.select("#type").text(n.type);
+                          d3.select("#statisticalOperations").text(n.statisticalOperations);
+                          d3.select("#objective").text(n.objective);
+                          d3.select("#unityObservation").text(n.unityObservation);
+                          d3.select("#entitiesUsing").text(n.entitiesUsing);
+                          d3.select("#variables").text(n.variables);
+                          d3.select("#daneDependency").text(n.daneDependency);
+                          d3.select("#thematic").text(n.thematic);
+                          d3.select("#thematic2").text(n.thematic2);
+                          d3.select("#thematicShared").text(n.thematicShared);
+                          d3.select("#entityProducing").text(n.entityProducing);
+                          d3.select("#periodicity").text(n.periodicity);
+                          d3.select("#geographicZone").text(n.geographicZone);
+                          d3.select("#geographicDivision").text(n.geographicDivision);
+                          d3.select("#indicators").text(n.indicators);
+                          d3.select("#methodologyOOEE").text(n.methodologyOOEE);
+                          d3.select("#groups").text(n.groups);
+                          d3.select("#group").text(n.group);
+                        })
+                        .call(d3.drag()
+                                  .on("start", dragstarted)
+                                  .on("drag", dragged)
+                                  .on("end", dragended));
+
+    var label = svg.selectAll("label")
+                .data(graph.nodes)
+                .enter()
+                .append("text")
+                .attr("text-anchor", "middle")
+                .text(function (d) {
+                    return d.main ==="true" ? d.name :""})
+                .style("fill", "#000000")
+                .style("font-weight", d=>d.main ==="true" ? "bold" : "normal")
+                .attr("x",d =>d.x)
+                .attr("y",d => d.y)
+                .style("font-family", "Arial")
+                .style("font-size", d=>d.main ==="true" ? 11: 7);
+
+    force.on("tick", function() {
+      label .attr("x", d => d.x)
+            .attr("y", d => d.y);
+      node.attr("cx", function(d) { return d.x = Math.max(7, Math.min(widthNetworkChart - 7, d.x)); })
+          .attr("cy", function(d) { return d.y = Math.max(7, Math.min(heightNetworkChart - 7, d.y)); });
+    });
+
+    d3.select("#checkGroupInABox").on("change", function () {
+      force.stop();
+      useGroupInABox = d3.select("#checkGroupInABox").property("checked");
+      force
+          // .force("link", d3.forceLink(graph.links).distance(50).strength(
+           //function (l) { return !useGroupInABox? 0.7 :
+             //  l.source.group!==l.target.group ? 0 : 0.1;
+           //}))
+          .force("group").enableGrouping(useGroupInABox)
+
+      force.alphaTarget(0.5).restart();
+    });
+
+    d3.select("#selectTemplate").on("change", function () {
+      template = d3.select("#selectTemplate").property("value");
+      force.stop();
+      force.force("group").template(template);
+      force.alphaTarget(0.5).restart();
+    });
+
+    d3.select("#checkShowTreemap").on("change", function () {
+      drawTemplate = d3.select("#checkShowTreemap").property("checked");
+      if (drawTemplate) {
+        force.force("group").drawTemplate(svg);
+      } else {
+        force.force("group").deleteTemplate(svg);
+      }
+    });
+    function dragstarted(d) {
+      if (!d3.event.active) force.alphaTarget(0.3).restart();
+      d.fx = d.x;
+      d.fy = d.y;
+    }
+    function dragged(d) {
+        d.fx = d3.event.x;
+        d.fy = d3.event.y;
+    }
+    function dragended(d) {
+        if (!d3.event.active) force.alphaTarget(0);
+        d.fx = null;
+        d.fy = null;
+    }
+});
+
+}, 0);
+} 
+    init();
+    </script>
+</body>
