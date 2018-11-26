@@ -1,37 +1,37 @@
-oldCategory,occurrences
-MONEDA -  BANCA Y FINANZAS,147
-AGRICULTURA - GANADERIA Y PESCA,89
-TRANSPORTE,82
-JUSTICIA,73
-CUENTAS ECONOMICAS,71
-POR CONFIRMAR,66
-MONEDA - BANCA Y FINANZAS,64
-EDUCACION - CIENCIA - TECNOLOGIA E INNOVACION,51
-SERVICIOS PUBLICOS DOMICILIARIOS,49
-MINERO ENERGETICO,46
-FINANZAS PUBLICAS Y ESTADISTICAS FISCALES,42
-SEGURIDAD Y DEFENSA,29
-ADMINISTRACION PUBLICA,29
-CONDICIONES Y CALIDAD AMBIENTAL,27
-SALUD,27
-SERVICIOS (TURISMO - HOTELES - RESTAURANTES Y OTROS),25
-RECURSOS AMBIENTALES Y SU USO,23
-COMERCIO,18
-CONSTRUCCION,18
-MERCADO LABORAL Y SEGURIDAD SOCIAL,16
-INDUSTRIA,15
-NIVEL - CALIDAD Y CONDICIONES DE VIDA,14
-CULTURA - DEPORTE Y RECREACION,13
-INDICES DE PRECIOS Y COSTOS,12
-PROTECCION AMBIENTAL - GESTION Y PARTICIPACION/ACCION CIUDADANA,12
-CULTURA,11
-DEMOGRAFIA Y POBLACION,8
-RESIDUOS,7
-ACTIVIDAD POLITICA Y ASOCIATIVA,7
-TECNOLOGIAS DE LA INFORMACION Y LAS COMUNICACIONES,6
-DEPORTE Y RECREACION,6
-EVENTOS EXTREMOS Y DESASTRES,5
-ASENTAMIENTOS HUMANOS Y SALUD AMBIENTAL,2
-SEGURIDAD y DEFENSA,2
-GENERO,1
-ECONOMICA,1
+oldCategory,occurrencesRRAA,occurrencesOOEE
+moneda -  banca y finanzas,147,0
+por confirmar,66,0
+justicia,57,16
+cuentas economicas,52,19
+transporte,44,38
+servicios publicos domiciliarios,37,12
+agricultura - ganaderia y pesca,24,65
+minero energetico,21,25
+moneda - banca y finanzas,20,44
+finanzas publicas y estadisticas fiscales,16,26
+educacion - ciencia - tecnologia e innovacion,15,36
+recursos ambientales y su uso,13,10
+cultura - deporte y recreacion,13,0
+seguridad y defensa,11,18
+administracion publica,10,19
+comercio,9,9
+proteccion ambiental - gestion y participacion/accion ciudadana,8,4
+salud,6,21
+mercado laboral y seguridad social,5,11
+servicios (turismo - hoteles - restaurantes y otros),5,20
+residuos,4,3
+nivel - calidad y condiciones de vida,4,10
+industria,4,11
+construccion,3,15
+demografia y poblacion,3,5
+deporte y recreacion,2,4
+genero,1,0
+condiciones y calidad ambiental,1,26
+actividad politica y asociativa,1,6
+asentamientos humanos y salud ambiental,1,1
+economica,1,0
+indices de precios y costos,0,12
+eventos extremos y desastres,0,5
+tecnologias de la informacion y las comunicaciones,0,6
+cultura,0,11
+seguridad y defensa,0,2

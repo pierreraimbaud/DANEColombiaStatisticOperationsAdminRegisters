@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style>
+  h1 {
+    font-size : 130%;
+    color:#696969;
+    text-align: center;
+  }
+  h2 {
+    font-size : 110%;
+    color:#489450;
+    text-align: center;
+  }
+  .node {
+    stroke: #fff;
+    stroke-width: 1.5px;
+  }
+  .link {
+    stroke: #999;
+    stroke-opacity: .6;
+  }
+  .cell {
+    fill: none;
+    stroke: grey;
+  }
+  #chart {
+          display: inline-block;
+          float: left;
+  }
+  #chartDetail {
+    display: inline-block;
+    float: right;
+  }
+  .p.newCategorys {
+      word-wrap: break-word;
+       width:auto;
+       white-space:normal
+  }
+  .table {display:block; }
+  .row { display:block;border:1px solid #111111;word-break: break-all}
+  .cell {display:inline-block;font-size:85%;}
+
+  /*Color for global dataset*/
+
+
+ 
+    
+    .toolTip {
+      position: absolute;
+      display: none;
+      min-width: 80px;
+      height: auto;
+      background: none repeat scroll 0 0 #ffffff;
+      border: 1px solid #6F257F;
+      padding: 14px;
+      text-align: center;
+    }
+    
+
+    .xaxis text {
+      color:blue;
+    }
+    .yaxis text {
+      color:blue;
+    }
+
+
+
+.bar:hover {
+  fill: brown;
+}
+
+.axis--x path {
+  display: none;
+}
+   
+
+</style>
+<body>
+  
+  <div id='container'>
+        <svg id = "svgcontainer" width="960" height="950"></svg>
+        <button id="byOOEE"> Sort by OOEE</button>
+  <button id="byRRAA"> Sort by RRAA</button>
+    <svg id = "svgNew" width="960" height="700"></svg>
+</div>
+  <script src="https://d3js.org/d3.v5.min.js"></script>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/spin.js/2.0.1/spin.min.js'></script> 
+
+  <script type="text/javascript">
+    
+    var svgcontainer = d3.select("#svgcontainer"),
+      margin = {top: 20, right: 20, bottom: 500, left: 90},
+      width = +svgcontainer.attr("width") - margin.left - margin.right,
+      height = +svgcontainer.attr("height") - margin.top - margin.bottom;
+
+    var svgNew = d3.select("#svgNew"),
+      margin = {top: 20, right: 20, bottom: 100, left: 90},
+      width = +svgNew.attr("width") - margin.left - margin.right,
+      height = +svgNew.attr("height") - margin.top - margin.bottom;
+
+
+var x0 = d3.scaleBand()
+    .rangeRound([0, width])
+    .paddingInner(0.1);
+
+var x1 = d3.scaleBand()
+    .padding(0.05);
+
+var y = d3.scaleLinear()
+    .rangeRound([height, 0]);
+
+var z = d3.scaleOrdinal()
+    .range(["#98abc5", "#8a89a6"]);
+
+
+//    var x = d3.scaleBand().rangeRound([0, width]).padding(0.1),
+  //      y = d3.scaleLinear().rangeRound([height, 0]);
+
+    var x0b = d3.scaleBand()
+    .rangeRound([0, width])
+    .paddingInner(0.1);
+
+var x1b = d3.scaleBand()
+    .padding(0.05);
+
+var yb = d3.scaleLinear()
+    .rangeRound([height, 0]);
+
+var zb = d3.scaleOrdinal()
+    .range(["#98abc5", "#8a89a6"]);
+
+    var g = svgcontainer.append("g")
+        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+    var gg = svgNew.append("g")
+        .attr("transform", "translate(" + margin.left + "," + margin.top + ")"); 
+
+    d3.csv("../data/data1.csv")
+    .then((data) => {
+          return data.map((d) => {
+            d.occurrencesRRAA = +d.occurrencesRRAA;
+                        d.occurrencesOOEE= +d.occurrencesOOEE;
+
+            return d;  
+          });
+        })
+
+            .then((data) => {
+
+data.sort(function(a, b) {
+  return d3.descending(a.occurrencesRRAA, b.occurrencesRRAA)
+})
+        var keys = d3.keys(data[0]).slice(1);
+
+  x0.domain(data.map(function(d) { return d.oldCategory; }));
+  x1.domain(keys).rangeRound([0, x0.bandwidth()]);
+  y.domain([0, d3.max(data, function(d) { return d3.max(keys, function(key) { return d[key]; }); })]).nice();
+g.append("g")
+    .selectAll("g")
+    .data(data)
+    .enter().append("g")
+      .attr("transform", function(d) { return "translate(" + x0(d.oldCategory) + ",0)"; })
+    .selectAll("rect")
+    .data(function(d) { return keys.map(function(key) { return {key: key, value: d[key]}; }); })
+    .enter().append("rect").attr("class","bar")
+      .attr("x", function(d) { return x1(d.key); })
+      .attr("y", function(d) { return y(d.value); })
+      .attr("width", x1.bandwidth())
+      .attr("height", function(d) { return height - y(d.value); })
+      .attr("fill", function(d) { return zb(d.key); });
+
+  g.append("g")
+      .attr("class", "axis")
+      .attr("transform", "translate(0," + height + ")")
+      .call(d3.axisBottom(x0).ticks(10))
+          .selectAll("text")  
+            .style("text-anchor", "end")
+            .attr("dx", "-.8em")
+            .attr("dy", ".15em")
+            .attr("transform", "rotate(-65)");
+
+  g.append("g")
+      .attr("class", "axis")
+      .call(d3.axisLeft(y).ticks(null, "s"))
+    .append("text")
+      .attr("x", 2)
+      .attr("y", y(y.ticks().pop()) + 0.5)
+      .attr("dy", "0.32em")
+      .attr("fill", "#000")
+      .attr("font-weight", "bold")
+      .attr("text-anchor", "start")
+      .text("Occurences");
+
+  var legend = g.append("g")
+      .attr("font-family", "sans-serif")
+      .attr("font-size", 10)
+      .attr("text-anchor", "end")
+    .selectAll("g")
+    .data(keys.slice().reverse())
+    .enter().append("g")
+      .attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
+
+  legend.append("rect")
+      .attr("x", width - 19)
+      .attr("width", 19)
+      .attr("height", 19)
+      .attr("fill", zb);
+
+  legend.append("text")
+      .attr("x", width - 24)
+      .attr("y", 9.5)
+      .attr("dy", "0.32em")
+      .text(function(d) { return d; });
+      /*  x.domain(data.map(function(d) { return d.oldCategory; }));
+        y.domain([0, d3.max(data, function(d) { return d.occurrences; })]);
+        g.append("g")
+          .attr("class", "axis axis--x")
+          .attr("transform", "translate(0," + height + ")")
+          .call(d3.axisBottom(x).ticks(10))
+          .selectAll("text")  
+            .style("text-anchor", "end")
+            .attr("dx", "-.8em")
+            .attr("dy", ".15em")
+            .attr("transform", "rotate(-65)");
+        g.append("g")
+            .attr("class", "axis axis--y")
+            .call(d3.axisLeft(y).ticks(10))
+          .append("text")
+            .attr("transform", "rotate(-90)")
+            .attr("y", 6)
+            .attr("dy", "0.71em")
+            .attr("text-anchor", "end")
+            .text("occurrences");
+        g.selectAll(".bar")
+          .data(data)
+          .enter().append("rect")
+            .attr("class", "bar")
+            .attr("x", function(d) { return x(d.oldCategory); })
+            .attr("y", function(d) { return y(d.occurrences); })
+            .attr("width", x.bandwidth())
+            .attr("height", function(d) { return height - y(d.occurrences); });*/
+        })
+        //.catch((error) => {
+          //  throw error;
+        //});
+
+    d3.csv("../data/data2.csv")
+    .then((data) => {
+          return data.map((d) => {
+            d.occurrencesRRAA = +d.occurrencesRRAA;
+                        d.occurrencesOOEE= +d.occurrencesOOEE;
+
+            return d;  
+          });
+        })
+
+            .then((data) => {
+
+        var keys = d3.keys(data[0]).slice(1);
+
+        data.sort(function(a, b) {
+  return d3.descending(a.occurrencesRRAA, b.occurrencesRRAA)
+})
+
+  x0b.domain(data.map(function(d) { return d.newCategory; }));
+  x1b.domain(keys).rangeRound([0, x0b.bandwidth()]);
+  yb.domain([0, d3.max(data, function(d) { return d3.max(keys, function(key) { return d[key]; }); })]).nice();
+var columnBars=gg.append("g")
+    .selectAll("g")
+    .data(data)
+    .enter().append("g")
+      .attr("transform", function(d) { return "translate(" + x0b(d.newCategory) + ",0)"; })
+    .selectAll("rect")
+    .data(function(d) { 
+      return keys.map(function(key) { return {key: key, value: d[key]}; }); })
+
+
+    columnBars.enter().append("rect").attr("class","bar")
+      .attr("x", function(d) { 
+        return x1b(d.key); })
+      .attr("y", function(d) { 
+        return yb(d.value); })
+      .attr("width", x1b.bandwidth())
+      .attr("height", function(d) { return height - yb(d.value); })
+      .attr("fill", function(d) { return z(d.key); });
+
+  gg.append("g")
+      .attr("class", "x.axis")
+      .attr("transform", "translate(0," + height + ")")
+      .call(d3.axisBottom(x0b).ticks(10))
+          .selectAll("text")  
+            .classed("bar-label", true)
+            .style("text-anchor", "end")
+            .attr("dx", "-.8em")
+            .attr("dy", ".15em")
+            .attr("transform", "rotate(-65)");
+
+  gg.append("g")
+      .attr("class", "y.axis")
+      .call(d3.axisLeft(yb).ticks(null, "s"))
+    .append("text")
+      .attr("x", 2)
+      .attr("y", yb(yb.ticks().pop()) + 0.5)
+      .attr("dy", "0.32em")
+      .attr("fill", "#000")
+      .attr("font-weight", "bold")
+      .attr("text-anchor", "start")
+      .text("Occurences");
+
+  var legend = gg.append("g")
+      .attr("font-family", "sans-serif")
+      .attr("font-size", 10)
+      .attr("text-anchor", "end")
+    .selectAll("g")
+    .data(keys.slice().reverse())
+    .enter().append("g")
+      .attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
+
+  legend.append("rect")
+      .attr("x", width - 19)
+      .attr("width", 19)
+      .attr("height", 19)
+      .attr("fill", z);
+
+  legend.append("text")
+      .attr("x", width - 24)
+      .attr("y", 9.5)
+      .attr("dy", "0.32em")
+      .text(function(d) { return d; });
+
+
+
+d3.select("#byOOEE").on("click", function() {
+
+console.log(data);
+  //var keys = d3.keys(data[0]).slice(1);
+
+   data.sort(function(a, b) {
+    return  d3.ascending(a.occurrencesOOEE, b.occurrencesOOEE)
+  })
+console.log(data);
+
+
+
+  x0b.domain(data.map(function(d) { return d.newCategory; }));
+  x1b.domain(keys).rangeRound([0, x0b.bandwidth()]);
+  yb.domain([0, d3.max(data, function(d) { return d3.max(keys, function(key) { return d[key]; }); })]).nice();
+
+
+
+gg.selectAll(".y.axis").transition().duration(1000)
+      .call(d3.axisLeft(yb).ticks(null, "s"));
+
+   ddd= keys.map(function(key) { return {key: key, value: data[key]}; });
+
+var bar = gg.selectAll(".bar")
+      .data(ddd)
+
+  //  bar.exit().remove();
+
+    bar.enter().append("rect")
+      .attr("class", "bar")
+      .attr("fill", "steelblue")
+      .attr("width", x1b.bandwidth())
+      .merge(bar)
+    .transition().duration(1000)
+      .attr("x", function(d) { 
+      return x1b(d.key); })
+      .attr("y", function(d) { 
+        return yb(d.value); })
+      .attr("width", x1b.bandwidth())
+      .attr("height", function(d) { return height - yb(d.value); })
+      .attr("fill", function(d) { return z(d.key); });
+
+
+
+
+    //gg.selectAll("rect").data(ddd).exit().remove();
+   /*columnBars.transition().duration(1000)
+    .attr("x", function(d) { 
+      return x1b(d.key); })
+      .attr("y", function(d) { 
+        return yb(d.value); })
+      .attr("width", x1b.bandwidth())
+      .attr("height", function(d) { return height - yb(d.value); })
+      .attr("fill", function(d) { return z(d.key); });*/
+
+  /*     gg.selectAll(".bar-label")
+    .transition()
+    .duration(500)
+    .attr("transform", function(d, i) {
+      return "translate(" + (x0b(ddd.key) + x0b.bandwidth() / 2 - 8) + "," + (height + 15) + ")" + " rotate(45)"
+    })*/
+
+
+ })
+
+  /*svg.selectAll(".val-label")
+    .transition()
+    .duration(500)
+    .attr("x", function(d, i) {
+      return x(d.key) + x.bandwidth() / 2;
+    })
+
+  svg.selectAll(".bar-label")
+    .transition()
+    .duration(500)
+    .attr("transform", function(d, i) {
+      return "translate(" + (x(d.key) + x.bandwidth() / 2 - 8) + "," + (height + 15) + ")" + " rotate(45)"
+    })*/
+
+
+
+d3.select("#byRRAA").on("click", function() {
+  data.sort(function(a, b) {
+    return  d3.ascending(a.occurrencesRRAA, b.occurrencesRRAA)
+  })
+  console.log(data);
+  x0b.domain(data.map(function(d) { return d.newCategory; }));
+  x1b.domain(keys).rangeRound([0, x0b.bandwidth()]);
+  gg.selectAll(".bar")
+    .transition()
+    .duration(500)
+    .attr("x", function(d) { 
+      return x1b(d.key); })
+      .attr("y", function(d) { 
+        return yb(d.value); })
+      .attr("width", x1b.bandwidth())
+      .attr("height", function(d) { return height - yb(d.value); })
+      .attr("fill", function(d) { return z(d.key); });
+})
+})
+
+        .catch((error) => {
+            throw error;
+        });
+    </script>
+</body>

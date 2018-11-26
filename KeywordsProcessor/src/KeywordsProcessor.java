@@ -36,11 +36,14 @@ public class KeywordsProcessor {
 
     private static final String OOEE_TYPE="OOEE";
 
+
     /**
      * The separator of the CSV file
      */
     private static final String CSV_SEPARATOR = ",";
     public static final int INDEX_FOR_OLD_CATEGORY = 17;
+    public static final int INDEX_FOR_TYPE = 1;
+
     private static final String CSV_COLUMN_NAME_FOR_OLD_CATEGORY = "G. TEMA 2. Tema al que pertenece el registro administrativo   (Este campo sera diligenciado por el funcionario del DANE)";
     /**
      * Generic useless words to not consider when searching keywords for clusters
@@ -221,13 +224,12 @@ public class KeywordsProcessor {
 
     /**
      * Allow to read a map and put it as a one String (after filtering it)
-     * @param mapToRead the map to read
-     * @param min the min number for filtering (before reading)
+     * @param map the map to read
      */
-    private static void readMapAndWriteOnStaticStringVar(Map<String, List<List<Integer>>> mapToRead, int min) {
+    private static void readMapAndWriteOnStaticStringVar(Map<String, List<List<Integer>>> map) {
 
         //First filter the map
-        Map<String, List<List<Integer>>> map = filterMapResultByMinimumOfOccurrences(mapToRead, min);
+        //Map<String, List<List<Integer>>> map = filterMapResultByMinimumOfOccurrences(mapToRead, min);
 
         List<String> values = new ArrayList<>(map.keySet());
 
@@ -341,7 +343,7 @@ public class KeywordsProcessor {
     }
 
     public static void writeOldCategoryFile(){
-        Map<String, Integer> map = new ConcurrentHashMap<>();
+        Map<String, List<Integer>> map = new ConcurrentHashMap<>();
 
         try (Stream<String> stream = Files.lines(Paths.get(CSV_PATH))) {
             stream.forEach(getConsumerOldCategories(map));
@@ -356,7 +358,7 @@ public class KeywordsProcessor {
         Collections.sort(values, new Comparator<String>() {
             public int compare(String a, String b) {
                 // no need to worry about nulls as we know a and b are both in map
-                return map.get(b)- map.get(a);
+                return map.get(b).get(0)- map.get(a).get(0);
             }
         });
         values.size();
@@ -364,15 +366,19 @@ public class KeywordsProcessor {
         StringBuilder categorical2Results=new StringBuilder();
         categorical2Results.append("oldCategory");
         categorical2Results.append(CSV_SEPARATOR);
-        categorical2Results.append("occurrences");
+        categorical2Results.append("occurrencesRRAA");
+        categorical2Results.append(CSV_SEPARATOR);
+        categorical2Results.append("occurrencesOOEE");
         categorical2Results.append("\n");
         Scanner s;
         try {
             s = new Scanner(new File(DATA_RESULTS_FILE_PATH));
             for (String line : values){
-                categorical2Results.append(line);
+                categorical2Results.append(line.toLowerCase());
                 categorical2Results.append(CSV_SEPARATOR);
-                categorical2Results.append(map.get(line));
+                categorical2Results.append(map.get(line).get(0));
+                categorical2Results.append(CSV_SEPARATOR);
+                categorical2Results.append(map.get(line).get(1));
                 categorical2Results.append("\n");
             }
             s.close();
@@ -394,19 +400,95 @@ public class KeywordsProcessor {
         }
     }
 
-    private static Consumer<String> getConsumerOldCategories(Map<String, Integer> map) {
+    private static Consumer<String> getConsumerOldCategories(Map<String, List<Integer>> map) {
         return (x) ->{
             List<String> splitStrBefore = new ArrayList<>(Arrays.asList(x.trim().split(CSV_SEPARATOR)));
             String val=splitStrBefore.get(INDEX_FOR_OLD_CATEGORY);
             if(!CSV_COLUMN_NAME_FOR_OLD_CATEGORY.equals(val)){
+                String tipo=splitStrBefore.get(INDEX_FOR_TYPE);
                 if (!map.containsKey(val)) {
-                    map.put(val, 1);
+
+                    if(!tipo.equals(OOEE_TYPE)){
+                        map.put(val, new ArrayList<>(Arrays.asList(1,0)));
+                    }
+                    else{
+                        map.put(val, new ArrayList<>(Arrays.asList(0,1)));
+                    }
+
                 }
                 else{
-                    map.put(val, map.get(val)+1);
+                    List<Integer> oldList = map.get(val);
+                    if(!tipo.equals(OOEE_TYPE)){
+                        map.put(val, new ArrayList<>(Arrays.asList(oldList.get(0)+1,oldList.get(1))));
+                    }
+                    else{
+                        map.put(val, new ArrayList<>(Arrays.asList(oldList.get(0),oldList.get(1)+1)));
+                    }
                 }
             }
         };
+    }
+
+    private static StringBuilder categorical2Results(Map<String, List<List<Integer>>> map) {
+
+
+        List<String> values = new ArrayList<>(map.keySet());
+
+       /* Collections.sort(values, new Comparator<String>() {
+            public int compare(String a, String b) {
+                // no need to worry about nulls as we know a and b are both in map
+                return map.get(b).get(0).get(0) - map.get(a).get(0).get(0);
+            }
+        });*/
+
+        StringBuilder categorical2Results =new StringBuilder();
+        categorical2Results.append("newCategory");
+        categorical2Results.append(CSV_SEPARATOR);
+        categorical2Results.append("occurrencesRRAA");
+        categorical2Results.append(CSV_SEPARATOR);
+        categorical2Results.append("occurrencesOOEE");
+        categorical2Results.append("\n");
+
+        String category;
+        List<String> lines;
+        try  {
+            lines = Files.readAllLines(Paths.get(CSV_PATH));
+            int i =0;
+            while(i <map.size()) {
+                category = values.get(i);
+                List<List<Integer>> listNodes = map.get(values.get(i)).subList(1,map.get(values.get(i)).size());
+                int j=0;
+                int totalRRAA=0;
+                int totalOOEE=0;
+                String type="";
+
+                while(j <listNodes.size()) {
+                    int indexLine = listNodes.get(j).get(0);
+                    String line = lines.get(indexLine);
+                    type =line.trim().split(CSV_SEPARATOR)[1];
+                    if(OOEE_TYPE.equals(type)){
+                        totalOOEE++;
+                    }
+                    else{
+                        totalRRAA++;
+                    }
+                    j++;
+                }
+                categorical2Results.append(category);
+                categorical2Results.append(CSV_SEPARATOR);
+                categorical2Results.append(totalRRAA);
+                categorical2Results.append(CSV_SEPARATOR);
+                categorical2Results.append(totalOOEE);
+                categorical2Results.append("\n");
+
+                i++;
+            }
+        }
+
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+        return categorical2Results;
     }
     @SuppressWarnings("deprecation")
     public static String getKeywordsListWithOccurrences(){
@@ -415,7 +497,8 @@ public class KeywordsProcessor {
 
         //Build keywords maps (1,2,3,4 words)
         Map<String, List<List<Integer>>> map1 = buildKeywordsOccurrencesNumberMap1Word(); //5
-        readMapAndWriteOnStaticStringVar(map1,150);
+        Map<String, List<List<Integer>>> mapFiltered =filterMapResultByMinimumOfOccurrences(map1, 150);
+        readMapAndWriteOnStaticStringVar(mapFiltered);
 
         /*Map<String, List<List<Integer>>> map2 = new ConcurrentHashMap<>();
         buildKeywordsOccurrencesNumberMap2OrMoreWords(getConsumer2WordsOrMore(map2,2)); //3
@@ -442,27 +525,7 @@ public class KeywordsProcessor {
         }
 
 
-        StringBuilder categorical2Results=new StringBuilder();
-        categorical2Results.append("newCategory");
-        categorical2Results.append(CSV_SEPARATOR);
-        categorical2Results.append("occurrences");
-        categorical2Results.append("\n");
-        Scanner s;
-        try {
-            s = new Scanner(new File(DATA_RESULTS_FILE_PATH));
-            while (s.hasNextLine()){
-                String line = s.nextLine();
-                List<String> splitLine = new ArrayList<>(Arrays.asList(line.trim().split(CSV_SEPARATOR)));
-                categorical2Results.append(splitLine.get(0).toUpperCase());
-                categorical2Results.append(CSV_SEPARATOR);
-                categorical2Results.append(splitLine.get(1).substring(2));
-                categorical2Results.append("\n");
-            }
-            s.close();
-
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
+        StringBuilder categorical2Results=categorical2Results(mapFiltered);
 
         BufferedWriter writerCSV2;
         try {
