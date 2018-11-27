@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>General Viz DANE</title>
+  <script src="https://cdn.jsdelivr.net/npm/vega@4.3.0"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-lite@3.0.0-rc8"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-embed@3.20.0"></script>
+  	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<meta charset="utf-8">
+</head>
+<body>
+<style>.vega-actions {display: none}</style> 
+<div class="container general">
+  <div class="row">
+    <div class="col-md-offset-1 col-md-10">
+<br/>
+<h1> Distribución General</h1>
+  <br/>
+  <div id="vis"></div>
+  
+  <script type="text/javascript">
+    var yourVlSpec = {
+      "$schema": "https://vega.github.io/schema/vega-lite/v2.0.json",
+	  "width": 100,
+	  "height": 200,
+      "description": "A simple bar chart with embedded data.",
+      "data": {
+        "values": [
+          {"group": "Total", "type": "RRAA","cantidad": 604}, 
+		  {"group": "Total","type": "OOEE","cantidad": 510}
+        ]
+      },
+	  "mark": "bar",
+  "encoding": {
+    "column": {
+      "field": "group", "type": "ordinal",
+	  "header": {"title": "", "labelAngle": 0}	  
+    },
+    "y": {
+      "field": "cantidad", "type": "quantitative",
+      "axis": {"title": "cantidad", "grid": false}
+    },
+    "x": {
+      "field": "type", "type": "nominal",
+      "scale": {"rangeStep": 12},
+      "axis": {"title": ""}
+    },
+    "color": {
+      "field": "type", "type": "nominal",
+      "scale": {"range": ["#ff7f0e", "#1f77b4"]}
+    }
+  }
+  }
+    vegaEmbed("#vis", yourVlSpec);
+  </script>
+
+<br/>
+<h1> Macrotemas</h1>
+  <br/>  <div id="vis2"></div>
+
+  <script type="text/javascript">
+    var yourVlSpec = {
+      "$schema": "https://vega.github.io/schema/vega-lite/v2.0.json",
+	    "width": 100,
+		"height": 200,
+      "description": "A simple bar chart with embedded data.",
+      "data": {
+        "values": [
+          {"group": "Económica", "type": "RRAA","cantidad": 351}, 
+		  {"group": "Económica","type": "OOEE","cantidad": 290},
+		  {"group": "Social", "type": "RRAA","cantidad": 182}, 
+		  {"group": "Social","type": "OOEE","cantidad": 171},		  
+		  {"group": "Ambiental", "type": "RRAA","cantidad": 27}, 
+		  {"group": "Ambiental","type": "OOEE","cantidad": 49},
+		  {"group": "Por confirmar", "type": "RRAA","cantidad": 44}, 
+		  {"group": "Por confirmar","type": "OOEE","cantidad": 0}        ]
+      },
+	  "mark": "bar",
+  "encoding": {
+    "column": {
+      "field": "group", "type": "ordinal",
+	  "header": {"title": "", "labelAngle": 0},
+	  "sort": {"op": "mean", "field": "cantidad", "order":"descending"}
+    },
+    "y": {
+      "field": "cantidad", "type": "quantitative",
+      "axis": {"title": "cantidad", "grid": false}
+    },
+    "x": {
+      "field": "type", "type": "nominal",
+      "scale": {"rangeStep": 12},
+      "axis": {"title": ""}
+    },
+    "color": {
+      "field": "type", "type": "nominal",
+      "scale": {"range": ["#ff7f0e", "#1f77b4"]}
+    }
+  }
+  }
+    vegaEmbed("#vis2", yourVlSpec);
+  </script>
+ 
+ <br/>
+<h1> Subtemas</h1>
+  <br/>
+  <div id="vis3"></div>
+
+  <script type="text/javascript">
+    var yourVlSpec = {
+      "$schema": "https://vega.github.io/schema/vega-lite/v2.0.json",
+	    "width": 500,
+		"height": 20,
+      "description": "A simple bar chart with embedded data.",
+      "data": {"url": "data/temasArreglados2.csv"},
+	  "mark": "bar",
+  "encoding": {
+    "row": {
+      "field": "group", "type": "nominal",
+	  "header": {"title": "", "labelAngle": 0},
+	  "sort": {"op": "mean", "field": "cantidad", "order":"descending"}
+    },
+    "x": {
+      "field": "cantidad", "type": "quantitative",
+      "axis": {"title": "cantidad", "grid": true, "labelAngle": 0}
+    },
+    "y": {
+      "field": "type", "type": "nominal",
+      "scale": {"rangeStep": 12},
+      "axis": {"title": ""}
+    },
+    "color": {
+      "field": "type", "type": "nominal",
+      "scale": {"range": ["#ff7f0e", "#1f77b4"]}
+    }
+  }
+  }
+    vegaEmbed("#vis3", yourVlSpec);
+  </script>
+</div>
+</div>
+</div>
+</body>
+</html>
