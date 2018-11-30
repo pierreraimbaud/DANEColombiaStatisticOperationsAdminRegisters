@@ -662,8 +662,10 @@
         d3.select("#checkShowTreemap").property("checked", drawTemplate);
         d3.select("#selectTemplate").property("value", template);
 
-        var color = d3.scaleOrdinal(d3.schemeSet3);
+        //var color = d3.scaleOrdinal(d3.schemeSet3);
 
+        var color = d3.scaleOrdinal().range(d3.quantize(d3.interpolateRainbow,36 + 1));
+    
         var target = document.getElementById(chartConfig.target);
         // callback function wrapped for loader in 'init' function
         function init() {
