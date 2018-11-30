@@ -3,44 +3,13 @@
     <meta charset="utf-8">  
     <title>Inventario de información estadística</title>
     <style>
-      body { 
-        font: 14px/2 Georgia, serif; 
-      }
-      #page-wrap { 
-        max-width: 500px; 
-        margin: 1rem auto;
-        padding: 1rem;
-      }
-
-      h1, h2 {
-        line-height: 1.2;
-      }
-
-      p, ul, h1 { 
-        margin: 0 0 1rem 0; 
+      hmtl{
+        scroll-behavior:smooth;
       }
     </style>
   </head>
   <body>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-    <script>
-      // Select all links with hashes
-      $('a[href*=#]:not([href=#])').click(function() {
-        if (location.pathname.replace(/^\//,'') == this.pathname.replace(/^\//,'') 
-            || location.hostname == this.hostname) {
-
-            var target = $(this.hash);
-            target = target.length ? target : $('[name=' + this.hash.slice(1) +']');
-               if (target.length) {
-                 $('html,body').animate({
-                     scrollTop: target.offset().top
-                }, 1000);
-                return false;
-            }
-        }
-      });
-        //# sourceURL=pen.js
-      </script>
       <ul>
           <li><a href="#two">Scroll to Section Two</a></li>
           <li><a href="#three">Scroll to Section Three</a></li>
