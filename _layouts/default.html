@@ -1,10 +1,78 @@
-<A HREF="indexOld.html">Page : network viz - old categories</A>
-<br/>
-<A HREF="new.html">Page : network viz - new categories</A>
-<br/>
-<A HREF="indexVizT2T4.html">Page : camilo viz</A>
-<br/>
-<iframe src="indexOld.html" height=800 width="100%" frameBorder="0" scrolling="no"></iframe>
-<iframe src="new.html" height=800 width="100%" frameBorder="0" scrolling="no"></iframe>
-<iframe src="vizGenerales.html" height=800 width="100%"0 frameBorder="0" scrolling="no"></iframe>
-<iframe id ="lastElement" src="indexVizT2T4.html" height=800 width="100%" frameBorder="0" scrolling="no"></iframe>
+<html lang="es">
+  <head>
+    <meta charset="utf-8">  
+    <title>Inventario de información estadística</title>
+    <style>
+      body { 
+        font: 14px/2 Georgia, serif; 
+      }
+      #page-wrap { 
+        max-width: 500px; 
+        margin: 1rem auto;
+        padding: 1rem;
+      }
+
+      h1, h2 {
+        line-height: 1.2;
+      }
+
+      p, ul, h1 { 
+        margin: 0 0 1rem 0; 
+      }
+    </style>
+  </head>
+  <body>
+    <script>
+      // Select all links with hashes
+      $('a[href*="#"]')
+        // Remove links that don't actually link to anything
+        .not('[href="#"]')
+        .not('[href="#0"]')
+        .click(function(event) {
+          // On-page links
+          if (
+            location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') 
+            && 
+            location.hostname == this.hostname
+          ) {
+            // Figure out element to scroll to
+            var target = $(this.hash);
+            target = target.length ? target : $('[name=' + this.hash.slice(1) + ']');
+            // Does a scroll target exist?
+            if (target.length) {
+              // Only prevent default if animation is actually gonna happen
+              event.preventDefault();
+              $('html, body').animate({
+                scrollTop: target.offset().top
+              }, 1000, function() {
+                // Callback after animation
+                // Must change focus!
+                var $target = $(target);
+                $target.focus();
+                if ($target.is(":focus")) { // Checking if the target was focused
+                  return false;
+                } else {
+                  $target.attr('tabindex','-1'); // Adding tabindex for elements not focusable
+                  $target.focus(); // Set focus again
+                };
+              });
+            }
+          }
+        });
+        //# sourceURL=pen.js
+      </script>
+      <ul>
+          <li><a href="#two">Scroll to Section Two</a></li>
+          <li><a href="#three">Scroll to Section Three</a></li>
+          <li><a href="#four">Scroll to Section Four</a></li>
+      </ul>
+      <h2 id="one">Section One</h2>
+      <iframe src="indexOld.html" height=800 width="100%" frameBorder="0" scrolling="no"></iframe>
+      <h2 id="two">Section Two</h2>
+      <iframe src="new.html" height=800 width="100%" frameBorder="0" scrolling="no"></iframe>
+      <h2 id="three">Section 3</h2>
+      <iframe src="vizGenerales.html" height=800 width="100%"0 frameBorder="0" scrolling="no"></iframe>
+      <h2 id="four">Section 4</h2>
+      <iframe id ="lastElement" src="indexVizT2T4.html" height=800 width="100%" frameBorder="0" scrolling="no"></iframe>
+  </body>
+ </html>
