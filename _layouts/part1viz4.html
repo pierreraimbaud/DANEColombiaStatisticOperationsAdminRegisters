@@ -41,6 +41,7 @@
 </style>
 <body> 
   <div id='container'>
+    <h2>Subtemas - ordenados por cantidad</h2>
     <div id="div1a"><svg id = "svgcontainer" width="600" height="550"></svg></div>
     <div id="div1b"><svg id = "svgcontainer2" width="600" height="550"></svg></div>
   </div>
@@ -49,12 +50,12 @@
   <script type="text/javascript">
     var tooltip = d3.select("body").append("div").attr("class", "toolTip");
     var svgcontainer = d3.select("#svgcontainer"),
-      margin = {top: 20, right: 20, bottom: 300, left: 90},
+      margin = {top: 20, right: 20, bottom: 300, left: 110},
       width = +svgcontainer.attr("width") - margin.left - margin.right,
       height = +svgcontainer.attr("height") - margin.top - margin.bottom;
 
     var svgcontainer2 = d3.select("#svgcontainer2"),
-        margin = {top: 20, right: 20, bottom: 300, left: 90},
+        margin = {top: 20, right: 20, bottom: 300, left: 110},
         width = +svgcontainer2.attr("width") - margin.left - margin.right,
         height = +svgcontainer2.attr("height") - margin.top - margin.bottom;
 
