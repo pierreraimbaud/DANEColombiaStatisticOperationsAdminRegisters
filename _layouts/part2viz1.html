@@ -1,139 +1,13 @@
 <!DOCTYPE html>
 <meta charset="utf-8">
 <style>
-  h1 {
-    font-size : 130%;
-    color:#696969;
-    text-align: center;
-  }
-  h2 {
-    font-size : 110%;
-    color:#489450;
-    text-align: center;
-  }
-  .node {
-    stroke: #fff;
-    stroke-width: 1.5px;
-  }
-  .link {
-    stroke: #999;
-    stroke-opacity: .6;
-  }
   .cell {
     fill: none;
     stroke: grey;
   }
-  #chart {
-          display: inline-block;
-          float: left;
-  }
-  #chartDetail {
-    display: inline-block;
-    float: right;
-  }
-  .p.newCategorys {
-      word-wrap: break-word;
-       width:auto;
-       white-space:normal
-  }
-  .table {display:block; }
-  .row { display:block;border:1px solid #111111;word-break: break-all}
-  .cell {display:inline-block;font-size:85%;}
-
-  /*Color for global dataset*/
-    .bar--positive {
-      fill: #C48189;
-    }
-    .bar--negative {
-      fill: #CFECEC;
-    }
-    .bar:hover {
-      fill: #347C17;
-    }
-
-    /*Color for North dataset*/
-    .bar1--positive {
-      fill: #7F4E52;
-    }
-    .bar1--negative {
-        fill: #3B9C9C;
-    }
-    .bar1:hover {
-      fill: #347C17;
-    }
-
-    /*Color for Equator dataset*/
-    .bar2--positive {
-      fill: #C5908E;
-    }
-    .bar2--negative {
-      fill: #46C7C7;
-    }
-    .bar2:hover {
-      fill: #347C17;
-    }
-
-    /*Color for South dataset*/
-    .bar3--positive {
-      fill: #E8ADAA;
-    }
-    .bar3--negative {
-      fill: #79BAEC;
-    }
-    .bar3:hover {
-      fill: #347C17;
-    }
-    
-    .toolTip {
-      position: absolute;
-      display: none;
-      min-width: 80px;
-      height: auto;
-      background: none repeat scroll 0 0 #ffffff;
-      border: 1px solid #6F257F;
-      padding: 14px;
-      text-align: center;
-    }
-    
-
-    .xaxis text {
-      color:blue;
-    }
-    .yaxis text {
-      color:blue;
-    }
-
-    .bar {
-  fill: steelblue;
-}
-
-.bar:hover {
-  fill: brown;
-}
-
-.axis--x path {
-  display: none;
-}
-   
-
 </style>
 <body>
-  <h1>Tématicas y relaciones entre los diferentes registros administrativos y operaciones estadisticas del DANE en Colombia</h1>
-  <h2>Visión global de las tématicas y relaciones entre RRAA y OOEE</h2>
-  <p style="font-size:85%">A la izquierda pueden observar las operaciones estadisticas y los registros administrativos organizados por grupos, cada grupo siendo una palabra clave encontrada en varios registros u operaciones, después de haber procesado la información disponible sobre cada registro u operación.</br>
-  A la derecha, después de haber dado <b>clic en un circulo, cada uno siendo un registro u operación</b>, pueden observar las caracteristicas de la operación estadistica o del registro administrativo.</br></br>
-  NB: los circulos grandes son las tematicas y los más pequeños son los registros (sin borde gris) o las operaciones (con borde gris).
-  </p>
   <div id='container'>
-
-    <p style="color:#709410;font-size:105%"; word-wrap="break-word";
-                width="auto";-ms-word-break="break-all"white-space="normal";word-break="break-all"; float="center">Visualización Tarea 1 (Diagrama de redes)</p>
-                <select id="selectTemplate" type="select">
-    <option value="treemap">Treemap</option>
-    <option value="force">Force</option>
-  </select>
-
-
     <div id = "chart">
     </div>
     <div id = "chartDetail">
@@ -221,7 +95,6 @@
   </div>
   <script src="https://d3js.org/d3.v5.min.js"></script>
   <script src='https://cdnjs.cloudflare.com/ajax/libs/spin.js/2.0.1/spin.min.js'></script> 
-
   <script type="text/javascript">
         /* Script for group in a box technique */
         /* global d3 */
@@ -644,9 +517,6 @@
 
         d3.select("#tableChartDetail").selectAll('.row').style("max-width",widthTableChart+"px");
 
-
-            
-
         var useGroupInABox = true,
           drawTemplate = true,
           template = "treemap";
@@ -664,18 +534,11 @@
 
         //var color = d3.scaleOrdinal(d3.schemeSet3);
 
-        var color = d3.scaleOrdinal().range(["#d3fe14", "#fec7f8", "#0b7b3e",
-                                             "#0bf0e9", "#fd9b39", "#a26437","#c949a6",
-                                             "#98ba7f", "#fe6794", "#10b0ff", "#ac7bff", "#ccb7a0",
-                                             "#1da49c", "#0ad811", "#bbd9ca", "#fe6cfe",
-                                             "#d1a09c", "#48259e", "#81ffad", "#739400",
-                                             "#ca6949", "#d9bf01", "#bb73a9",
-                                             "#ccc655", "#b6a7d4", "#9e8c62", "#6e83c8",
-                                             "#01af64", "#cfe589", "#d4ccd1", "#fd4109",
-                                             "#bf8f0e", "#4ed1a5", "#d8bb7d", "#a54509",
-                                             "#6a6276", "#a4777a", "#606f15", "#3cc4d9",
-                                             "#f097c6", "#fc8772", "#92a6fe",
-                                             "#875b44", "#94bc19","#d24dfe"]);
+        var color = d3.scaleOrdinal().range(["#d3fe14", "#fec7f8", "#0b7b3e","#0bf0e9", "#fd9b39", "#a26437","#c949a6","#98ba7f",
+          "#fe6794", "#10b0ff", "#ac7bff", "#ccb7a0","#1da49c", "#0ad811", "#bbd9ca", "#fe6cfe","#d1a09c", "#48259e", "#81ffad",
+          "#739400","#ca6949", "#d9bf01", "#bb73a9","#ccc655", "#b6a7d4", "#9e8c62", "#6e83c8","#01af64", "#cfe589", "#d4ccd1",
+          "#fd4109","#bf8f0e", "#4ed1a5", "#d8bb7d", "#a54509","#6a6276", "#a4777a", "#606f15", "#3cc4d9","#f097c6", "#fc8772",
+          "#92a6fe","#875b44", "#94bc19","#d24dfe"]);
     
         var target = document.getElementById(chartConfig.target);
         // callback function wrapped for loader in 'init' function
@@ -721,14 +584,12 @@
                           return d.source.name == name ? d.target.name : d.source.name;
                         });
                     }
-
                     //var link = svg.selectAll(".link")
                     //  .data(graph.links)
                     //   .enter().append("line")
                     //   .attr("class", function(d){ return ["link", d.source.id, d.target.id].join(" "); })
                     //   .style("opacity", 0)
                     //   .style("stroke-width", 5);//function(d) { return Math.sqrt(d.value); });
-
                     var node = svg.selectAll(".node")
                       .data(graph.nodes)
                       .enter().append("circle")
@@ -766,73 +627,72 @@
                                   .on("drag", dragged)
                                   .on("end", dragended));
 
-    var label = svg.selectAll("label")
-                .data(graph.nodes)
-                .enter()
-                .append("text")
-                .attr("text-anchor", "middle")
-                .text(function (d) {
-                    return d.main ==="true" ? d.name :""})
-                .style("fill", "#000000")
-                .style("font-weight", d=>d.main ==="true" ? "bold" : "normal")
-                .attr("x",d =>d.x)
-                .attr("y",d => d.y)
-                .style("font-family", "Arial")
-                .style("font-size", d=>d.main ==="true" ? 11: 7);
+                    var label = svg.selectAll("label")
+                                .data(graph.nodes)
+                                .enter()
+                                .append("text")
+                                .attr("text-anchor", "middle")
+                                .text(function (d) {
+                                    return d.main ==="true" ? d.name :""})
+                                .style("fill", "#000000")
+                                .style("font-weight", d=>d.main ==="true" ? "bold" : "normal")
+                                .attr("x",d =>d.x)
+                                .attr("y",d => d.y)
+                                .style("font-family", "Arial")
+                                .style("font-size", d=>d.main ==="true" ? 11: 7);
 
-    force.on("tick", function() {
-      label .attr("x", d => d.x)
-            .attr("y", d => d.y);
-      node.attr("cx", function(d) { return d.x = Math.max(7, Math.min(widthNetworkChart - 7, d.x)); })
-          .attr("cy", function(d) { return d.y = Math.max(7, Math.min(heightNetworkChart - 7, d.y)); });
-    });
+                    force.on("tick", function() {
+                      label .attr("x", d => d.x)
+                            .attr("y", d => d.y);
+                      node.attr("cx", function(d) { return d.x = Math.max(7, Math.min(widthNetworkChart - 7, d.x)); })
+                          .attr("cy", function(d) { return d.y = Math.max(7, Math.min(heightNetworkChart - 7, d.y)); });
+                    });
 
-    d3.select("#checkGroupInABox").on("change", function () {
-      force.stop();
-      useGroupInABox = d3.select("#checkGroupInABox").property("checked");
-      force
-          // .force("link", d3.forceLink(graph.links).distance(50).strength(
-           //function (l) { return !useGroupInABox? 0.7 :
-             //  l.source.group!==l.target.group ? 0 : 0.1;
-           //}))
-          .force("group").enableGrouping(useGroupInABox)
+                    d3.select("#checkGroupInABox").on("change", function () {
+                      force.stop();
+                      useGroupInABox = d3.select("#checkGroupInABox").property("checked");
+                      force
+                          // .force("link", d3.forceLink(graph.links).distance(50).strength(
+                           //function (l) { return !useGroupInABox? 0.7 :
+                             //  l.source.group!==l.target.group ? 0 : 0.1;
+                           //}))
+                          .force("group").enableGrouping(useGroupInABox)
 
-      force.alphaTarget(0.5).restart();
-    });
+                      force.alphaTarget(0.5).restart();
+                    });
 
-    d3.select("#selectTemplate").on("change", function () {
-      template = d3.select("#selectTemplate").property("value");
-      force.stop();
-      force.force("group").template(template);
-      force.alphaTarget(0.5).restart();
-    });
+                    d3.select("#selectTemplate").on("change", function () {
+                      template = d3.select("#selectTemplate").property("value");
+                      force.stop();
+                      force.force("group").template(template);
+                      force.alphaTarget(0.5).restart();
+                    });
 
-    d3.select("#checkShowTreemap").on("change", function () {
-      drawTemplate = d3.select("#checkShowTreemap").property("checked");
-      if (drawTemplate) {
-        force.force("group").drawTemplate(svg);
-      } else {
-        force.force("group").deleteTemplate(svg);
-      }
-    });
-    function dragstarted(d) {
-      if (!d3.event.active) force.alphaTarget(0.3).restart();
-      d.fx = d.x;
-      d.fy = d.y;
-    }
-    function dragged(d) {
-        d.fx = d3.event.x;
-        d.fy = d3.event.y;
-    }
-    function dragended(d) {
-        if (!d3.event.active) force.alphaTarget(0);
-        d.fx = null;
-        d.fy = null;
-    }
-});
-
-}, 0);
-} 
-    init();
+                    d3.select("#checkShowTreemap").on("change", function () {
+                      drawTemplate = d3.select("#checkShowTreemap").property("checked");
+                      if (drawTemplate) {
+                        force.force("group").drawTemplate(svg);
+                      } else {
+                        force.force("group").deleteTemplate(svg);
+                      }
+                    });
+                    function dragstarted(d) {
+                      if (!d3.event.active) force.alphaTarget(0.3).restart();
+                      d.fx = d.x;
+                      d.fy = d.y;
+                    }
+                    function dragged(d) {
+                        d.fx = d3.event.x;
+                        d.fy = d3.event.y;
+                    }
+                    function dragended(d) {
+                        if (!d3.event.active) force.alphaTarget(0);
+                        d.fx = null;
+                        d.fy = null;
+                    }
+            });
+        }, 0);
+        } 
+        init();
     </script>
 </body>

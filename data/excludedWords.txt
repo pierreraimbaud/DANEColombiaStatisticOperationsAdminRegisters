@@ -178,3 +178,6 @@ cooperativos
 cooperativo
 grados
 grado
+dnp
+saldo
+saldos
