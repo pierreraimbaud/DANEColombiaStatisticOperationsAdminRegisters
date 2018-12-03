@@ -45,7 +45,8 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );
 			
 <div class="slides">
 				
-<section>
+
+	<section>
 <h2>Mapeando la información estadística de Colombia</h2></section>		
 <section>
 <h2>OBJETIVO</h2>
@@ -75,17 +76,57 @@ Tarea: Summarize/Distribution
 <section>
 <iframe src="https://pierreraimbaud.github.io/DANEColombiaStatisticOperationsAdminRegisters/part1viz1.html" height=400 width="400" frameBorder="0" scrolling="no"></iframe>
 </section>
+<section>
+<h2>Insights</h2>
+<p>
+<br/>-Existen más Registros Administrativos que Operaciones Estadísticas. Ya que los Registros Administrativos generan las Operaciones Estadísticas, hay una oportunidad de generar más operaciones utilizando los datos actuales.
+</p>
+</section>
 
 <section>
 <iframe src="https://pierreraimbaud.github.io/DANEColombiaStatisticOperationsAdminRegisters/part1viz2.html" height=400 width="400" frameBorder="0" scrolling="no"></iframe>
 </section>
 
 <section>
+<h2>Insights</h2>
+<p>
+<br/>-Los macrotemas utilizados para clasificar los Registros Administrativos y las Operaciones Estadísticas tienen una categoría diferente: Social vs. SocioDemográfica.
+<br/>-Los únicos ítems por confirmar categoría son Registros Administrativos.
+<br/>-En los tres grandes temas se destaca la categoría económica, por lo tanto valdría la pena revisar qué información podría producirse en los ámbitos social y ambiental.
+</p>
+</section>
+
+<section>
 <iframe src="https://pierreraimbaud.github.io/DANEColombiaStatisticOperationsAdminRegisters/part1viz3.html" height=900 width="100%" frameBorder="0" scrolling="no"></iframe>
+</section>
+
+<section>
+<h2>Insights</h2>
+<p>
+<br/>-Sugerimos que las categorías de clasificación de las Operaciones Estadísticas y de los Registros Administrativos en Macrotemas y subtemas, tengan códigos, para asegurar la integridad de los datos. Ya que Moneda - banca y finanzas estaba presente varias veces debido a errores de transcripción.
+<br/>-En 7 categorías, existen más registros que RRAA que OOEE (Moneda - banca y Finanzas, Justicia, Cuentas Económicas, etc.). En estas categorías valdría la pena revisar por qué no se utiliza toda la información,  tal vez puede existir información redundante o pueden haber instrumentos que pueden ser optimizados. 
+<br/>Si observamos atentamente la viz anterior de Macrotemas y la viz Subtemas, podemos ver que Moneda - banca y Finanzas, y Cuentas Económicas, son los subtemas que pueden causar la menor producción de OOEE en la categoría económica.
+</p>
+</section>
+
+<section>
+<h2>Insights</h2>
+<p>
+<br/>-.
+<br/>-.
+</p>
 </section>
 
 <section style="top: 0px;display: block;width: 1200px;">
 <iframe src="https://pierreraimbaud.github.io/DANEColombiaStatisticOperationsAdminRegisters/part1viz4.html" height=900 width="100%" frameBorder="0" scrolling="no"></iframe>
+</section>
+
+<section>
+<h2>Insights</h2>
+<p>
+<br/>-Entre los Registros Administrativos, existe una diferencia más amplia en el número de ítems por subtema vs. la menor diferencia que existe entre el número de OOEE por subtema.
+<br/>-El segundo subtema más relevante entre los RRAA es “Por confirmar”, lo cual puede contribuir a la diferencia entre los RRAA por subtema.
+</p>
 </section>
 
 <section>
@@ -98,8 +139,19 @@ Tarea: Summarize/Distribution (Taxonomía)
 </p>
 </section>
 
+
 <section>
+<h4>Palabras clave y temáticas de RRAA y OOEE</h2>
+
 <iframe src="https://pierreraimbaud.github.io/DANEColombiaStatisticOperationsAdminRegisters/part2viz1.html" height=900 width="100%" frameBorder="0" scrolling="no"></iframe>
+</section>
+
+<section>
+<h2>Insights</h2>
+<p>
+<br/>-A través de esta visualización es posible confirmar que la metadata de los RRAA y las OOEE contiene los subtemas. Sin embargo, las proporciones son diferentes, por ejemplo: “Empresa” es la cuarta palabra clave más ocurrente, mientras que en los subtemas, “Mercado Laboral” es la penúltima categoría.
+<br/>-Podemos confirmar que las palabras claves que tienen únicamente RRAA (transferencia y leasing) pertenecen a la categoría “Económica”. Por lo tanto, los RRAA asociados a estas palabras claves podrían ser los más apropiados para generar nuevas Operaciones Estadísticas.
+</p>
 </section>
 
 <section>
@@ -108,15 +160,35 @@ Tarea: Summarize/Distribution (Taxonomía)
 </section>
 
 <section>
+<h2>Insights</h2>
+<p>
+<br/>-Utilizando la categorización de OOEE y RRAA por palabras claves es posible obtener una distribución más equilibrada.
+</p>
+</section>
+
+
+<section>
 <h2>PARTE 3 - RRAA y OOEE por tema</h2>
 <p>
 Tarea: Identify/Extremes (RRAA y OOEE)
-<br/>-Conocer cuáles son los Registros Administrativos y Operaciones Estadísticas correspondientes a una temática o palabra clave.
+<br/>-Conocer cuáles son los Registros Administrativos y Operaciones Estadísticas más relacionados a una temática o palabra clave.
 </p>
 </section>
 
 <section>
+<h4>RRAA y OOEE por tema</h2>
 <iframe src="https://pierreraimbaud.github.io/DANEColombiaStatisticOperationsAdminRegisters/part3viz1.html" height=900 width="100%" frameBorder="0" scrolling="no"></iframe>
+</section>
+
+
+<section>
+<h2>Insights</h2>
+<p>
+<br/>-La clasificación por palabras clave permite encontrar los RRAA y OOEE más relacionadas con un tema en concreto sin necesidad de ser expertos en el dominio de los datos (Los resultados fueron validados a través de las pruebas de usuario). De esta manera se puede dar acceso a los datos al público en general y a los comités de política pública organizados por el DANE. <BR/>Por ejemplo, si buscamos vivienda, podemos ver que los RRAA y OOEE más relevantes son “Financiación de Vivienda”, “Estadísticas sobre vivienda de interés prioritario y social”, etc.
+
+<br/>-Esta clasificación también permite analizar en cuáles temas existen más RRAA que OOEE para saber en qué temas el DANE puede generar más información. Por ejemplo, si buscamos la palabra clave “crédito”, podemos ver que es posible generar nuevas OOEE, ya que la mayoría de los ítems relevantes son RRAA.
+
+</p>
 </section>
 
 
