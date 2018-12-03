@@ -1,96 +1,103 @@
 <!DOCTYPE html>
 <meta charset="utf-8">
-<style>
-  .cell {
-    fill: none;
-    stroke: grey;
-  }
-</style>
+<head>
+  <style>
+    .cell {
+      fill: none;
+      stroke: grey;
+    }
+    .table {display:block; }
+    .row { display:block;border:1px solid #111111;word-break: break-all}
+    .cell {display:inline-block;font-size:70%;}
+  </style>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+
 <body>
-  <div id='container'>
-    <div id = "chart">
-    </div>
-    <div id = "chartDetail">
-      <p style="color:#709410;font-size:105%"; word-wrap="break-word";
-          width="auto";-ms-word-break="break-all"white-space="normal";word-break="break-all"; float="center">Visualización Tarea 4 (Tabla de detalle)</p>
-      <div id="tableChartDetail">
+  <div class="container">
+    <div class="row1">
+      <div class="col-md-offset-0 col-md-9" id="chart"></div>
+      <div class="col-md-offset-0 col-md-3" id = "chartDetail">
+        <p style="text-align:center">Tabla de detalle</p>
+        <div id="tableChartDetail">
+           <div class="row">
+            <div class="cell" style="font-weight:bold">Nombre:</div>
+            <div class="cell"id='name'>-</div>
+          </div>
+          <div class="row">
+            <div class="cell" style="font-weight:bold">Tipo:</div>
+            <div class="cell" id='type'>-</div>
+          </div>
+          <div class="row">
+            <div class="cell"  style="font-weight:bold">Operaciones estatisticas:</div>
+            <div class="cell"id='statisticalOperations' >-</div>
+          </div>
+          <div class="row">
+            <div class="cell"  style="font-weight:bold" >Objetivo:</div>
+            <div class="cell"id='objective' >-</div>
+          </div>
+          <div class="row">
+            <div class="cell"  style="font-weight:bold" >Unidad de observación:</div>
+            <div class="cell"id='unityObservation' >-</div>
+          </div>
+          <div class="row">
+            <div class="cell"  style="font-weight:bold" >Variables:</div>
+            <div class="cell"id='variables' >-</div>
+          </div>
+          <div class="row">
+            <div class="cell" style="font-weight:bold" >Resultados estad. (indicadores-agregados):</div>
+            <div class="cell"id='indicators' >-</div>
+          </div>
+          <div class="row">
+            <div class="cell"  style="font-weight:bold">Area tématica:</div>
+            <div class="cell"id='thematic' >-</div>
+          </div>
+          <div class="row">
+            <div class="cell"  style="font-weight:bold">Tématica 2:</div>
+            <div class="cell"id='thematic2' >-</div>
+          </div>
+          <div class="row">
+            <div class="cell" style="font-weight:bold" >Nuevo tema principal descubierto:</div>
+            <div class="cell"id='group' >-</div>
+          </div>
+          <div class="row">
+            <div class="cell" style="font-weight:bold" >Otros nuevos temas(nombre, # occurencias):</div>
+            <div class="cell"id='groups' >-</div>
+          </div>
+          <div class="row">
+            <div class="cell" style="font-weight:bold" >Desagregación geografica:</div>
+            <div class="cell"id='geographicDivision' >-</div>
+          </div>
+          <div class="row">
+            <div class="cell" style="font-weight:bold" >Cobertura geografica:</div>
+            <div class="cell"id='geographicZone' >-</div>
+          </div>
          <div class="row">
-          <div class="cell" style="font-weight:bold">Nombre</div>
-          <div class="cell"id='name'>-</div>
-        </div>
-        <div class="row">
-          <div class="cell" style="font-weight:bold">Tipo</div>
-          <div class="cell" id='type'>-</div>
-        </div>
-        <div class="row">
-          <div class="cell" style="font-weight:bold" >Nombre de sus grupos</div>
-          <div class="cell"id='groups' >-</div>
-        </div>
-        <div class="row">
-          <div class="cell" style="font-weight:bold" >Grupo principal</div>
-          <div class="cell"id='group' >-</div>
-        </div>
-        <div class="row">
-          <div class="cell"  style="font-weight:bold">Operaciones estatisticas</div>
-          <div class="cell"id='statisticalOperations' >-</div>
-        </div>
-        <div class="row">
-          <div class="cell"  style="font-weight:bold" >Objetivo</div>
-          <div class="cell"id='objective' >-</div>
-        </div>
-        <div class="row">
-          <div class="cell"  style="font-weight:bold" >Unidad de observación</div>
-          <div class="cell"id='unityObservation' >-</div>
-        </div>
-        <div class="row">
-          <div class="cell"  style="font-weight:bold" >Entidad que lo usa</div>
-          <div class="cell"id='entitiesUsing' >-</div>
-        </div>
-        <div class="row">
-          <div class="cell"  style="font-weight:bold" >Variables</div>
-          <div class="cell"id='variables' >-</div>
-        </div>
-        <div class="row">
-          <div class="cell" style="font-weight:bold" >Dependencia al DANE</div>
-          <div class="cell"id='daneDependency' >-</div>
-        </div>
-        <div class="row">
-          <div class="cell"  style="font-weight:bold">Tématica</div>
-          <div class="cell"id='thematic' >-</div>
-        </div>
-        <div class="row">
-          <div class="cell"  style="font-weight:bold">Tématica 2</div>
-          <div class="cell"id='thematic2' >-</div>
-        </div>
-        <div class="row">
-          <div class="cell"  style="font-weight:bold">Tématica compartida</div>
-          <div class="cell"id='thematicShared' >-</div>
-        </div>
-        <div class="row">
-          <div class="cell"  style="font-weight:bold">Entidad que lo produce</div>
-          <div class="cell"id='entityProducing' >-</div>
-        </div>
-        <div class="row">
-          <div class="cell"  style="font-weight:bold">Periodicidad</div>
-          <div class="cell"id='periodicity' >-</div>
-        </div>
-        <div class="row">
-          <div class="cell" style="font-weight:bold" >Zona geografica</div>
-          <div class="cell"id='geographicZone' >-</div>
-        </div>
-        <div class="row">
-          <div class="cell" style="font-weight:bold" >Desagregación geografica</div>
-          <div class="cell"id='geographicDivision' >-</div>
-        </div>
-        <div class="row">
-          <div class="cell" style="font-weight:bold" >Indicadores</div>
-          <div class="cell"id='indicators' >-</div>
-        </div>
-        <div class="row">
-          <div class="cell"  style="font-weight:bold">Metodología OOEE</div>
-          <div class="cell"id='methodologyOOEE' >-</div>
-        </div>
-      </div>
+            <div class="cell"  style="font-weight:bold">Periodicidad (captura):</div>
+            <div class="cell"id='periodicity' >-</div>
+          </div>
+          <div class="row">
+            <div class="cell"  style="font-weight:bold">Entidad productora:</div>
+            <div class="cell"id='entityProducing' >-</div>
+          </div>
+          <div class="row">
+            <div class="cell" style="font-weight:bold" >Dependencia DANE:</div>
+            <div class="cell"id='daneDependency' >-</div>
+          </div>
+          <div class="row">
+            <div class="cell"  style="font-weight:bold">Temas compartidos:</div>
+            <div class="cell"id='thematicShared' >-</div>
+          </div>
+          <div class="row">
+            <div class="cell"  style="font-weight:bold">Metodología estadística OOEE:</div>
+            <div class="cell"id='methodologyOOEE' >-</div>
+          </div>
+          <div class="row">
+            <div class="cell"  style="font-weight:bold" >Entidades que lo consumen:</div>
+            <div class="cell"id='entitiesUsing' >-</div>
+          </div>
+        </div></div>
     </div>
   </div>
   <script src="https://d3js.org/d3.v5.min.js"></script>
@@ -491,15 +498,15 @@
         };
 
         // instantiate chart within callback
-        const trueH= screen.height;
-        const trueW=screen.width;
+        const trueH= 1100;
+        const trueW= 800;
 
         /* Script for chart 1 : network + chart 2 : table */
-        var widthNetworkChart = 0.7*trueW;
-        var heightNetworkChart = 0.7*trueH;
+        var widthNetworkChart = 1*trueW;
+        var heightNetworkChart = 0.5*trueH;
 
-        var widthTableChart = 0.2*trueW;
-        var heightTableChart = 0.7*trueH;
+        var widthTableChart = 0.9*trueW;
+        var heightTableChart = 1*trueH;
 
         var svg = d3.select("#chart")
                   .append("svg")
