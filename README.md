@@ -1,4 +1,4 @@
-# DANE - Colombian Statistic - Making new policies
+# DANE - Colombian Statistics - Making new policies
 ### Authors
 Pierre Raimbaud : https://github.com/pierreraimbaud
 Camilo Espitia: https://github.com/camilospn
