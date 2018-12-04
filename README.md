@@ -20,6 +20,14 @@ Inventory of Administrative Registers and Statistical Operations of the country 
 Keywords present in the previous inventory (in the metadata) and the Administrative Registers and Statistical Operations linked to them (Derived table)
 <br/><br/>
 <h2>WHY</h2>
+Part 1<br/>
+Summarize / Distribution<br/>
+Part 2<br/>
+Summarize / Distribution   -   Identify Extremes<br/>
+Part 3<br/>
+Identify / Features   -   Identify Extremes
+<br/><br/>
+<h2>HOW</h2>
 Part 1:
 <br/>
 <img src="/vizPart1.png" alt="vizPart1"><br/>
