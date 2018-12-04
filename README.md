@@ -20,15 +20,11 @@ Keywords present in the previous inventary and the Administratives Registers and
 <br/><br/>
 <h2>WHY</h2>
 Part 1:
-Summarize / Distribution
 <br/>
-Part 2:
-Summarize / Distribution   -   Identify Extremes
-<br/>
-Parte 3:
-Identify / Features   -   Identify Extremes
-<br/><br/>
-<h2>HOW</h2>
 <img src="/vizPart1.png" alt="vizPart1"><br/>
+Part 2:
+<br/>
 <img src="/vizPart2.PNG" alt="vizPart2"><br/>
+Part 3:
+<br/>
 <img src="/vizPart3.PNG" alt="vizPart3"><br/>
