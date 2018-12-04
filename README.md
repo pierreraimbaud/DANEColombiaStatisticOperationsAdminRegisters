@@ -4,7 +4,8 @@ Pierre Raimbaud : https://github.com/pierreraimbaud
 Camilo Espitia: https://github.com/camilospn
 GitHub project link : https://github.com/pierreraimbaud/DANEColombiaStatisticOperationsAdminRegisters and Projet page : https://pierreraimbaud.github.io/DANEColombiaStatisticOperationsAdminRegisters/demo<br/><br/>
 This project is under MIT license (applied to the repository).<br/><br/>
-<img src="/registersAndOperationsAboutOneTheme.png" alt="registersAndOperationsAboutOneTheme"><br/>
+<h3>Example of visualization of our tool</h3><br/>
+<img src="/registersAndOperationsAboutOneTheme.png" alt="registersAndOperationsAboutOneTheme"><br/><br/>
 This visualization uses data from the Colombian public entity DANE. The principal objective here is to show or discover some interesting insights about this data, knowing that the principal question here is:<br/><b>Could I take better decisions for making new policies using current data from DANE ? And using the metada present in these intial data? </b><br/>
 In other terms, the objective is to build a visualization that allows :<br/>
 - to provide a tool for the politics maker and for the public in general, providing an added-value for making decisions. <br/>
@@ -29,5 +30,5 @@ Identify / Features   -   Identify Extremes
 <br/><br/>
 <h2>HOW</h2>
 <img src="/vizPart1.png" alt="vizPart1"><br/>
-<img src="/vizPart2.png" alt="vizPart2"><br/>
-<img src="/vizPart3.png" alt="vizPart3"><br/>
+<img src="/vizPart2.PNG" alt="vizPart2"><br/>
+<img src="/vizPart3.PNG" alt="vizPart3"><br/>
