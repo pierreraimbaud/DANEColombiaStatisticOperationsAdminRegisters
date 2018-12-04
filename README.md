@@ -1,12 +1,13 @@
 # DANE - Colombian Statistics - Making new policies
 ### Authors
-Pierre Raimbaud : https://github.com/pierreraimbaud
-Camilo Espitia: https://github.com/camilospn
-GitHub project link : https://github.com/pierreraimbaud/DANEColombiaStatisticOperationsAdminRegisters and Projet page : https://pierreraimbaud.github.io/DANEColombiaStatisticOperationsAdminRegisters/demo<br/><br/>
+Pierre Raimbaud : https://github.com/pierreraimbaud<br/>
+Camilo Espitia: https://github.com/camilospn<br/>
+GitHub project link : https://github.com/pierreraimbaud/DANEColombiaStatisticOperationsAdminRegisters<br/>
+Projet page : https://pierreraimbaud.github.io/DANEColombiaStatisticOperationsAdminRegisters/demo<br/><br/>
 This project is under MIT license (applied to the repository).<br/><br/>
 <h3>Example of visualization of our tool</h3><br/>
 <img src="/registersAndOperationsAboutOneTheme.png" alt="registersAndOperationsAboutOneTheme"><br/><br/>
-This visualization uses data from the Colombian public entity DANE. The principal objective here is to show or discover some interesting insights about this data, knowing that the principal question here is:<br/><b>Could I take better decisions for making new policies using current data from DANE ? And using the metada present in these intial data? </b><br/>
+This visualization uses data from the Colombian public entity DANE. The principal objective here is to show or discover some interesting insights about this data, knowing that the principal question here is:<br/><b>Could I take better decisions for making new policies using current data from DANE ? And using the metadata present in these initial data? </b><br/>
 In other terms, the objective is to build a visualization that allows :<br/>
 - to provide a tool for the politics maker and for the public in general, providing an added-value for making decisions. <br/>
 - to discover new taxonomies about Administrative Registers and Statistical Operations from Keywords.<br/><br/>
@@ -15,8 +16,8 @@ The other objetives are more academic: to use d3, to represent a network in a vi
 To be more precise, in the following paragraphs first we will explain (briefly!) what were our data (through data abstraction), why this visualization (through task abstraction) and to conclude the reason of how we choice to present the data (idioms : visual encoding and interaction) ; thanks to that, we have been able to answer to the question written above. Our answers will be the insights of this visualization!
 <br/><br/>
 <h2>WHAT</h2>
-Inventary of Administrative Registers and Statistical Operations of the country (Table)
-Keywords present in the previous inventary and the Administratives Registers and Statistical Operations linked to them (Derivated table)
+Inventory of Administrative Registers and Statistical Operations of the country (Table)<br/>
+Keywords present in the previous inventory (in the metadata) and the Administrative Registers and Statistical Operations linked to them (Derivated table)
 <br/><br/>
 <h2>WHY</h2>
 Part 1:
