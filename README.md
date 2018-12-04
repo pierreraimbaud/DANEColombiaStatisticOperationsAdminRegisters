@@ -22,12 +22,10 @@ Part 1:
 Summarize / Distribution
 <br/>
 Part 2:
-Summarize / Distribution
-<br/>Identify Extremes
+Summarize / Distribution   -   Identify Extremes
 <br/>
 Parte 3:
-Identify / Features
-<br/>Identify Extremes
+Identify / Features   -   Identify Extremes
 <br/><br/>
 <h2>HOW</h2>
 <img src="/vizPart1.png" alt="vizPart1"><br/>
