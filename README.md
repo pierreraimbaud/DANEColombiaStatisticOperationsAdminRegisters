@@ -17,7 +17,7 @@ To be more precise, in the following paragraphs first we will explain (briefly!)
 <br/><br/>
 <h2>WHAT</h2>
 Inventory of Administrative Registers and Statistical Operations of the country (Table)<br/>
-Keywords present in the previous inventory (in the metadata) and the Administrative Registers and Statistical Operations linked to them (Derivated table)
+Keywords present in the previous inventory (in the metadata) and the Administrative Registers and Statistical Operations linked to them (Derived table)
 <br/><br/>
 <h2>WHY</h2>
 Part 1:
