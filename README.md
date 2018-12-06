@@ -4,6 +4,7 @@ Pierre Raimbaud : https://github.com/pierreraimbaud<br/>
 Camilo Espitia: https://github.com/camilospn<br/>
 GitHub project link : https://github.com/pierreraimbaud/DANEColombiaStatisticOperationsAdminRegisters<br/>
 Projet page : https://pierreraimbaud.github.io/DANEColombiaStatisticOperationsAdminRegisters/demo<br/><br/>
+<b>Paper</b>: https://github.com/pierreraimbaud/DANEColombiaStatisticOperationsAdminRegisters/blob/master/IEEE%20VIS%20Camilo%20y%20Pierre%20-%20DANE%20-%20Data%20driven%20Policy%20Making%20in%20Colombia.pdf<br/><br/>
 This project is under MIT license (applied to the repository).<br/><br/>
 <h3>Example of visualization of our tool</h3><br/>
 <img src="/registersAndOperationsAboutOneTheme.png" alt="registersAndOperationsAboutOneTheme"><br/><br/>
